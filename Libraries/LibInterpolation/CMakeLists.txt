@@ -1,6 +1,8 @@
 set(SOURCES
-  LagrangeInterpolator.cc
-  NewtonInterpolator.cc
+  Polynomial/Lagrange.cc
+  Polynomial/Newton.cc
+  Spline/Linear.cc
+  Spline/Quadratic.cc
 )
 
 uni_lib(LibInterpolation interpolation)

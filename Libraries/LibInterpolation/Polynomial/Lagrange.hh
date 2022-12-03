@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LibInterpolation/PolynomialInterpolator.hh>
+#include <LibInterpolation/Polynomial/Interpolator.hh>
 
 namespace Uni
 {

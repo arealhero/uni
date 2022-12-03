@@ -2,6 +2,8 @@
 
 #include <LibSLE/Solver.hh>
 
+#include <iostream>
+
 namespace Uni
 {
 
@@ -15,7 +17,7 @@ class GaussSolver : public Solver
   [[nodiscard]] constexpr Matrix solve(
       const Matrix& A,
       const Matrix& b,
-      [[maybe_unused]] const double eps) override
+      [[maybe_unused]] const double eps = DEFAULT_EPS) override
   {
     auto A_copy = A;
     auto b_copy = b;

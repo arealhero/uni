@@ -21,7 +21,7 @@ bool operator==(const Polynomial& lhs, const Polynomial& rhs)
 
   for (std::size_t i = 0; i < lhs.degree(); ++i)
   {
-    if (lhs.coeff(i) != rhs.coeff(i))
+    if (lhs.coeff(i) != rhs.coeff(i)) // FIXME: change to approximate equality
     {
       return false;
     }

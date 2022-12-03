@@ -1,10 +1,9 @@
-#include <LibInterpolation/NewtonInterpolator.hh>
+#include <LibInterpolation/Polynomial/Newton.hh>
 
 namespace Uni
 {
 
-Polynomial NewtonInterpolator::operator()(
-    const std::vector<Point>& points)
+Polynomial NewtonInterpolator::operator()(const std::vector<Point>& points)
 {
   const std::size_t N = points.size();
 

@@ -1,4 +1,4 @@
-#include <LibInterpolation/LagrangeInterpolator.hh>
+#include <LibInterpolation/Polynomial/Lagrange.hh>
 
 namespace Uni
 {

@@ -1,6 +1,6 @@
-#include <LibInterpolation/LagrangeInterpolator.hh>
+#include <LibInterpolation/Polynomial/Lagrange.hh>
 #include <LibInterpolation/LinearGenerator.hh>
-#include <LibInterpolation/NewtonInterpolator.hh>
+#include <LibInterpolation/Polynomial/Newton.hh>
 #include <LibInterpolation/OptimalGenerator.hh>
 #include <LibMath/Point.hh>
 #include <LibMath/Polynomial.hh>
