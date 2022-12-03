@@ -1,5 +1,6 @@
 #pragma once
 
+#include <LibMath/Function.hh>
 #include <initializer_list>
 #include <ostream>
 #include <vector>
@@ -7,7 +8,7 @@
 namespace Uni
 {
 
-class Polynomial
+class Polynomial : public Function
 {
  public:
   Polynomial() = default;
@@ -49,7 +50,7 @@ class Polynomial
     return result;
   }
 
-  constexpr double operator()(double x) const
+  constexpr double operator()(double x) const override
   {
     double result = 0;
     double power = 1;

@@ -1,15 +1,17 @@
 #pragma once
 
+#include <LibMath/Function.hh>
+#include <LibMath/Interval.hh>
+#include <LibMath/Polynomial.hh>
+#include <ostream>
+#include <stdexcept>
 #include <utility>
 #include <vector>
-
-#include "Interval.hh"
-#include "Polynomial.hh"
 
 namespace Uni
 {
 
-class Spline
+class Spline : public Function
 {
  public:
   using IntervalPolynomial = std::pair<Interval, Polynomial>;
@@ -23,7 +25,7 @@ class Spline
   {
   }
 
-  double operator()(double x) const
+  double operator()(double x) const override
   {
     for (const auto& [interval, polynomial] : m_polynomials)
     {
@@ -33,8 +35,7 @@ class Spline
       }
     }
 
-    // FIXME: throw an exception
-    return 0;
+    throw std::runtime_error{"x does not match any interval"};
   }
 
   const std::vector<IntervalPolynomial>& get_polynomials() const
@@ -45,5 +46,7 @@ class Spline
  private:
   std::vector<IntervalPolynomial> m_polynomials;
 };
+
+std::ostream& operator<<(std::ostream& out, const Spline& spline);
 
 }  // namespace Uni

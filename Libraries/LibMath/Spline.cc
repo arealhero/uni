@@ -1,0 +1,16 @@
+#include <LibMath/Spline.hh>
+
+namespace Uni
+{
+
+std::ostream& operator<<(std::ostream& out, const Spline& spline)
+{
+  for (const auto& [interval, polynomial] : spline.get_polynomials())
+  {
+    out << polynomial << '{' << interval.left << " <= x <= " << interval.right
+        << "}\n";
+  }
+  return out;
+}
+
+}  // namespace Uni
