@@ -164,7 +164,7 @@ class Matrix
 
   constexpr void swap_rows(std::size_t i, std::size_t j)
   {
-    assert(i < rows() && j < cols());
+    assert(i < rows() && j < rows());
 
     if (i == j)
       return;
