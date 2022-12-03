@@ -40,7 +40,7 @@ void print_table(std::shared_ptr<Uni::PolynomialInterpolator> interpolation,
     auto linear_generator =
         std::make_shared<Uni::LinearGenerator<double>>(a, b, n);
     auto optimal_generator =
-        std::make_shared<Uni::OptimalGeneartor<double>>(a, b, n);
+        std::make_shared<Uni::OptimalGenerator<double>>(a, b, n);
 
     std::vector<Uni::Point> linear_points;
     linear_points.reserve(n);

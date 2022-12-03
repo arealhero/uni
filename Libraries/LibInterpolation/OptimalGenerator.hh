@@ -8,7 +8,7 @@ namespace Uni
 {
 
 template <typename ValueType = double>
-class OptimalGeneartor : public SequenceGenerator<ValueType>
+class OptimalGenerator : public SequenceGenerator<ValueType>
 {
  public:
   using SequenceGenerator<ValueType>::SequenceGenerator;
