@@ -19,55 +19,61 @@ Spline CubicSplineInterpolator::operator()(std::vector<Point> const& points)
   std::vector<Spline::IntervalPolynomial> polynomials;
   polynomials.reserve(N);
 
-  Matrix X = Matrix::zero(3 * N);
-  Matrix y = Matrix::zero(3 * N, 1);
-
-  for (std::size_t block = 0; block < N; ++block)
+  auto H = Matrix::zero(N - 1);
+  auto gamma = Matrix::zero(N - 1, 1);
+  for (std::size_t i = 0; i < N - 1; ++i)
   {
-    const auto row = 2 * block;
-    const auto col = 3 * block;
+    const auto [x_prev, y_prev] = points.at(i);
+    const auto [x_current, y_current] = points.at(i + 1);
+    const auto [x_next, y_next] = points.at(i + 2);
 
-    const auto [left_x, left_y] = points.at(block);
-    const auto [right_x, right_y] = points.at(block + 1);
+    const auto h_prev = x_current - x_prev;
+    const auto h_next = x_next - x_current;
 
-    X.at(row, col) = left_x * left_x;
-    X.at(row, col + 1) = left_x;
-    X.at(row, col + 2) = 1.0;
-    y.at(row) = left_y;
+    if (i != 0)
+      H.at(i, i - 1) = h_prev;
+    H.at(i, i) = 2 * (h_prev + h_next);
+    if (i != N - 2)
+      H.at(i, i + 1) = h_next;
 
-    X.at(row + 1, col) = right_x * right_x;
-    X.at(row + 1, col + 1) = right_x;
-    X.at(row + 1, col + 2) = 1.0;
-    y.at(row + 1) = right_y;
+    gamma.at(i) =
+        6 * ((y_next - y_current) / h_next - (y_current - y_prev) / h_prev);
   }
-
-  for (std::size_t block = 0; block < N - 1; ++block)
-  {
-    const auto row = 2 * N + block;
-    const auto col = 3 * block;
-
-    const auto x = points.at(block + 1).x;
-
-    X.at(row, col) = 2.0 * x;
-    X.at(row, col + 1) = 1.0;
-
-    X.at(row, col + 3) = -2.0 * x;
-    X.at(row, col + 4) = -1.0;
-  }
-
-  X.at(3 * N - 1, 3 * N - 3) = 2.0 * points.at(N).x;
-  X.at(3 * N - 1, 3 * N - 2) = 1.0;
-  y.at(3 * N - 1) = d;
 
   auto solver = GaussSolver{};
-  auto a = solver.solve(X, y);
+  auto ypp_partial = solver.solve(H, gamma);
+
+  auto ypp = Matrix::zero(N + 1, 1);
+  for (std::size_t i = 0; i < N - 1; ++i)
+  {
+    ypp.at(i + 1) = ypp_partial.at(i);
+  }
+
+  auto yp = Matrix::zero(N, 1);
+  for (std::size_t i = 0; i < N; ++i)
+  {
+    const auto [x, y] = points.at(i);
+    const auto [x_next, y_next] = points.at(i + 1);
+    const auto h = x_next - x;
+    yp.at(i) =
+        (y_next - y) / h - ypp.at(i + 1) * h / 6.0 - ypp.at(i) * h / 3.0;
+  }
 
   for (std::size_t i = 0; i < N; ++i)
   {
-    const auto index = 3 * i;
-    const auto interval = Interval{points.at(i).x, points.at(i + 1).x};
-    const auto polynomial =
-        Polynomial{a.at(index + 2), a.at(index + 1), a.at(index)};
+    const auto [x_i, y_i] = points.at(i);
+    const auto x_next = points.at(i + 1).x;
+    const auto interval = Interval{x_i, x_next};
+
+    const auto term = Polynomial{-x_i, 1.0};
+    // clang-format off
+    const auto polynomial = Polynomial{y_i}
+                            + yp.at(i) * term
+                            + ypp.at(i) / 2.0 * term * term
+                            + (ypp.at(i + 1) - ypp.at(i)) / (6 * (x_next - x_i))
+                              * term * term * term;
+    // clang-format on
+
     polynomials.push_back({interval, polynomial});
   }
 

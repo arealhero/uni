@@ -1,6 +1,7 @@
 set(SOURCES
   Polynomial/Lagrange.cc
   Polynomial/Newton.cc
+  Spline/Cubic.cc
   Spline/Linear.cc
   Spline/Quadratic.cc
 )

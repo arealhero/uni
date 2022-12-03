@@ -5,7 +5,7 @@
 #include <vector>
 
 // FIXME: implement in Polynomial::operator==
-void assert_equal(const Uni::Polynomial& lhs, const Uni::Polynomial& rhs)
+inline void assert_equal(const Uni::Polynomial& lhs, const Uni::Polynomial& rhs)
 {
   ASSERT_EQ(lhs.degree(), rhs.degree());
   for (std::size_t i = 0; i < lhs.degree(); ++i)

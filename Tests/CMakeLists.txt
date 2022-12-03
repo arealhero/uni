@@ -3,6 +3,7 @@ include(GoogleTest)
 enable_testing()
 
 add_executable(Tests
+  LibInterpolation/Spline/Cubic.specs.cc
   LibInterpolation/Spline/Linear.specs.cc
   LibInterpolation/Spline/Quadratic.specs.cc
   LibMath/Polynomial.specs.cc

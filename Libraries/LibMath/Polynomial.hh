@@ -138,6 +138,7 @@ class Polynomial
 Polynomial operator*(double number, const Polynomial& polynomial);
 Polynomial operator*(Polynomial lhs, const Polynomial& rhs);
 
+Polynomial operator+(Polynomial lhs, const Polynomial& rhs);
 bool operator==(const Polynomial& lhs, const Polynomial& rhs);
 
 std::ostream& operator<<(std::ostream& out, const Polynomial& polynomial);

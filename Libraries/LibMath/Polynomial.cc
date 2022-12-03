@@ -14,6 +14,11 @@ Polynomial operator*(Polynomial lhs, const Polynomial& rhs)
   return lhs *= rhs;
 }
 
+Polynomial operator+(Polynomial lhs, const Polynomial& rhs)
+{
+  return lhs += rhs;
+}
+
 bool operator==(const Polynomial& lhs, const Polynomial& rhs)
 {
   if (lhs.degree() != rhs.degree())
@@ -21,7 +26,7 @@ bool operator==(const Polynomial& lhs, const Polynomial& rhs)
 
   for (std::size_t i = 0; i < lhs.degree(); ++i)
   {
-    if (lhs.coeff(i) != rhs.coeff(i)) // FIXME: change to approximate equality
+    if (lhs.coeff(i) != rhs.coeff(i))  // FIXME: change to approximate equality
     {
       return false;
     }
