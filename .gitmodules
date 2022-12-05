@@ -1,6 +1,3 @@
 [submodule "Vendors/GTest"]
 	path = Vendors/GTest
 	url = git@github.com:google/googletest
-[submodule "Vendors/matplotlibcpp"]
-	path = Vendors/matplotlibcpp
-	url = git@github.com:lava/matplotlib-cpp.git
