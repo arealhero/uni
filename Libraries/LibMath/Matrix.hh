@@ -177,6 +177,8 @@ class Matrix
     }
   }
 
+  constexpr std::vector<value_type> get_data() const { return m_data; }
+
   constexpr std::optional<value_type> get_diagonal_dominance_factor() const
   {
     value_type min_factor = std::abs(at(0, 0));

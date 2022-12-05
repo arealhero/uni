@@ -22,7 +22,7 @@ class OptimalGenerator : public SequenceGenerator<ValueType>
 
     const auto cos = std::cos(pi * (2 * index + 1) / (2 * n));
 
-    return ((a - b) * cos + b - a) / 2;
+    return ((a - b) * cos + b + a) / 2;
   }
 };
 

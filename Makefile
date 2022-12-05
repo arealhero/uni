@@ -1,20 +1,24 @@
 GENERATOR := Ninja
 BUILD_TYPE ?= Debug
+BUILD_DIR := Build
 
 all: setup
-	@cmake --build Build --target Applications Libraries
+	@cmake --build $(BUILD_DIR) --target Applications Libraries
 
 apps: setup
-	@cmake --build Build --target Applications
+	@cmake --build $(BUILD_DIR) --target Applications
 
 libs: setup
-	@cmake --build Build --target Libraries
+	@cmake --build $(BUILD_DIR) --target Libraries
 
 tests: setup
-	@cmake --build Build --target Tests
-	@Build/Tests/Tests
+	@cmake --build $(BUILD_DIR) --target Tests
+	@$(BUILD_DIR)/Tests/Tests
 
 setup:
-	@cmake -S . -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B Build -G $(GENERATOR)
+	@cmake -S . -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B $(BUILD_DIR) -G $(GENERATOR)
+
+clear:
+	@$(RM) -r $(BUILD_DIR)
 
 .PHONY: all apps libs tests setup

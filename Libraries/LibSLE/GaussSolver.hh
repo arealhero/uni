@@ -1,7 +1,6 @@
 #pragma once
 
 #include <LibSLE/Solver.hh>
-
 #include <iostream>
 
 namespace Uni
@@ -17,7 +16,7 @@ class GaussSolver : public Solver
   [[nodiscard]] constexpr Matrix solve(
       const Matrix& A,
       const Matrix& b,
-      [[maybe_unused]] const double eps = DEFAULT_EPS) override
+      [[maybe_unused]] const double eps = DEFAULT_EPS) const override
   {
     auto A_copy = A;
     auto b_copy = b;
@@ -29,7 +28,7 @@ class GaussSolver : public Solver
   }
 
  private:
-  constexpr void down(Matrix& A, Matrix& b)
+  constexpr void down(Matrix& A, Matrix& b) const
   {
     for (std::size_t index = 0; index < A.size(); ++index)
     {
@@ -74,7 +73,7 @@ class GaussSolver : public Solver
     }
   }
 
-  constexpr void up(Matrix& A, Matrix& b)
+  constexpr void up(Matrix& A, Matrix& b) const
   {
     for (std::size_t index = A.size() - 1; index != 0; --index)
     {

@@ -18,6 +18,10 @@ Polynomial operator+(Polynomial lhs, const Polynomial& rhs)
 {
   return lhs += rhs;
 }
+Polynomial operator-(Polynomial lhs, const Polynomial& rhs)
+{
+  return lhs -= rhs;
+}
 
 bool operator==(const Polynomial& lhs, const Polynomial& rhs)
 {

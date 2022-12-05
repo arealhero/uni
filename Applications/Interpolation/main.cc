@@ -67,8 +67,8 @@ void print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
 
     auto linear_polynomial = (*interpolator)(linear_points);
     auto linear_max = calc_max(linear_polynomial,
-                               linear_points.front().x + EPS,
-                               linear_points.back().x - EPS);
+                               linear_points.front().x,
+                               linear_points.back().x);
 
     auto optimal_polynomial = (*interpolator)(optimal_points);
     auto optimal_max = calc_max(optimal_polynomial,

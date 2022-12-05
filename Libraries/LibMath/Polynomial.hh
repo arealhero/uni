@@ -12,12 +12,19 @@ class Polynomial : public Function
 {
  public:
   Polynomial() = default;
-  Polynomial(double number) : m_coeffs(1, number) {}
-  Polynomial(const std::vector<double>& coeffs) : m_coeffs(coeffs) {}
-  Polynomial(const std::initializer_list<double>& coeffs) : m_coeffs(coeffs) {}
+  Polynomial(double number) : m_coeffs(1, number) { shrink_to_fit(); }
+  Polynomial(const std::vector<double>& coeffs) : m_coeffs(coeffs)
+  {
+    shrink_to_fit();
+  }
+  Polynomial(const std::initializer_list<double>& coeffs) : m_coeffs(coeffs)
+  {
+    shrink_to_fit();
+  }
   Polynomial(std::initializer_list<double>&& coeffs)
       : m_coeffs(std::move(coeffs))
   {
+    shrink_to_fit();
   }
 
   double& coeff(std::size_t i) { return m_coeffs.at(i); }
@@ -92,6 +99,8 @@ class Polynomial : public Function
   {
     for (auto& coeff : m_coeffs)
       coeff *= number;
+
+    shrink_to_fit();
     return *this;
   }
   Polynomial& operator*=(const Polynomial& other)
@@ -113,12 +122,12 @@ class Polynomial : public Function
     return *this;
   }
 
-  void shrink_to_fit()
+  void shrink_to_fit(const double error = 1e-9)
   {
     if (degree() == 0)
       return;
     std::size_t i = m_coeffs.size() - 1;
-    while (i > 0 && m_coeffs[i] == 0)
+    while (i > 0 && std::abs(m_coeffs[i]) < error)
     {
       m_coeffs.pop_back();
       --i;
@@ -140,6 +149,7 @@ Polynomial operator*(double number, const Polynomial& polynomial);
 Polynomial operator*(Polynomial lhs, const Polynomial& rhs);
 
 Polynomial operator+(Polynomial lhs, const Polynomial& rhs);
+Polynomial operator-(Polynomial lhs, const Polynomial& rhs);
 bool operator==(const Polynomial& lhs, const Polynomial& rhs);
 
 std::ostream& operator<<(std::ostream& out, const Polynomial& polynomial);

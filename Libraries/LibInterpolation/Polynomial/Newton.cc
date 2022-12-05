@@ -40,7 +40,7 @@ Polynomial NewtonInterpolator::operator()(const std::vector<Point>& points)
     Polynomial term(1.0);
     for (std::size_t i = 0; i < k; ++i)
     {
-      auto x_i = points.at(i).x;
+      const auto x_i = points.at(i).x;
       term *= Polynomial({-x_i, 1.0});
     }
 
