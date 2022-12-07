@@ -14,7 +14,6 @@ Spline CubicSplineInterpolator::operator()(std::vector<Point> const& points)
   assert(points.size() > 1);
 
   const auto N = points.size() - 1;
-  const double d = 0.0;
 
   std::vector<Spline::IntervalPolynomial> polynomials;
   polynomials.reserve(N);
