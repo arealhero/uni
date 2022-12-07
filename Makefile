@@ -1,6 +1,8 @@
 GENERATOR := Ninja
-BUILD_TYPE ?= Debug
 BUILD_DIR := Build
+
+BUILD_TYPE ?= Debug
+TOOLCHAIN_FILE ?= Meta/CMake/Toolchains/clang.cmake
 
 all: setup
 	@cmake --build $(BUILD_DIR) --target Applications Libraries
@@ -16,9 +18,9 @@ tests: setup
 	@$(BUILD_DIR)/Tests/Tests
 
 setup:
-	@cmake -S . -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B $(BUILD_DIR) -G $(GENERATOR)
+	@cmake -S . -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN_FILE) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B $(BUILD_DIR) -G $(GENERATOR)
 
-clear:
+clean:
 	@$(RM) -r $(BUILD_DIR)
 
 .PHONY: all apps libs tests setup
