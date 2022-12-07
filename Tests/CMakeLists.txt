@@ -8,6 +8,7 @@ add_executable(Tests
   LibInterpolation/Spline/Linear.specs.cc
   LibInterpolation/Spline/Quadratic.specs.cc
   LibMath/Polynomial.specs.cc
+  LibOptimization/Scheduling/OpenShop.specs.cc
   LibSLE/GaussSolver.specs.cc
   LibStatistics/Average.specs.cc
 )
