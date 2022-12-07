@@ -11,11 +11,13 @@ set(CMAKE_INSTALL_PREFIX Dest)
 set(CMAKE_INSTALL_INCLUDEDIR include)
 set(CMAKE_INSTALL_LIBDIR lib)
 
-include (utils)
-
-include_directories (Libraries)
-
 add_subdirectory (Vendors)
+
+include (utils)
+include (compile_options)
+
+include_directories (.)
+include_directories (Libraries)
 
 add_subdirectory (Libraries)
 add_subdirectory (Applications)
