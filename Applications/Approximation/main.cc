@@ -39,7 +39,7 @@ std::vector<double> generate_approximations(const double x)
 }
 
 double calculate_total_error(const Uni::Polynomial& polynomial,
-                               const std::vector<Uni::Point>& points)
+                             const std::vector<Uni::Point>& points)
 {
   double total_error = 0;
   for (const auto& [x, y] : points)
