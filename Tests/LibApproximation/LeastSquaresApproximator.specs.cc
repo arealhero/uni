@@ -24,12 +24,12 @@ TEST(LeastSquaresApproximator, NormalEquations_SimpleExample)
       {3.0, 1.0},
   };
 
-  const auto approximator = Uni::LeastSquaresApproximator{};
   const auto type =
       Uni::LeastSquaresApproximator::GeneratorType::NormalEquations;
-  const auto constant = approximator(points, 0, type);
-  const auto linear = approximator(points, 1, type);
-  const auto quadratic = approximator(points, 2, type);
+  const auto approximator = Uni::LeastSquaresApproximator{type};
+  const auto constant = approximator(points, 0);
+  const auto linear = approximator(points, 1);
+  const auto quadratic = approximator(points, 2);
 
   assert_equal(constant, Uni::Polynomial{1.0 / 3.0});
   assert_equal(linear, Uni::Polynomial{1.0 / 3.0});
@@ -44,12 +44,12 @@ TEST(LeastSquaresApproximator, OrthogonalPolynomials_SimpleExample)
       {3.0, 1.0},
   };
 
-  const auto approximator = Uni::LeastSquaresApproximator{};
   const auto type =
       Uni::LeastSquaresApproximator::GeneratorType::OrthogonalPolynomials;
-  const auto constant = approximator(points, 0, type);
-  const auto linear = approximator(points, 1, type);
-  const auto quadratic = approximator(points, 2, type);
+  const auto approximator = Uni::LeastSquaresApproximator{type};
+  const auto constant = approximator(points, 0);
+  const auto linear = approximator(points, 1);
+  const auto quadratic = approximator(points, 2);
 
   assert_equal(constant, Uni::Polynomial{1.0 / 3.0});
   assert_equal(linear, Uni::Polynomial{1.0 / 3.0});
