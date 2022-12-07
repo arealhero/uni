@@ -9,7 +9,7 @@ add_executable(Tests
   LibInterpolation/Spline/Quadratic.specs.cc
   LibMath/Polynomial.specs.cc
   LibSLE/GaussSolver.specs.cc
-  LibStatistic/Average.specs.cc
+  LibStatistics/Average.specs.cc
 )
 
 target_link_libraries(Tests

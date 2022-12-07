@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <LibStatistic/Average.hh>
+#include <LibStatistics/Average.hh>
 #include <vector>
 
 TEST(Average, SimpleExample)
