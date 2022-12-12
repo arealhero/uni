@@ -7,6 +7,9 @@ TOOLCHAIN_FILE ?= Meta/CMake/Toolchains/clang.cmake
 all: setup
 	@cmake --build $(BUILD_DIR) --target Applications Libraries
 
+docs: setup
+	@cmake --build $(BUILD_DIR) --target Latex
+
 apps: setup
 	@cmake --build $(BUILD_DIR) --target Applications
 
@@ -23,4 +26,4 @@ setup:
 clean:
 	@$(RM) -r $(BUILD_DIR)
 
-.PHONY: all apps libs tests setup
+.PHONY: all docs apps libs tests setup

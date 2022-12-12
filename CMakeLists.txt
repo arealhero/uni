@@ -22,3 +22,6 @@ include_directories (Libraries)
 add_subdirectory (Libraries)
 add_subdirectory (Applications)
 add_subdirectory (Tests)
+
+include (UseLATEX)
+add_subdirectory (Latex)

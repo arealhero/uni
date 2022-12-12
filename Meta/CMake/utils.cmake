@@ -69,3 +69,19 @@ if (NOT COMMAND uni_bin)
     uni_generated_sources(${target_name})
   endfunction()
 endif()
+
+if (NOT COMMAND uni_latex)
+  function(uni_latex target_name)
+    list(APPEND UNI_LATEX_COMMAND ${SOURCES})
+
+    if (DEFINED BIBLATEX_FILES)
+      list(APPEND UNI_LATEX_COMMAND BIBFILES ${BIBLATEX_FILES} USE_BIBLATEX)
+    endif()
+
+    if (DEFINED IMAGE_DIRS)
+      list(APPEND UNI_LATEX_COMMAND IMAGE_DIRS ${IMAGE_DIRS})
+    endif()
+
+    add_latex_document(${UNI_LATEX_COMMAND})
+  endfunction()
+endif()
