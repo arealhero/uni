@@ -30,10 +30,14 @@ Spline CubicSplineInterpolator::operator()(std::vector<Point> const& points)
     const auto h_next = x_next - x_current;
 
     if (i != 0)
+    {
       H.at(i, i - 1) = h_prev;
+    }
     H.at(i, i) = 2 * (h_prev + h_next);
     if (i != N - 2)
+    {
       H.at(i, i + 1) = h_next;
+    }
 
     gamma.at(i) =
         6 * ((y_next - y_current) / h_next - (y_current - y_prev) / h_prev);

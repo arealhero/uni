@@ -12,21 +12,19 @@ void plot_init();
 
 void suptitle(const std::string& title);
 
-void subplot(const std::size_t rows,
-             const std::size_t cols,
-             const std::size_t plot_number);
+void subplot(std::uint32_t rows, std::uint32_t cols, std::uint32_t plot_number);
 void legend();
 
 void plot(const std::vector<Point>& points);
 void plot(const Polynomial& polynomial,
-          const double left,
-          const double right,
-          const std::size_t detalization = 1000);
+          double left,
+          double right,
+          std::size_t detalization = 1000);
 void named_plot(const std::string& name,
                 const Polynomial& polynomial,
-                const double left,
-                const double right,
-                const std::size_t detalization = 1000);
+                double left,
+                double right,
+                std::size_t detalization = 1000);
 void show_plot();
 
-}  // namespace Uni
+}  // namespace Uni::Gui

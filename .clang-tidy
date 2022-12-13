@@ -1,0 +1,26 @@
+---
+# FIXME: readability-identifier-length: probably turn on later
+# FIXME: readability-magic-number: find out how to disable this
+#                                  check for special targets (like math libraries)
+Checks: >
+  -*,
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  concurrency-*,
+  misc-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+WarningsAsErrors: '*'
+HeaderFilterRegex: 'VS|Libraries'
+FormatStyle: none
+CheckOptions:
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: true
+  - key: readability-implicit-bool-conversion.AllowPointerConditions
+    value: false
+  - key: readability-function-cognitive-complexity.Threshold
+    value: 100 # FIXME: Lower this to 50 or even 30

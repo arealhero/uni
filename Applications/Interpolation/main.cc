@@ -22,12 +22,14 @@ double calc_max(const Uni::Function& function, double a, double b)
 {
   const double step = (b - a) / (M - 1);
   double max_diff = 0;
-  for (std::size_t i = 0; i < M; ++i)
+  for (std::uint32_t i = 0; i < M; ++i)
   {
     const double x = a + i * step;
     const double diff = std::abs(f(x) - function(x));
     if (diff > max_diff)
+    {
       max_diff = diff;
+    }
   }
   return max_diff;
 }
@@ -39,9 +41,8 @@ void print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
                  double b)
 {
   std::cout << "=== " << interpolator->get_name() << " ===\n";
-  std::cout << std::setw(10) << 'N' << std::setw(10) << 'M'
-            << std::setw(20) << "R" << std::setw(20) << "R opt" << std::setw(20)
-            << '\n';
+  std::cout << std::setw(10) << 'N' << std::setw(10) << 'M' << std::setw(20)
+            << "R" << std::setw(20) << "R opt" << std::setw(20) << '\n';
   for (auto n : {3, 5, 7, 10, 15, 20, 25, 30, 50, 75, 100, 200, 500, 1000})
   {
     auto linear_generator =
@@ -66,9 +67,8 @@ void print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
     }
 
     auto linear_polynomial = (*interpolator)(linear_points);
-    auto linear_max = calc_max(linear_polynomial,
-                               linear_points.front().x,
-                               linear_points.back().x);
+    auto linear_max = calc_max(
+        linear_polynomial, linear_points.front().x, linear_points.back().x);
 
     auto optimal_polynomial = (*interpolator)(optimal_points);
     auto optimal_max = calc_max(optimal_polynomial,

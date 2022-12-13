@@ -13,6 +13,10 @@ set(CMAKE_INSTALL_LIBDIR lib)
 
 add_subdirectory (Vendors)
 
+if (USE_CLANG_TIDY)
+  set(CMAKE_CXX_CLANG_TIDY clang-tidy -header-filter=.*,format-style=file;--use-color)
+endif()
+
 include (utils)
 include (compile_options)
 

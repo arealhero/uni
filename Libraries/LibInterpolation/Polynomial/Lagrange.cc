@@ -3,8 +3,7 @@
 namespace Uni
 {
 
-Polynomial LagrangeInterpolator::operator()(
-    const std::vector<Point>& points)
+Polynomial LagrangeInterpolator::operator()(const std::vector<Point>& points)
 {
   Polynomial result;
 
@@ -16,7 +15,9 @@ Polynomial LagrangeInterpolator::operator()(
     for (std::size_t i = 0; i < points.size(); ++i)
     {
       if (i == k)
+      {
         continue;
+      }
 
       auto x_i = points.at(i).x;
       term *= Polynomial({-x_i, 1.0});

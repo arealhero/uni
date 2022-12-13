@@ -27,7 +27,7 @@
  * A bunch of constants were removed in OpenCV 4 in favour of enum classes, so
  * define the ones we need here.
  */
-#  if CV_MAJOR_VERSION > 3
+#  if defined(WITH_OPENCV) && CV_MAJOR_VERSION > 3
 #    define CV_BGR2RGB cv::COLOR_BGR2RGB
 #    define CV_BGRA2RGBA cv::COLOR_BGRA2RGBA
 #  endif
@@ -1064,7 +1064,7 @@ template<typename NumericX, typename NumericY, typename NumericZ>
 bool scatter(const std::vector<NumericX>& x,
              const std::vector<NumericY>& y,
              const std::vector<NumericZ>& z,
-             const double s=1.0, // The marker size in points**2
+             [[maybe_unused]] const double s=1.0, // The marker size in points**2
              const std::map<std::string, std::string> & keywords = {},
              const long fig_number=0) {
   detail::_interpreter::get();

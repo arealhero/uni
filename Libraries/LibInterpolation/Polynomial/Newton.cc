@@ -23,9 +23,10 @@ Polynomial NewtonInterpolator::operator()(const std::vector<Point>& points)
       const std::size_t left = i;
       const std::size_t right = i + d;
 
-      const double left_x = points[left].x, right_x = points[right].x;
-      const double left_y = differences[index - N + d - 1],
-                   right_y = differences[index - N + d];
+      const double left_x = points[left].x;
+      const double right_x = points[right].x;
+      const double left_y = differences[index - N + d - 1];
+      const double right_y = differences[index - N + d];
 
       differences.emplace_back((left_y - right_y) / (left_x - right_x));
 

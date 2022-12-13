@@ -18,9 +18,9 @@ void suptitle(const std::string& title)
   plt::suptitle(title);
 }
 
-void subplot(const std::size_t rows,
-             const std::size_t cols,
-             const std::size_t plot_number)
+void subplot(const std::uint32_t rows,
+             const std::uint32_t cols,
+             const std::uint32_t plot_number)
 {
   plt::subplot(rows, cols, plot_number);
 }
@@ -94,4 +94,4 @@ void show_plot()
   plt::show();
 }
 
-}  // namespace Uni
+}  // namespace Uni::Gui

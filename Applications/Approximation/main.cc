@@ -1,4 +1,4 @@
-#include <LibApproximation/LeastSquaresApproximator.hh>
+#include <LibApproximation/LeastSquares.hh>
 #include <LibGUI/Plot.hh>
 #include <LibInterpolation/LinearGenerator.hh>
 #include <LibMath/Point.hh>
@@ -34,7 +34,9 @@ std::vector<double> generate_approximations(const double x)
 {
   std::vector<double> approximations(NUMBER_OF_APPROXIMATIONS);
   for (auto& approximation : approximations)
+  {
     approximation = f(x) + get_random_error();
+  }
   return approximations;
 }
 

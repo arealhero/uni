@@ -26,7 +26,9 @@ Polynomial operator-(Polynomial lhs, const Polynomial& rhs)
 bool operator==(const Polynomial& lhs, const Polynomial& rhs)
 {
   if (lhs.degree() != rhs.degree())
+  {
     return false;
+  }
 
   for (std::size_t i = 0; i < lhs.degree(); ++i)
   {
@@ -47,9 +49,13 @@ std::ostream& operator<<(std::ostream& out, const Polynomial& polynomial)
     if (i != 0)
     {
       if (coefficient < 0)
+      {
         out << "- ";
+      }
       else
+      {
         out << "+ ";
+      }
       out << std::abs(coefficient);
     }
     else
@@ -58,7 +64,9 @@ std::ostream& operator<<(std::ostream& out, const Polynomial& polynomial)
     }
 
     if (i != 0)
+    {
       out << " x^{" << i << '}';
+    }
     out << ' ';
   }
   return out;
