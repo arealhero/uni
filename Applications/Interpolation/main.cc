@@ -11,14 +11,14 @@
 #include <iomanip>
 #include <iostream>
 
-double f(double x)
+auto f(double x) -> double
 {
   return x + std::log10(x / 5);
 }
 
 constexpr std::size_t M = 10000;
 
-double calc_max(const Uni::Function& function, double a, double b)
+auto calc_max(const Uni::Function& function, double a, double b) -> double
 {
   const double step = (b - a) / (M - 1);
   double max_diff = 0;
@@ -36,9 +36,9 @@ double calc_max(const Uni::Function& function, double a, double b)
 
 // FIXME: rename
 template <typename T>
-void print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
+auto print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
                  double a,
-                 double b)
+                 double b) -> void
 {
   std::cout << "=== " << interpolator->get_name() << " ===\n";
   std::cout << std::setw(10) << 'N' << std::setw(10) << 'M' << std::setw(20)
@@ -82,7 +82,7 @@ void print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
   }
 }
 
-int main()
+auto main() -> int
 {
   const double start = 0.1;
   const double end = 1.0;

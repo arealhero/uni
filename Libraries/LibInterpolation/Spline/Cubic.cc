@@ -9,7 +9,8 @@
 namespace Uni
 {
 
-Spline CubicSplineInterpolator::operator()(std::vector<Point> const& points)
+auto CubicSplineInterpolator::operator()(std::vector<Point> const& points)
+    -> Spline
 {
   assert(points.size() > 1);
 
@@ -77,10 +78,10 @@ Spline CubicSplineInterpolator::operator()(std::vector<Point> const& points)
                               * term * term * term;
     // clang-format on
 
-    polynomials.push_back({interval, polynomial});
+    polynomials.emplace_back(interval, polynomial);
   }
 
-  return Spline(polynomials);
+  return {polynomials};
 }
 
 }  // namespace Uni

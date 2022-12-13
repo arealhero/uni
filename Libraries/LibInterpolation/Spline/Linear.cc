@@ -9,7 +9,8 @@
 namespace Uni
 {
 
-Spline LinearSplineInterpolator::operator()(std::vector<Point> const& points)
+auto LinearSplineInterpolator::operator()(std::vector<Point> const& points)
+    -> Spline
 {
   assert(points.size() > 1);
 
@@ -41,10 +42,10 @@ Spline LinearSplineInterpolator::operator()(std::vector<Point> const& points)
   {
     const auto interval = Interval{points.at(i).x, points.at(i + 1).x};
     const auto polynomial = Polynomial{a.at(2 * i + 1), a.at(2 * i)};
-    polynomials.push_back({interval, polynomial});
+    polynomials.emplace_back(interval, polynomial);
   }
 
-  return Spline(polynomials);
+  return {polynomials};
 }
 
 }  // namespace Uni

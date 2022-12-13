@@ -9,8 +9,8 @@
 namespace Uni
 {
 
-Spline QuadraticSplineInterpolator::operator()(
-    std::vector<Point> const& points)
+auto QuadraticSplineInterpolator::operator()(std::vector<Point> const& points)
+    -> Spline
 {
   assert(points.size() > 1);
 
@@ -69,10 +69,10 @@ Spline QuadraticSplineInterpolator::operator()(
     const auto interval = Interval{points.at(i).x, points.at(i + 1).x};
     const auto polynomial =
         Polynomial{a.at(index + 2), a.at(index + 1), a.at(index)};
-    polynomials.push_back({interval, polynomial});
+    polynomials.emplace_back(interval, polynomial);
   }
 
-  return Spline(polynomials);
+  return {polynomials};
 }
 
 }  // namespace Uni

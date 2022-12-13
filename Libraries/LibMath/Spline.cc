@@ -3,7 +3,7 @@
 namespace Uni
 {
 
-std::ostream& operator<<(std::ostream& out, const Spline& spline)
+auto operator<<(std::ostream& out, const Spline& spline) -> std::ostream&
 {
   for (const auto& [interval, polynomial] : spline.get_polynomials())
   {

@@ -3,7 +3,7 @@
 namespace Uni
 {
 
-std::ostream& operator<<(std::ostream& out, const Matrix& matrix)
+auto operator<<(std::ostream& out, const Matrix& matrix) -> std::ostream&
 {
   for (std::size_t i = 0; i < matrix.rows(); ++i)
   {

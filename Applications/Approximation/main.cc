@@ -16,12 +16,12 @@ constexpr const std::size_t NUMBER_OF_UNIQUE_XS = 100;
 constexpr const std::size_t NUMBER_OF_APPROXIMATIONS = 3;
 constexpr const double APPROXIMATION_ERROR = 0.1;
 
-double f(const double x)
+auto f(const double x) -> double
 {
   return x * std::sqrt(x + 2.0);
 }
 
-double get_random_error()
+auto get_random_error() -> double
 {
   static std::random_device rd;
   static std::mt19937 gen(rd());
@@ -30,7 +30,7 @@ double get_random_error()
   return dis(gen);
 }
 
-std::vector<double> generate_approximations(const double x)
+auto generate_approximations(const double x) -> std::vector<double>
 {
   std::vector<double> approximations(NUMBER_OF_APPROXIMATIONS);
   for (auto& approximation : approximations)
@@ -40,8 +40,8 @@ std::vector<double> generate_approximations(const double x)
   return approximations;
 }
 
-double calculate_total_error(const Uni::Polynomial& polynomial,
-                             const std::vector<Uni::Point>& points)
+auto calculate_total_error(const Uni::Polynomial& polynomial,
+                           const std::vector<Uni::Point>& points) -> double
 {
   double total_error = 0;
   for (const auto& [x, y] : points)
@@ -52,7 +52,7 @@ double calculate_total_error(const Uni::Polynomial& polynomial,
   return total_error;
 }
 
-void print_table(const std::vector<Uni::Point>& points)
+auto print_table(const std::vector<Uni::Point>& points) -> void
 {
   const auto normal_equations_approximator = Uni::LeastSquaresApproximator{
       Uni::LeastSquaresApproximator::GeneratorType::NormalEquations};
@@ -91,7 +91,7 @@ void print_table(const std::vector<Uni::Point>& points)
   }
 }
 
-int main()
+auto main() -> int
 {
   std::vector<Uni::Point> points;
   points.reserve(NUMBER_OF_UNIQUE_XS * NUMBER_OF_APPROXIMATIONS);

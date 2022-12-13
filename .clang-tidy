@@ -12,6 +12,7 @@ Checks: >
   performance-*,
   portability-*,
   readability-*,
+  modernize-*,
   -readability-identifier-length,
   -readability-magic-numbers,
 WarningsAsErrors: '*'

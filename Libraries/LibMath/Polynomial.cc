@@ -3,27 +3,27 @@
 namespace Uni
 {
 
-Polynomial operator*(double number, const Polynomial& polynomial)
+auto operator*(double number, const Polynomial& polynomial) -> Polynomial
 {
   Polynomial result = polynomial;
   return result *= number;
 }
 
-Polynomial operator*(Polynomial lhs, const Polynomial& rhs)
+auto operator*(Polynomial lhs, const Polynomial& rhs) -> Polynomial
 {
   return lhs *= rhs;
 }
 
-Polynomial operator+(Polynomial lhs, const Polynomial& rhs)
+auto operator+(Polynomial lhs, const Polynomial& rhs) -> Polynomial
 {
   return lhs += rhs;
 }
-Polynomial operator-(Polynomial lhs, const Polynomial& rhs)
+auto operator-(Polynomial lhs, const Polynomial& rhs) -> Polynomial
 {
   return lhs -= rhs;
 }
 
-bool operator==(const Polynomial& lhs, const Polynomial& rhs)
+auto operator==(const Polynomial& lhs, const Polynomial& rhs) -> bool
 {
   if (lhs.degree() != rhs.degree())
   {
@@ -41,7 +41,8 @@ bool operator==(const Polynomial& lhs, const Polynomial& rhs)
   return true;
 }
 
-std::ostream& operator<<(std::ostream& out, const Polynomial& polynomial)
+auto operator<<(std::ostream& out, const Polynomial& polynomial)
+    -> std::ostream&
 {
   for (std::size_t i = 0; i <= polynomial.degree(); ++i)
   {
