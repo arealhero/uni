@@ -22,12 +22,12 @@ struct Timespan
   Time start;
   Time end;
 
-  constexpr bool contains(const Timespan& other) const
+  constexpr auto contains(const Timespan& other) const -> bool
   {
     return start <= other.start && other.end <= end;
   }
 
-  constexpr bool overlaps_with(const Timespan& other) const
+  constexpr auto overlaps_with(const Timespan& other) const -> bool
   {
     return other.start <= end && start <= other.end;
   }
@@ -48,13 +48,14 @@ class Timeline
     Timespan<Time> timespan;
     std::optional<Task> task;
 
-    constexpr static Event make_downtime(const Timespan<Time>& timespan)
+    constexpr static auto make_downtime(const Timespan<Time>& timespan)
+        -> Event
     {
       return Event{timespan, downtime};
     }
   };
 
-  constexpr Time makespan() const { return m_makespan; }
+  constexpr auto makespan() const -> Time { return m_makespan; }
 
   constexpr void insert(const Subject& subject, const Event& event)
   {
@@ -67,7 +68,9 @@ class Timeline
       events.push_back(Event{{Time{0}, event.timespan.start}, downtime});
       events.push_back(event);
       if (event.timespan.end < makespan())
+      {
         events.push_back(Event{{event.timespan.end, makespan()}, downtime});
+      }
 
       m_events.insert({subject, events});
       return;
@@ -75,7 +78,9 @@ class Timeline
 
     // 1. Test if this timespan is free
     if (!is_free(subject, event.timespan))
+    {
       throw std::runtime_error{"Cannot insert event: timespan is not free"};
+    }
 
     // 2. Resize timeline to fit this timespan
     // FIXME: we can probably resize it prior to this moment
@@ -87,10 +92,14 @@ class Timeline
     // 3.1. Find the downtime event
     auto it = events.begin();
     while (it != events.end() && !(it->timespan.contains(event.timespan)))
+    {
       ++it;
+    }
 
     if (it == events.end())
+    {
       throw std::runtime_error{"Cannot find suitable downtime event"};
+    }
 
     auto existing_event = *it;
     const auto initial_timespan = existing_event.timespan;
@@ -119,7 +128,8 @@ class Timeline
     events.insert(it, events_to_insert.begin(), events_to_insert.end());
   }
 
-  constexpr const Vector<Event>& get_events_by(const Subject& subject) const
+  constexpr auto get_events_by(const Subject& subject) const
+      -> const Vector<Event>&
   {
     return m_events.at(subject);
   }
@@ -129,7 +139,9 @@ class Timeline
   {
     const auto current_end = makespan();
     if (timespan.end < current_end)
+    {
       return;
+    }
 
     m_makespan = timespan.end;
 
@@ -137,17 +149,23 @@ class Timeline
     {
       auto& last_event = events.back();
       if (last_event.task == downtime)
+      {
         last_event.timespan.end = timespan.end;
+      }
       else
+      {
         events.emplace_back({{current_end, timespan.end}, downtime});
+      }
     }
   }
 
-  constexpr bool is_free(const Subject& subject,
-                         const Timespan<Time>& timespan) const
+  constexpr auto is_free(const Subject& subject,
+                         const Timespan<Time>& timespan) const -> bool
   {
     if (timespan.start >= makespan())
+    {
       return true;
+    }
 
     const auto& events = get_events_by(subject);
     for (const auto& event : events)

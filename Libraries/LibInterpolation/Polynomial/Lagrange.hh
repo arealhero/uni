@@ -8,9 +8,13 @@ namespace Uni
 class LagrangeInterpolator final : public PolynomialInterpolator
 {
  public:
-  constexpr std::string get_name() const override { return "Lagrange"; }
+  [[nodiscard]] constexpr auto get_name() const -> std::string override
+  {
+    return "Lagrange";
+  }
 
-  Polynomial operator()(const std::vector<Point>& points) override;
+  [[nodiscard]] auto operator()(const std::vector<Point>& points)
+      -> Polynomial override;
 };
 
 }  // namespace Uni

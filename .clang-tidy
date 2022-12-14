@@ -15,8 +15,9 @@ Checks: >
   modernize-*,
   -readability-identifier-length,
   -readability-magic-numbers,
+  -bugprone-reserved-identifier,-cert-dcl37-c,-cert-dcl51-cpp,
 WarningsAsErrors: '*'
-HeaderFilterRegex: 'VS|Libraries'
+HeaderFilterRegex: '.*'
 FormatStyle: none
 CheckOptions:
   - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic

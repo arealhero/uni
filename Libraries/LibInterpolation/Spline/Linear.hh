@@ -8,12 +8,13 @@ namespace Uni
 class LinearSplineInterpolator : public SplineInterpolator
 {
  public:
-  std::string get_name() const override
+  [[nodiscard]] auto get_name() const -> std::string override
   {
     return std::string{"Linear spline (1,0)"};
   }
 
-  Spline operator()(std::vector<Point> const& points) override;
+  [[nodiscard]] auto operator()(std::vector<Point> const& points)
+      -> Spline override;
 };
 
 }  // namespace Uni

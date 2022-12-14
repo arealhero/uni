@@ -17,9 +17,12 @@ class SequenceIterator
   {
   }
 
-  ValueType operator*() const { return m_generator->get(n); }
+  [[nodiscard]] auto operator*() const -> ValueType
+  {
+    return m_generator->get(n);
+  }
 
-  SequenceIterator<ValueType>& operator++()
+  auto operator++() -> SequenceIterator<ValueType>&
   {
     ++n;
     return *this;
@@ -30,13 +33,13 @@ class SequenceIterator
   std::size_t n;
 
   template <typename V>
-  friend bool operator!=(const SequenceIterator<V>& lhs,
-                         const SequenceIterator<V>& rhs);
+  friend auto operator!=(const SequenceIterator<V>& lhs,
+                         const SequenceIterator<V>& rhs) -> bool;
 };
 
 template <typename ValueType>
-bool operator!=(const SequenceIterator<ValueType>& lhs,
-                const SequenceIterator<ValueType>& rhs)
+auto operator!=(const SequenceIterator<ValueType>& lhs,
+                const SequenceIterator<ValueType>& rhs) -> bool
 {
   return lhs.n != rhs.n;
 }
@@ -47,19 +50,22 @@ class SequenceGenerator
  public:
   using iterator = SequenceIterator<ValueType>;
 
+  // FIXME: remove NOLINT
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters,-warnings-as-errors)
   SequenceGenerator(ValueType a, ValueType b, std::size_t n) : a(a), b(b), n(n)
   {
   }
   virtual ~SequenceGenerator() = default;
 
-  virtual ValueType get(std::size_t index) const = 0;
+  [[nodiscard]] virtual auto get(std::size_t index) const -> ValueType = 0;
 
-  iterator begin() { return iterator(this, 0); }
-  iterator end() { return iterator(this, n); }
+  [[nodiscard]] auto begin() -> iterator { return iterator(this, 0); }
+  [[nodiscard]] auto end() -> iterator { return iterator(this, n); }
 
  protected:
-  ValueType a, b;
-  std::size_t n;
+  // FIXME: remove NOLINT
+  ValueType a, b;  // NOLINT(misc-non-private-member-variables-in-classes)
+  std::size_t n;   // NOLINT(misc-non-private-member-variables-in-classes)
 };
 
 }  // namespace Uni

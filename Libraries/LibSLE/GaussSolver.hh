@@ -9,14 +9,15 @@ namespace Uni
 class GaussSolver : public Solver
 {
  public:
-  [[nodiscard]] std::string get_name() const override
+  [[nodiscard]] auto get_name() const -> std::string override
   {
     return std::string{"Gauss"};
   }
-  [[nodiscard]] constexpr Matrix solve(
-      const Matrix& A,
+  // FIXME: remove NOLINT
+  [[nodiscard]] constexpr auto solve(
+      const Matrix& A,  // NOLINT(bugprone-easily-swappable-parameters,-warnings-as-errors)
       const Matrix& b,
-      [[maybe_unused]] const double eps = DEFAULT_EPS) const override
+      [[maybe_unused]] const double eps = DEFAULT_EPS) const -> Matrix override
   {
     auto A_copy = A;
     auto b_copy = b;
@@ -28,7 +29,7 @@ class GaussSolver : public Solver
   }
 
  private:
-  constexpr void down(Matrix& A, Matrix& b) const
+  constexpr static void down(Matrix& A, Matrix& b)
   {
     for (std::size_t index = 0; index < A.size(); ++index)
     {
@@ -56,7 +57,9 @@ class GaussSolver : public Solver
       auto divider = A.at(index, index);
 
       for (std::size_t col = index; col < A.size(); ++col)
+      {
         A.at(index, col) /= divider;
+      }
 
       b.at(index) /= divider;
 
@@ -66,14 +69,18 @@ class GaussSolver : public Solver
         auto factor = A.at(row, index);
 
         for (std::size_t col = index; col < A.size(); ++col)
+        {
           A.at(row, col) -= factor * A.at(index, col);
+        }
 
         b.at(row) -= factor * b.at(index);
       }
     }
   }
 
-  constexpr void up(Matrix& A, Matrix& b) const
+  // FIXME: remove NOLINT
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters,-warnings-as-errors)
+  constexpr static void up(Matrix& A, Matrix& b)
   {
     for (std::size_t index = A.size() - 1; index != 0; --index)
     {
@@ -82,7 +89,9 @@ class GaussSolver : public Solver
         auto factor = A.at(row - 1, index);
 
         for (std::size_t col = index; col < A.size(); ++col)
+        {
           A.at(row - 1, col) -= factor * A.at(index, col);
+        }
 
         b.at(row - 1) -= factor * b.at(index);
       }

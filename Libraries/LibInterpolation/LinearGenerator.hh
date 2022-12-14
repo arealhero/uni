@@ -11,12 +11,12 @@ class LinearGenerator : public SequenceGenerator<ValueType>
  public:
   using SequenceGenerator<ValueType>::SequenceGenerator;
 
-  ValueType get(std::size_t index) const override
+  [[nodiscard]] auto get(std::size_t index) const -> ValueType override
   {
     return this->a + index * step();
   }
 
-  constexpr ValueType step() const
+  [[nodiscard]] constexpr auto step() const -> ValueType
   {
     return (this->b - this->a) / (this->n - 1);
   }

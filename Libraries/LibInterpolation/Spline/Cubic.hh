@@ -8,12 +8,13 @@ namespace Uni
 class CubicSplineInterpolator : public SplineInterpolator
 {
  public:
-  std::string get_name() const override
+  [[nodiscard]] auto get_name() const -> std::string override
   {
     return std::string{"Cubic spline (3,2)"};
   }
 
-  Spline operator()(std::vector<Point> const& points) override;
+  [[nodiscard]] auto operator()(std::vector<Point> const& points)
+      -> Spline override;
 };
 
 }  // namespace Uni

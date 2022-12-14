@@ -15,95 +15,108 @@ namespace Uni
 class Matrix
 {
  public:
-  using value_type = double;
-  using size_type = std::size_t;
+  using Value = double;
+  using Size = std::size_t;
 
-  constexpr explicit Matrix(const size_type rows,
-                            const size_type cols,
-                            const value_type value = 0)
+  constexpr explicit Matrix(const Size rows,
+                            const Size cols,
+                            const Value value = 0)
       : m_data(rows * cols, value), m_rows(rows), m_cols(cols)
   {
   }
-  constexpr Matrix(const size_type rows,
-                   const size_type cols,
-                   const std::initializer_list<value_type>& numbers)
+  // FIXME: remove NOLINT
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters,-warnings-as-errors)
+  constexpr Matrix(const Size rows,
+                   const Size cols,
+                   const std::initializer_list<Value>& numbers)
       : m_data(numbers), m_rows(rows), m_cols(cols)
   {
     assert(m_data.size() == m_rows * m_cols);
   }
 
-  constexpr size_type rows() const { return m_rows; }
-  constexpr size_type cols() const { return m_cols; }
-  constexpr bool is_square() const { return rows() == cols(); }
+  [[nodiscard]] constexpr auto rows() const -> Size { return m_rows; }
+  [[nodiscard]] constexpr auto cols() const -> Size { return m_cols; }
+  [[nodiscard]] constexpr auto is_square() const -> bool
+  {
+    return rows() == cols();
+  }
 
-  constexpr size_type size() const
+  [[nodiscard]] constexpr auto size() const -> Size
   {
     assert(is_square());
     return m_rows;
   }
 
-  constexpr value_type& at(std::size_t i, std::size_t j)
+  [[nodiscard]] constexpr auto at(std::size_t i, std::size_t j) -> Value&
   {
     assert(i < rows() && j < cols());
     return m_data[i * cols() + j];
   }
-  constexpr const value_type& at(std::size_t i, std::size_t j) const
+  [[nodiscard]] constexpr auto at(std::size_t i, std::size_t j) const
+      -> const Value&
   {
     assert(i < rows() && j < cols());
     return m_data[i * cols() + j];
   }
 
-  constexpr value_type& at(std::size_t index)
+  [[nodiscard]] constexpr auto at(std::size_t index) -> Value&
   {
     assert((rows() == 1 || cols() == 1) && index < rows() * cols());
     return m_data[index];
   }
-  constexpr const value_type& at(std::size_t index) const
+  [[nodiscard]] constexpr auto at(std::size_t index) const -> const Value&
   {
     assert((rows() == 1 || cols() == 1) && index < rows() * cols());
     return m_data[index];
   }
 
-  constexpr auto& operator+=(const value_type number)
+  constexpr auto operator+=(const Value number) -> Matrix&
   {
     apply_all([number](auto& element) { element += number; });
     return *this;
   }
-  constexpr auto& operator-=(const value_type number)
+  constexpr auto operator-=(const Value number) -> Matrix&
   {
     apply_all([number](auto& element) { element -= number; });
     return *this;
   }
-  constexpr auto& operator*=(const value_type number)
+  constexpr auto operator*=(const Value number) -> Matrix&
   {
     apply_all([number](auto& element) { element *= number; });
     return *this;
   }
-  constexpr auto& operator/=(const value_type number)
+  constexpr auto operator/=(const Value number) -> Matrix&
   {
     apply_all([number](auto& element) { element /= number; });
     return *this;
   }
 
-  constexpr auto& operator+=(const Matrix& other)
+  constexpr auto operator+=(const Matrix& other) -> Matrix&
   {
     assert(rows() == other.rows() && cols() == other.cols());
 
     for (std::size_t row = 0; row < rows(); ++row)
+    {
       for (std::size_t col = 0; col < cols(); ++col)
+      {
         at(row, col) += other.at(row, col);
+      }
+    }
 
     return *this;
   }
-  constexpr auto& operator-=(const Matrix& other) { return *this += -other; }
-
-  constexpr value_type norm_1() const
+  constexpr auto operator-=(const Matrix& other) -> Matrix&
   {
-    value_type result{0};
+    return *this += -other;
+  }
+
+  [[nodiscard]] constexpr auto norm_1() const -> Value
+  {
+    Value result{0};
 
     for (std::size_t j = 0; j < cols(); ++j)
     {
-      value_type sum{0};
+      Value sum{0};
 
       for (std::size_t i = 0; i < rows(); ++i)
       {
@@ -119,13 +132,13 @@ class Matrix
     return result;
   }
 
-  constexpr value_type norm_2() const
+  [[nodiscard]] constexpr auto norm_2() const -> Value
   {
-    value_type result{0};
+    Value result{0};
 
     for (std::size_t j = 0; j < cols(); ++j)
     {
-      value_type sum{0};
+      Value sum{0};
 
       for (std::size_t i = 0; i < rows(); ++i)
       {
@@ -134,31 +147,37 @@ class Matrix
       }
 
       if (sum > result)
+      {
         result = sum;
+      }
     }
 
     return std::sqrt(result);
   }
 
-  constexpr Matrix operator-() const
+  [[nodiscard]] constexpr auto operator-() const -> Matrix
   {
     auto result = *this;
     result.apply_all([](auto& element) { element = -element; });
     return result;
   }
 
-  constexpr operator value_type() const
+  constexpr operator Value() const
   {
     assert(rows() == 1 && cols() == 1);
     return at(0, 0);
   }
 
-  constexpr Matrix T() const
+  [[nodiscard]] constexpr auto T() const -> Matrix
   {
     auto result = Matrix(cols(), rows());
     for (std::size_t row = 0; row < rows(); ++row)
+    {
       for (std::size_t col = 0; col < cols(); ++col)
+      {
         result.at(col, row) = at(row, col);
+      }
+    }
     return result;
   }
 
@@ -167,7 +186,9 @@ class Matrix
     assert(i < rows() && j < rows());
 
     if (i == j)
+    {
       return;
+    }
 
     for (std::size_t col = 0; col < cols(); ++col)
     {
@@ -177,74 +198,88 @@ class Matrix
     }
   }
 
-  constexpr std::vector<value_type> get_data() const { return m_data; }
-
-  constexpr std::optional<value_type> get_diagonal_dominance_factor() const
+  [[nodiscard]] constexpr auto get_data() const -> std::vector<Value>
   {
-    value_type min_factor = std::abs(at(0, 0));
+    return m_data;
+  }
+
+  [[nodiscard]] constexpr auto get_diagonal_dominance_factor() const
+      -> std::optional<Value>
+  {
+    Value min_factor = std::abs(at(0, 0));
 
     for (std::size_t row = 0; row < rows(); ++row)
     {
-      value_type row_factor = 0;
+      Value row_factor = 0;
       for (std::size_t col = 0; col < cols(); ++col)
       {
         auto current_value = std::abs(at(row, col));
         if (row == col)
+        {
           row_factor += current_value;
+        }
         else
+        {
           row_factor -= current_value;
+        }
       }
 
       if (row_factor < 0)
+      {
         return std::nullopt;
+      }
 
       if (row_factor < min_factor)
+      {
         min_factor = row_factor;
+      }
     }
 
     return min_factor;
   }
 
-  constexpr bool is_diagonally_dominant() const
+  [[nodiscard]] constexpr auto is_diagonally_dominant() const -> bool
   {
     return get_diagonal_dominance_factor().has_value();
   }
 
-  Matrix inv() const { throw new std::runtime_error{"Not implemented yet"}; }
+  [[nodiscard]] constexpr auto inv() const -> Matrix;
 
-  constexpr static Matrix zero(const size_type size)
+  constexpr static auto zero(const Size size) -> Matrix
   {
     return zero(size, size);
   }
-  constexpr static Matrix zero(const size_type rows, const size_type cols)
+  constexpr static auto zero(const Size rows, const Size cols) -> Matrix
   {
     return Matrix(rows, cols);
   }
 
-  constexpr static Matrix identity(const size_type size)
+  constexpr static auto identity(const Size size) -> Matrix
   {
     auto result = zero(size);
     for (std::size_t i = 0; i < size; ++i)
+    {
       result.at(i, i) = 1;
+    }
     return result;
   }
 
-  constexpr static Matrix e(const size_type size, const size_type i)
+  constexpr static auto e(const Size size, const Size i) -> Matrix
   {
     assert(i < size);
     auto result = zero(size);
     result.at(i) = 1;
     return result;
   }
-  constexpr static Matrix e_T(const size_type size, const size_type i)
+  constexpr static auto e_T(const Size size, const Size i) -> Matrix
   {
     return e(size, i).T();
   }
 
  private:
-  std::vector<value_type> m_data;
-  size_type m_rows;
-  size_type m_cols;
+  std::vector<Value> m_data;
+  Size m_rows;
+  Size m_cols;
 
   constexpr void apply_all(auto&& func)
   {
@@ -252,21 +287,23 @@ class Matrix
   }
 };
 
-constexpr Matrix operator+(const Matrix& lhs, const Matrix& rhs)
+constexpr auto operator+(const Matrix& lhs, const Matrix& rhs) -> Matrix
 {
   assert(lhs.rows() == rhs.rows() && lhs.cols() == rhs.cols());
   auto result = lhs;
   return result += rhs;
 }
-constexpr Matrix operator-(const Matrix& lhs, const Matrix& rhs)
+constexpr auto operator-(const Matrix& lhs, const Matrix& rhs) -> Matrix
 {
   return lhs + -rhs;
 }
 
-constexpr bool operator==(const Matrix& lhs, const Matrix& rhs)
+constexpr auto operator==(const Matrix& lhs, const Matrix& rhs) -> bool
 {
   if (lhs.rows() != rhs.rows() || lhs.cols() != rhs.cols())
+  {
     return false;
+  }
 
   for (std::size_t row = 0; row < lhs.rows(); ++row)
   {
@@ -282,27 +319,33 @@ constexpr bool operator==(const Matrix& lhs, const Matrix& rhs)
   return true;
 }
 
-constexpr Matrix operator*(const Matrix& lhs, const Matrix& rhs)
+constexpr auto operator*(const Matrix& lhs, const Matrix& rhs) -> Matrix
 {
   assert(lhs.cols() == rhs.rows());
   const auto K = lhs.cols();
 
   auto result = Matrix::zero(lhs.rows(), rhs.cols());
   for (std::size_t row = 0; row < lhs.rows(); ++row)
+  {
     for (std::size_t col = 0; col < rhs.cols(); ++col)
+    {
       for (std::size_t k = 0; k < K; ++k)
+      {
         result.at(row, col) += lhs.at(row, k) * rhs.at(k, col);
+      }
+    }
+  }
 
   return result;
 }
 
-constexpr Matrix operator*(const typename Matrix::value_type number,
-                           const Matrix& mat)
+constexpr auto operator*(const typename Matrix::Value number,
+                         const Matrix& mat) -> Matrix
 {
   auto result = mat;
   return result *= number;
 }
 
-std::ostream& operator<<(std::ostream& out, const Matrix& matrix);
+auto operator<<(std::ostream& out, const Matrix& matrix) -> std::ostream&;
 
 }  // namespace Uni

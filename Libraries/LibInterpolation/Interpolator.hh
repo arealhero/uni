@@ -13,8 +13,9 @@ class Interpolator
  public:
   virtual ~Interpolator() = default;
 
-  virtual std::string get_name() const = 0;
-  virtual InterpolationType operator()(std::vector<Point> const& points) = 0;
+  [[nodiscard]] virtual auto get_name() const -> std::string = 0;
+  [[nodiscard]] virtual auto operator()(std::vector<Point> const& points)
+      -> InterpolationType = 0;
 };
 
 }  // namespace Uni

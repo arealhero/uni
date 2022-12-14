@@ -8,7 +8,10 @@ struct Interval
   double left;
   double right;
 
-  constexpr bool contains(double x) const { return left <= x && x <= right; }
+  [[nodiscard]] constexpr auto contains(double x) const -> bool
+  {
+    return left <= x && x <= right;
+  }
 };
 
 }  // namespace Uni

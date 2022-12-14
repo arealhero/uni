@@ -3,7 +3,7 @@
 #include <LibApproximation/Approximator.hh>
 #include <LibMath/Matrix.hh>
 #include <LibSLE/GaussSolver.hh>
-#include <LibStatistics/Average.hh>
+#include <LibStatistics/Numbers.hh>
 #include <algorithm>
 #include <unordered_set>
 
@@ -34,10 +34,14 @@ class LeastSquaresApproximator : public Approximator
     }
   }
 
-  std::string get_name() const override { return {"Least squares"}; }
+  [[nodiscard]] auto get_name() const -> std::string override
+  {
+    return {"Least squares"};
+  }
 
-  constexpr Polynomial operator()(const std::vector<Point>& points,
-                                  const std::size_t degree) const override
+  [[nodiscard]] constexpr auto operator()(const std::vector<Point>& points,
+                                          const std::size_t degree) const
+      -> Polynomial override
   {
     return (*m_method)(points, degree);
   }
@@ -47,22 +51,21 @@ class LeastSquaresApproximator : public Approximator
                                 const std::size_t degree);
   Method m_method;
 
-  constexpr static Polynomial orthogonal_polynomials_method(
+  [[nodiscard]] constexpr static auto orthogonal_polynomials_method(
       const std::vector<Point>& points,
-      const std::size_t degree)
+      const std::size_t degree) -> Polynomial
   {
     const std::size_t M = points.size();
     const std::size_t N = degree;
 
     // Orthogonal polynomials generation
-    std::vector<double> xs(M);
+    VS::Vector<double> xs(M, 0.0);
     std::transform(points.begin(),
                    points.end(),
                    xs.begin(),
                    [](const Point& point) -> double { return point.x; });
 
-    std::vector<Polynomial> q = {Polynomial{1.0},
-                                 Polynomial{-arithmetic_average(xs), 1.0}};
+    std::vector<Polynomial> q = {Polynomial{1.0}, Polynomial{-mean(xs), 1.0}};
     q.reserve(N + 1);
 
     const auto generate_alpha = [&xs, &q](const std::size_t index) -> double
@@ -130,9 +133,9 @@ class LeastSquaresApproximator : public Approximator
     return result;
   }
 
-  constexpr static Polynomial normal_equations_method(
+  [[nodiscard]] constexpr static auto normal_equations_method(
       const std::vector<Point>& points,
-      const std::size_t degree)
+      const std::size_t degree) -> Polynomial
   {
     const std::size_t M = points.size();
     const std::size_t N = degree;
@@ -157,7 +160,7 @@ class LeastSquaresApproximator : public Approximator
     const auto a = solver.solve(E_t * E, E_t * f);
 
     assert(a.rows() == N + 1 && a.cols() == 1);
-    return Polynomial(a.get_data());
+    return {a.get_data()};
   }
 };
 

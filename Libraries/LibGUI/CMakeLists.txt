@@ -5,5 +5,5 @@ set(SOURCES
 )
 
 uni_lib (LibGUI gui)
-target_include_directories (LibGUI PRIVATE ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+target_include_directories (LibGUI SYSTEM PRIVATE ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
 target_link_libraries (LibGUI PRIVATE LibMath ${Python3_LIBRARIES})

@@ -8,13 +8,13 @@ namespace Uni
 class QuadraticSplineInterpolator : public SplineInterpolator
 {
  public:
-  std::string get_name() const override
+  [[nodiscard]] auto get_name() const -> std::string override
   {
     return std::string{"Quadratic spline (2,1)"};
   }
 
-  Spline operator()(std::vector<Point> const& points) override;
+  [[nodiscard]] auto operator()(std::vector<Point> const& points)
+      -> Spline override;
 };
 
 }  // namespace Uni
-

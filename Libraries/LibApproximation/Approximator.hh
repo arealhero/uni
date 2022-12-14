@@ -13,9 +13,10 @@ class Approximator
  public:
   virtual ~Approximator() = default;
 
-  virtual std::string get_name() const = 0;
-  virtual Polynomial operator()(const std::vector<Point>& points,
-                                const std::size_t degree) const = 0;
+  [[nodiscard]] virtual auto get_name() const -> std::string = 0;
+  [[nodiscard]] virtual auto operator()(const std::vector<Point>& points,
+                                        std::size_t degree) const
+      -> Polynomial = 0;
 };
 
 }  // namespace Uni

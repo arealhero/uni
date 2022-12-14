@@ -8,12 +8,13 @@ namespace Uni
 class NewtonInterpolator final : public PolynomialInterpolator
 {
  public:
-  constexpr std::string get_name() const override
+  [[nodiscard]] constexpr auto get_name() const -> std::string override
   {
     return std::string{"Newton"};
   }
 
-  Polynomial operator()(const std::vector<Point>& points) override;
+  [[nodiscard]] auto operator()(const std::vector<Point>& points)
+      -> Polynomial override;
 };
 
 }  // namespace Uni

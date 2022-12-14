@@ -8,7 +8,7 @@ class Function
  public:
   virtual ~Function() = default;
 
-  [[nodiscard]] virtual double operator()(double x) const = 0;
+  [[nodiscard]] virtual auto operator()(double x) const -> double = 0;
 };
 
 }  // namespace Uni

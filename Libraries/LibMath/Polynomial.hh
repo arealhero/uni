@@ -17,39 +17,52 @@ class Polynomial : public Function
   {
     shrink_to_fit();
   }
+  Polynomial(std::vector<double>&& coeffs) : m_coeffs(std::move(coeffs))
+  {
+    shrink_to_fit();
+  }
   Polynomial(const std::initializer_list<double>& coeffs) : m_coeffs(coeffs)
   {
     shrink_to_fit();
   }
-  Polynomial(std::initializer_list<double>&& coeffs)
-      : m_coeffs(std::move(coeffs))
+  Polynomial(std::initializer_list<double>&& coeffs) : m_coeffs(coeffs)
   {
     shrink_to_fit();
   }
 
-  double& coeff(std::size_t i) { return m_coeffs.at(i); }
-  const double& coeff(std::size_t i) const { return m_coeffs.at(i); }
-
-  double at(std::size_t i) const
+  [[nodiscard]] auto coeff(std::size_t i) -> double& { return m_coeffs.at(i); }
+  [[nodiscard]] auto coeff(std::size_t i) const -> const double&
   {
-    if (i <= degree())
-      return m_coeffs[i];
-    else
-      return 0;
+    return m_coeffs.at(i);
   }
 
-  std::size_t degree() const { return m_coeffs.size() - 1; }
+  [[nodiscard]] auto at(std::size_t i) const -> double
+  {
+    if (i <= degree())
+    {
+      return m_coeffs[i];
+    }
 
-  Polynomial d() const
+    return 0;
+  }
+
+  [[nodiscard]] auto degree() const -> std::size_t
+  {
+    return m_coeffs.size() - 1;
+  }
+
+  [[nodiscard]] auto d() const -> Polynomial
   {
     if (degree() == 0)
+    {
       return {0};
+    }
 
     std::vector<double> coeffs(m_coeffs.size() - 1, 0);
 
     for (std::size_t i = 0; i < coeffs.size(); ++i)
     {
-      coeffs[i] = m_coeffs[i + 1] * (i + 1);
+      coeffs[i] = m_coeffs[i + 1] * static_cast<double>(i + 1);
     }
 
     auto result = Polynomial{coeffs};
@@ -57,7 +70,7 @@ class Polynomial : public Function
     return result;
   }
 
-  constexpr double operator()(double x) const override
+  [[nodiscard]] constexpr auto operator()(double x) const -> double override
   {
     double result = 0;
     double power = 1;
@@ -71,7 +84,7 @@ class Polynomial : public Function
     return result;
   }
 
-  Polynomial& operator+=(const Polynomial& other)
+  auto operator+=(const Polynomial& other) -> Polynomial&
   {
     resize_if_needed(other.degree());
 
@@ -83,7 +96,7 @@ class Polynomial : public Function
     shrink_to_fit();
     return *this;
   }
-  Polynomial& operator-=(const Polynomial& other)
+  auto operator-=(const Polynomial& other) -> Polynomial&
   {
     resize_if_needed(other.degree());
 
@@ -95,15 +108,17 @@ class Polynomial : public Function
     shrink_to_fit();
     return *this;
   }
-  Polynomial& operator*=(double number)
+  auto operator*=(double number) -> Polynomial&
   {
     for (auto& coeff : m_coeffs)
+    {
       coeff *= number;
+    }
 
     shrink_to_fit();
     return *this;
   }
-  Polynomial& operator*=(const Polynomial& other)
+  auto operator*=(const Polynomial& other) -> Polynomial&
   {
     const auto max_degree = degree() + other.degree();
     std::vector<double> coeffs(max_degree + 1, 0.0);
@@ -125,7 +140,9 @@ class Polynomial : public Function
   void shrink_to_fit(const double error = 1e-9)
   {
     if (degree() == 0)
+    {
       return;
+    }
     std::size_t i = m_coeffs.size() - 1;
     while (i > 0 && std::abs(m_coeffs[i]) < error)
     {
@@ -138,20 +155,24 @@ class Polynomial : public Function
   void resize_if_needed(std::size_t new_degree)
   {
     if (degree() < new_degree)
+    {
       resize(new_degree);
+    }
   }
   void resize(std::size_t new_degree) { m_coeffs.resize(new_degree + 1); }
 
+  // FIXME: change std::vector to VS::Vector
   std::vector<double> m_coeffs = {0};
 };
 
-Polynomial operator*(double number, const Polynomial& polynomial);
-Polynomial operator*(Polynomial lhs, const Polynomial& rhs);
+auto operator*(double number, const Polynomial& polynomial) -> Polynomial;
+auto operator*(Polynomial lhs, const Polynomial& rhs) -> Polynomial;
 
-Polynomial operator+(Polynomial lhs, const Polynomial& rhs);
-Polynomial operator-(Polynomial lhs, const Polynomial& rhs);
-bool operator==(const Polynomial& lhs, const Polynomial& rhs);
+auto operator+(Polynomial lhs, const Polynomial& rhs) -> Polynomial;
+auto operator-(Polynomial lhs, const Polynomial& rhs) -> Polynomial;
+auto operator==(const Polynomial& lhs, const Polynomial& rhs) -> bool;
 
-std::ostream& operator<<(std::ostream& out, const Polynomial& polynomial);
+auto operator<<(std::ostream& out, const Polynomial& polynomial)
+    -> std::ostream&;
 
 }  // namespace Uni
