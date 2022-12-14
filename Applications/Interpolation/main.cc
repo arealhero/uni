@@ -1,3 +1,4 @@
+#include <LibGUI/Plot.hh>
 #include <LibInterpolation/LinearGenerator.hh>
 #include <LibInterpolation/OptimalGenerator.hh>
 #include <LibInterpolation/Polynomial/Lagrange.hh>
@@ -32,6 +33,24 @@ auto calc_max(const Uni::Function& function, double a, double b) -> double
     }
   }
   return max_diff;
+}
+
+void plot_error(const std::string& name,
+                const Uni::Function& function,
+                double a,
+                double b)
+{
+  auto points = std::vector<Uni::Point>{};
+
+  const double step = (b - a) / (M - 1);
+  for (std::uint32_t i = 0; i < M; ++i)
+  {
+    const double x = a + i * step;
+    const double diff = std::abs(f(x) - function(x));
+    points.push_back({x, diff});
+  }
+
+  Uni::Gui::named_plot(name, points);
 }
 
 // FIXME: rename
@@ -75,6 +94,11 @@ auto print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
                                 optimal_points.front().x + EPS,
                                 optimal_points.back().x - EPS);
 
+    if (n == 10)
+    {
+      plot_error(interpolator->get_name(), linear_polynomial, a, b);
+    }
+
     std::cout << std::fixed << std::setw(10) << n << std::setw(10) << M
               << std::setw(20) << std::setprecision(7) << std::scientific
               << linear_max << std::setw(20) << optimal_max << std::setw(20)
@@ -86,6 +110,8 @@ auto main() -> int
 {
   const double start = 0.1;
   const double end = 1.0;
+
+  Uni::Gui::plot_init();
 
   auto lagrange_interpolator = std::make_shared<Uni::LagrangeInterpolator>();
   auto newton_interpolator = std::make_shared<Uni::NewtonInterpolator>();
@@ -101,6 +127,9 @@ auto main() -> int
   print_table<Uni::Spline>(linear_spline_interpolator, start, end);
   print_table<Uni::Spline>(quadratic_spline_interpolator, start, end);
   print_table<Uni::Spline>(cubic_spline_interpolator, start, end);
+
+  Uni::Gui::legend();
+  Uni::Gui::show_plot();
 
   return 0;
 }

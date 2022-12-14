@@ -3,4 +3,4 @@ set(SOURCES
 )
 
 uni_bin(Interpolation)
-target_link_libraries(Interpolation PRIVATE LibMath LibInterpolation)
+target_link_libraries(Interpolation PRIVATE LibMath LibGUI LibInterpolation)

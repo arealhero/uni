@@ -89,6 +89,22 @@ void named_plot(const std::string& name,
   plt::named_plot(name, xs, ys);
 }
 
+void named_plot(const std::string& name, const std::vector<Point>& points)
+{
+  auto xs = std::vector<double>{};
+  auto ys = std::vector<double>{};
+  xs.reserve(points.size());
+  ys.reserve(points.size());
+
+  for (const auto& point : points)
+  {
+    xs.push_back(point.x);
+    ys.push_back(point.y);
+  }
+
+  plt::named_plot(name, xs, ys);
+}
+
 void show_plot()
 {
   plt::show();
