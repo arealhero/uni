@@ -3,6 +3,7 @@
 #include <LibInterpolation/LinearGenerator.hh>
 #include <LibMath/Point.hh>
 #include <cmath>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -52,7 +53,7 @@ auto calculate_total_error(const Uni::Polynomial& polynomial,
   return total_error;
 }
 
-auto print_table(const std::vector<Uni::Point>& points) -> void
+void print_table(const std::vector<Uni::Point>& points)
 {
   const auto normal_equations_approximator = Uni::LeastSquaresApproximator{
       Uni::LeastSquaresApproximator::GeneratorType::NormalEquations};
@@ -60,6 +61,8 @@ auto print_table(const std::vector<Uni::Point>& points) -> void
       Uni::LeastSquaresApproximator{
           Uni::LeastSquaresApproximator::GeneratorType::OrthogonalPolynomials};
 
+  std::cout << std::setw(4) << "N" << std::setw(20) << "Normal eq."
+            << std::setw(20) << "Orthogonal poly." << '\n';
   for (std::size_t degree = 0; degree < NUMBER_OF_UNIQUE_XS; ++degree)
   {
     const auto normal_equations_polynomial =
@@ -117,4 +120,6 @@ auto main() -> int
   {
     std::cout << "Caught exception: " << e.what() << '\n';
   }
+
+  return EXIT_SUCCESS;
 }

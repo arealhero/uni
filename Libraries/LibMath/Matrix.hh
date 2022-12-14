@@ -25,7 +25,7 @@ class Matrix
   {
   }
   // FIXME: remove NOLINT
-  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters,-warnings-as-errors)
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
   constexpr Matrix(const Size rows,
                    const Size cols,
                    const std::initializer_list<Value>& numbers)
@@ -264,6 +264,8 @@ class Matrix
     return result;
   }
 
+  // FIXME: remove NOLINT
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
   constexpr static auto e(const Size size, const Size i) -> Matrix
   {
     assert(i < size);
