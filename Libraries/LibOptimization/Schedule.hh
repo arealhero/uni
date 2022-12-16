@@ -52,6 +52,21 @@ class Schedule
       : m_machines(machines), m_jobs(jobs)
   {
   }
+  constexpr Schedule(const VS::Vector<Machine>&& machines,
+                     const VS::Vector<Job>& jobs)
+      : m_machines(std::move(machines)), m_jobs(jobs)
+  {
+  }
+  constexpr Schedule(const VS::Vector<Machine>& machines,
+                     const VS::Vector<Job>&& jobs)
+      : m_machines(machines), m_jobs(std::move(jobs))
+  {
+  }
+  constexpr Schedule(const VS::Vector<Machine>&& machines,
+                     const VS::Vector<Job>&& jobs)
+      : m_machines(std::move(machines)), m_jobs(std::move(jobs))
+  {
+  }
 
   constexpr void set_schedule_for_machine(
       const std::size_t machine_index,
@@ -60,14 +75,15 @@ class Schedule
     m_schedule[machine_index] = job_indices;
   }
 
-  constexpr VS::Vector<std::size_t> get_schedule_for_machine(
-      const std::size_t machine_index) const
+  [[nodiscard]] constexpr auto get_schedule_for_machine(
+      const std::size_t machine_index) const -> VS::Vector<std::size_t>
 
   {
     return m_schedule.at(machine_index);
   }
 
-  constexpr VS::Timeline<TimelineTraits> to_timeline() const
+  [[nodiscard]] constexpr auto to_timeline() const
+      -> VS::Timeline<TimelineTraits>
   {
     throw std::runtime_error{"Method not implemented."};
   }
@@ -98,8 +114,9 @@ class ScheduleBuilder
   using Job = typename Traits::Job;
   using Machine = typename Traits::Machine;
 
-  Schedule<Traits> make_schedule(const VS::Vector<Machine>& machines,
-                                 const VS::Vector<Job>& jobs) const
+  [[nodiscard]] auto make_schedule(const VS::Vector<Machine>& machines,
+                                   const VS::Vector<Job>& jobs) const
+      -> Schedule<Traits>
   {
     return BuilderTraits::make_schedule(machines, jobs);
   }
@@ -114,9 +131,9 @@ struct OpenShopTraits
   using Job = typename Traits::Job;
   using Machine = typename Traits::Machine;
 
-  constexpr static Schedule<Traits> make_schedule(
-      const VS::Vector<Machine>& machines,
-      const VS::Vector<Job>& jobs)
+  constexpr static auto make_schedule(const VS::Vector<Machine>& machines,
+                                      const VS::Vector<Job>& jobs)
+      -> Schedule<Traits>
   {
     // FIXME: assert that for every job the number of operations equals the
     // number of machines
@@ -130,9 +147,9 @@ struct OpenShopTraits
   }
 
  private:
-  constexpr static Schedule<Traits> make_schedule_for_2_machines(
+  constexpr static auto make_schedule_for_2_machines(
       const VS::Vector<Machine>& machines,
-      const VS::Vector<Job>& jobs)
+      const VS::Vector<Job>& jobs) -> Schedule<Traits>
   {
     assert(machines.size() == 2);
 
@@ -144,9 +161,13 @@ struct OpenShopTraits
       const auto& job = jobs.at(i);
       const auto& operations = job.operations;
       if (operations.at(0).processing_time <= operations.at(1).processing_time)
+      {
         first_type.push_back(i);
+      }
       else
+      {
         second_type.push_back(i);
+      }
     }
 
     const auto [first_type_index, first_type_value] =
@@ -208,13 +229,105 @@ struct OpenShopTraits
     };
 
     if (max_index == first_type.at(first_type_index))
+    {
       return first_type_case();
-    else
-      return second_type_case();
+    }
+
+    return second_type_case();
   }
 };
 
 template <ScheduleTraits Traits>
 using OpenShopBuilder = ScheduleBuilder<OpenShopTraits<Traits>>;
+
+template <ScheduleTraits UnderlyingTraits>
+struct JobShopTraits
+{
+ public:
+  using Traits = UnderlyingTraits;
+  using Time = typename Traits::Time;
+  using Job = typename Traits::Job;
+  using Machine = typename Traits::Machine;
+
+  [[nodiscard]] constexpr static auto make_schedule(
+      const VS::Vector<Machine>& machines,
+      const VS::Vector<Job>& jobs) -> Schedule<Traits>
+  {
+    // FIXME: assert that for every job the number of operations equals the
+    // number of machines
+
+    if (machines.size() == 2)
+    {
+      return johnsons_method(machines, jobs);
+    }
+
+    throw std::runtime_error{"Algorithm not implemented."};
+  }
+
+ private:
+  [[nodiscard]] constexpr static auto johnsons_method(
+      const VS::Vector<Machine>& machines,
+      const VS::Vector<Job>& jobs) -> Schedule<Traits>
+  {
+    assert(machines.size() == 2);
+    // FIXME: assert that every job has exactly 2 operations
+
+    struct Helper
+    {
+      Time minimum_time;
+      std::size_t operation_index;
+      std::size_t job_index;
+    };
+
+    std::size_t current_index = 0;
+    // FIXME: rename
+    VS::Vector<Helper> minimums = jobs.template map<Helper>(
+        [&current_index](const auto& job) -> Helper
+        {
+          const auto& first_time = job.operations.at(0).processing_time;
+          const auto& second_time = job.operations.at(1).processing_time;
+
+          if (first_time < second_time)
+          {
+            return {
+                first_time,
+                0,
+                current_index++,
+            };
+          }
+          return {
+              second_time,
+              1,
+              current_index++,
+          };
+        });
+
+    minimums.sort([](const auto& lhs, const auto& rhs) -> bool
+                  { return lhs.minimum_time < rhs.minimum_time; });
+
+    VS::Vector<std::size_t> job_indices(minimums.size(), {});
+    std::size_t left = 0;
+    std::size_t right = minimums.size() - 1;
+    for (const auto& element : minimums)
+    {
+      if (element.operation_index == 0)
+      {
+        job_indices.at(left++) = element.job_index;
+      }
+      else
+      {
+        job_indices.at(right--) = element.job_index;
+      }
+    }
+
+    auto schedule = Schedule<Traits>(machines, jobs);
+    schedule.set_schedule_for_machine(0, job_indices);
+    schedule.set_schedule_for_machine(1, job_indices);
+    return schedule;
+  }
+};
+
+template <ScheduleTraits Traits>
+using JobShopBuilder = ScheduleBuilder<JobShopTraits<Traits>>;
 
 }  // namespace Uni

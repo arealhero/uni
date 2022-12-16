@@ -18,14 +18,18 @@ template <VS::Arithmetic T>
 constexpr auto min(const VS::Vector<T>& numbers) -> T
 {
   assert(numbers.size() > 0);
-  return numbers.reduce(numbers.at(0), std::min);
+  return numbers.reduce(numbers.at(0),
+                        [](const T& lhs, const T& rhs) -> T
+                        { return lhs < rhs ? lhs : rhs; });
 }
 
 template <VS::Arithmetic T>
 constexpr auto max(const VS::Vector<T>& numbers) -> T
 {
   assert(numbers.size() > 0);
-  return numbers.reduce(numbers.at(0), std::max);
+  return numbers.reduce(numbers.at(0),
+                        [](const T& lhs, const T& rhs) -> T
+                        { return lhs > rhs ? lhs : rhs; });
 }
 
 }  // namespace Uni

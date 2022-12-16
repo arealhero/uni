@@ -1,7 +1,9 @@
 #pragma once
 
 #include <VS/Traits.hh>
+#include <VS/Types.hh>
 #include <algorithm>
+#include <cassert>
 #include <functional>
 #include <initializer_list>
 #include <numeric>
@@ -33,18 +35,20 @@ class Vector
   {
   }
 
+  // FIXME: test if every Args is convertible to vector
   template <typename... Args>
   constexpr static auto merge(Args&&... elements) -> Vector<ContainedType>
   {
     auto result = Vector<ContainedType>{};
 
     // FIXME: move this dirty hack somewhere else
-    // FIXME: remove NOLINT
-    // NOLINTNEXTLINE(modernize-avoid-c-arrays)
-    (void)(int[]){(result.push_back(elements), 0)...};
+    [](auto...) {
+    }((result.push_back(elements), 0)...);
 
     return result;
   }
+
+  auto get_std() -> auto& { return m_data; }
 
   constexpr void push_back(const Vector<ContainedType>& other)
   {
@@ -52,6 +56,14 @@ class Vector
     {
       m_data.push_back(element);
     }
+  }
+
+  template <typename... Args>
+  constexpr void insert(
+      const typename std::vector<ContainedType>::iterator& it,
+      Args&&... args)
+  {
+    m_data.insert(it, std::forward<Args>(args)...);
   }
 
   constexpr void push_back(const ContainedType& element)
@@ -62,6 +74,12 @@ class Vector
   constexpr void push_back(ContainedType&& element)
   {
     m_data.push_back(std::move(element));
+  }
+
+  template <typename... Args>
+  constexpr void emplace_back(Args&&... args)
+  {
+    m_data.emplace_back(std::forward<Args>(args)...);
   }
 
   constexpr void sort(auto&& comparator = std::greater<>{})
@@ -77,6 +95,15 @@ class Vector
       -> const ContainedType&
   {
     return m_data.at(index);
+  }
+
+  [[nodiscard]] constexpr auto back() const -> const ContainedType&
+  {
+    return m_data.back();
+  }
+  [[nodiscard]] constexpr auto back() -> ContainedType&
+  {
+    return m_data.back();
   }
 
   [[nodiscard]] constexpr auto find_max_element() const
@@ -99,6 +126,11 @@ class Vector
   }
 
   [[nodiscard]] constexpr auto size() const -> Size { return m_data.size(); }
+  [[nodiscard]] constexpr auto is_empty() const -> bool
+  {
+    return m_data.empty();
+  }
+
   constexpr void reserve(const Size size) { m_data.reserve(size); }
 
   [[nodiscard]] constexpr auto filter(auto&& function) const
@@ -128,10 +160,40 @@ class Vector
     return result;
   }
 
-  [[nodiscard]] constexpr auto reduce(ContainedType&& init,
-                                      auto&& function) const -> ContainedType
+  [[nodiscard]] constexpr auto reduce(
+      const ContainedType& init,
+      std::function<ContainedType(const ContainedType&,
+                                  const ContainedType&)>&& function) const
+      -> ContainedType
   {
     return std::reduce(m_data.begin(), m_data.end(), init, function);
+  }
+  [[nodiscard]] constexpr auto reduce(
+      ContainedType&& init,
+      std::function<ContainedType(const ContainedType&,
+                                  const ContainedType&)>&& function) const
+      -> ContainedType
+  {
+    return std::reduce(
+        m_data.begin(), m_data.end(), std::move(init), function);
+  }
+
+  [[nodiscard]] constexpr auto reduce_to_index(
+      std::function<bool(const ContainedType&, const ContainedType&)>&&
+          function) const -> VS::Index
+  {
+    assert(!is_empty());
+
+    VS::Index best_index = 0;
+    for (VS::Index i = 1; i < size(); ++i)
+    {
+      if (function(at(best_index), at(i)))
+      {
+        best_index = i;
+      }
+    }
+
+    return best_index;
   }
 
   [[nodiscard]] constexpr auto begin() { return m_data.begin(); }
@@ -141,7 +203,10 @@ class Vector
   [[nodiscard]] constexpr auto end() const { return m_data.end(); }
 
  private:
+  // FIXME: change to VS::Vector
   std::vector<ContainedType> m_data;
 };
+
+using Indices = Vector<Index>;
 
 }  // namespace VS

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <LibApproximation/LeastSquaresApproximator.hh>
+#include <LibApproximation/LeastSquares.hh>
 #include <LibMath/Point.hh>
 #include <vector>
 

@@ -1,5 +1,6 @@
 add_compile_options(-Wall)
 add_compile_options(-Wextra)
+add_compile_options(-Wpedantic)
 add_compile_options(-Wimplicit-fallthrough)
 add_compile_options(-Wmisleading-indentation)
 add_compile_options(-Wmissing-declarations)

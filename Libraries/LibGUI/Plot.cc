@@ -105,6 +105,13 @@ void named_plot(const std::string& name, const std::vector<Point>& points)
   plt::named_plot(name, xs, ys);
 }
 
+void named_plot(const std::string& name,
+                const std::vector<std::size_t>& xs,
+                const std::vector<std::size_t>& ys)
+{
+  plt::named_plot(name, xs, ys);
+}
+
 void show_plot()
 {
   plt::show();

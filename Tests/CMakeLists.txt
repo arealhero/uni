@@ -8,14 +8,13 @@ add_executable(Tests
   LibInterpolation/Spline/Linear.specs.cc
   LibInterpolation/Spline/Quadratic.specs.cc
   LibMath/Polynomial.specs.cc
-  LibOptimization/Scheduling/OpenShop.specs.cc
+  LibOptimization/Schedule.specs.cc
   LibSLE/GaussSolver.specs.cc
   LibStatistics/Average.specs.cc
 )
 
 target_link_libraries(Tests
   GTest::gtest_main
-  LibApproximation
   LibInterpolation
   LibMath
 )

@@ -1,17 +1,18 @@
 #include <gtest/gtest.h>
 
-#include <LibStatistics/Average.hh>
+#include <LibStatistics/Numbers.hh>
+#include <VS/Vector.hh>
 #include <vector>
 
 TEST(Average, SimpleExample)
 {
-  const std::vector<double> points{
+  const VS::Vector<double> points{
       1.0,
       2.0,
       3.0,
       4.0,
       5.0,
   };
-  const auto average = Uni::arithmetic_average(points);
+  const auto average = Uni::mean(points);
   ASSERT_DOUBLE_EQ(average, 3.0);
 }

@@ -1,8 +1,11 @@
 #pragma once
 
 #include <VS/Vector.hh>
+#include <algorithm>
+#include <iostream>
 #include <map>
 #include <optional>
+#include <sstream>
 #include <stdexcept>
 
 namespace VS
@@ -22,12 +25,13 @@ struct Timespan
   Time start;
   Time end;
 
-  constexpr auto contains(const Timespan& other) const -> bool
+  [[nodiscard]] constexpr auto contains(const Timespan& other) const -> bool
   {
     return start <= other.start && other.end <= end;
   }
 
-  constexpr auto overlaps_with(const Timespan& other) const -> bool
+  [[nodiscard]] constexpr auto overlaps_with(const Timespan& other) const
+      -> bool
   {
     return other.start <= end && start <= other.end;
   }
@@ -55,7 +59,7 @@ class Timeline
     }
   };
 
-  constexpr auto makespan() const -> Time { return m_makespan; }
+  [[nodiscard]] constexpr auto makespan() const -> Time { return m_makespan; }
 
   constexpr void insert(const Subject& subject, const Event& event)
   {
@@ -75,6 +79,8 @@ class Timeline
       m_events.insert({subject, events});
       return;
     }
+
+    resize_to_fit(event.timespan);
 
     // 1. Test if this timespan is free
     if (!is_free(subject, event.timespan))
@@ -114,7 +120,7 @@ class Timeline
     else
     {
       existing_event.task = event.task;
-      existing_event.end = event.timespan.end;
+      existing_event.timespan.end = event.timespan.end;
     }
 
     // 3.3. Optionally insert downtime event afterwards
@@ -128,13 +134,66 @@ class Timeline
     events.insert(it, events_to_insert.begin(), events_to_insert.end());
   }
 
-  constexpr auto get_events_by(const Subject& subject) const
+  [[nodiscard]] constexpr auto get_events_by(const Subject& subject)
+      -> Vector<Event>&
+  {
+    return m_events.at(subject);
+  }
+  [[nodiscard]] constexpr auto get_events_by(const Subject& subject) const
       -> const Vector<Event>&
   {
     return m_events.at(subject);
   }
 
+  void print() const
+  {
+    for (const auto& [subject, events] : m_events)
+    {
+      std::cout << subject << ": ";
+      for (const auto& event : events)
+      {
+        const auto length = event.timespan.end - event.timespan.start + 1;
+        if (event.task)
+        {
+          std::stringstream str;
+          str << event.task.value();
+          const auto event_name = str.str();
+          // FIXME: this won't work if event_name.length() > 1
+          for (VS::Index i = 0; i < length; ++i)
+          {
+            std::cout << event_name;
+          }
+        }
+        else
+        {
+          std::cout << std::string(length, '.');
+        }
+        // if (event.task)
+        // {
+        //   std::stringstream str;
+        //   str << event.task.value();
+        //   const auto event_name = str.str();
+
+        //   const auto diff = (length - event_name.size());
+        //   const auto left_padding = diff / 2;
+        //   const auto right_padding = diff / 2 + diff % 2;
+
+        //   std::cout << '|' << std::string(left_padding, '.') << event_name
+        //             << std::string(right_padding, '.');
+        // }
+        // else
+        // {
+        //   std::cout << '|' << std::string(length, '-');
+        // }
+      }
+      std::cout << '\n';
+    }
+  }
+
  private:
+  std::map<Subject, Vector<Event>> m_events = {};
+  Time m_makespan = 0;
+
   constexpr void resize_to_fit(const Timespan<Time>& timespan)
   {
     const auto current_end = makespan();
@@ -148,19 +207,20 @@ class Timeline
     for (auto& [subject, events] : m_events)
     {
       auto& last_event = events.back();
-      if (last_event.task == downtime)
+      if (is_downtime(last_event.task))
       {
         last_event.timespan.end = timespan.end;
       }
       else
       {
-        events.emplace_back({{current_end, timespan.end}, downtime});
+        events.emplace_back(Event{{current_end, timespan.end}, downtime});
       }
     }
   }
 
-  constexpr auto is_free(const Subject& subject,
-                         const Timespan<Time>& timespan) const -> bool
+  [[nodiscard]] constexpr auto is_free(const Subject& subject,
+                                       const Timespan<Time>& timespan) const
+      -> bool
   {
     if (timespan.start >= makespan())
     {
@@ -168,19 +228,18 @@ class Timeline
     }
 
     const auto& events = get_events_by(subject);
-    for (const auto& event : events)
-    {
-      if (event.timespan.contains(timespan) && event.task == downtime)
-      {
-        return true;
-      }
-    }
-
-    return false;
+    return std::ranges::any_of(events,
+                               [&timespan](const auto& event) -> bool {
+                                 return event.timespan.contains(timespan) &&
+                                        is_downtime(event.task);
+                               });
   }
 
-  std::map<Subject, Vector<Event>> m_events = {};
-  Time m_makespan = 0;
+  [[nodiscard]] constexpr static auto is_downtime(
+      const std::optional<Task>& task) -> bool
+  {
+    return !task.has_value();
+  }
 };
 
 }  // namespace VS

@@ -33,7 +33,9 @@ void assert_equal(const VS::Vector<T>& lhs, const VS::Vector<T>& rhs)
 {
   ASSERT_EQ(lhs.size(), rhs.size());
   for (std::size_t i = 0; i < lhs.size(); ++i)
+  {
     ASSERT_EQ(lhs.at(i), rhs.at(i));
+  }
 }
 
 TEST(OpenShop, FirstCase_SimpleExample)
@@ -88,4 +90,31 @@ TEST(OpenShop, SecondCase_SimpleExample)
                VS::Vector<std::size_t>{0, 3, 1, 4, 2});
   assert_equal(schedule.get_schedule_for_machine(1),
                VS::Vector<std::size_t>{2, 0, 3, 1, 4});
+}
+
+TEST(JobShop, SimpleExample)
+{
+  auto machines = VS::Vector<Machine>{
+      {"Milling machine"},
+      {"Lathe"},
+  };
+
+  auto jobs = VS::Vector<Job>{
+      {VS::Vector<Job::Operation>{{4}, {5}}},
+      {VS::Vector<Job::Operation>{{12}, {1}}},
+      {VS::Vector<Job::Operation>{{2}, {11}}},
+      {VS::Vector<Job::Operation>{{6}, {5}}},
+      {VS::Vector<Job::Operation>{{15}, {3}}},
+  };
+
+  const auto job_shop_builder = Uni::JobShopBuilder<ScheduleTraits>{};
+  const auto schedule = job_shop_builder.make_schedule(machines, jobs);
+
+  const auto first_schedule = schedule.get_schedule_for_machine(0);
+  const auto second_schedule = schedule.get_schedule_for_machine(1);
+
+  assert_equal(schedule.get_schedule_for_machine(0),
+               VS::Vector<std::size_t>{2, 0, 3, 4, 1});
+  assert_equal(schedule.get_schedule_for_machine(1),
+               VS::Vector<std::size_t>{2, 0, 3, 4, 1});
 }

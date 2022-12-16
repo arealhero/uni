@@ -28,6 +28,9 @@ void named_plot(const std::string& name,
                 double right,
                 std::size_t detalization = 1000);
 void named_plot(const std::string& name, const std::vector<Point>& points);
+void named_plot(const std::string& name,
+                const std::vector<std::size_t>& xs,
+                const std::vector<std::size_t>& ys);
 void show_plot();
 
 }  // namespace Uni::Gui
