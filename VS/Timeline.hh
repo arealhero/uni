@@ -63,34 +63,41 @@ class Timeline
 
   constexpr void insert(const Subject& subject, const Event& event)
   {
-    // 0. If subject does not exist, create it
+    // 0. Resize to fit timespan
+    resize_to_fit(event.timespan);
+
+    // 1. If subject does not exist, create it
     if (!m_events.contains(subject))
     {
-      resize_to_fit(event.timespan);
-
       auto events = Vector<Event>{};
-      events.push_back(Event{{Time{0}, event.timespan.start}, downtime});
-      events.push_back(event);
-      if (event.timespan.end < makespan())
+      if (event.task == downtime)
       {
-        events.push_back(Event{{event.timespan.end, makespan()}, downtime});
+        events.push_back(Event{{Time{0}, makespan()}, downtime});
+      }
+      else
+      {
+        if (Time{0} < event.timespan.start)
+        {
+          events.push_back(Event{{Time{0}, event.timespan.start}, downtime});
+        }
+
+        events.push_back(event);
+
+        if (event.timespan.end < makespan())
+        {
+          events.push_back(Event{{event.timespan.end, makespan()}, downtime});
+        }
       }
 
       m_events.insert({subject, events});
       return;
     }
 
-    resize_to_fit(event.timespan);
-
-    // 1. Test if this timespan is free
+    // 2. Test if this timespan is free
     if (!is_free(subject, event.timespan))
     {
       throw std::runtime_error{"Cannot insert event: timespan is not free"};
     }
-
-    // 2. Resize timeline to fit this timespan
-    // FIXME: we can probably resize it prior to this moment
-    resize_to_fit(event.timespan);
 
     // 3. Insert event
     auto& events = get_events_by(subject);
@@ -107,7 +114,7 @@ class Timeline
       throw std::runtime_error{"Cannot find suitable downtime event"};
     }
 
-    auto existing_event = *it;
+    auto& existing_event = *it;
     const auto initial_timespan = existing_event.timespan;
     Vector<Event> events_to_insert{};
 
@@ -131,7 +138,13 @@ class Timeline
     }
 
     // 3.4. Commit changes
-    events.insert(it, events_to_insert.begin(), events_to_insert.end());
+    if (!events_to_insert.is_empty())
+    {
+      events.insert(it + 1, events_to_insert.begin(), events_to_insert.end());
+    }
+
+    // 3.5 Remove trailing downtime
+    remove_trailing_downtime();
   }
 
   [[nodiscard]] constexpr auto get_events_by(const Subject& subject)
@@ -145,14 +158,29 @@ class Timeline
     return m_events.at(subject);
   }
 
-  void print() const
+  [[nodiscard]] auto get_number_of_events() const -> std::size_t
   {
+    std::size_t number_of_events = 0;
     for (const auto& [subject, events] : m_events)
     {
-      std::cout << subject << ": ";
+      number_of_events +=
+          events
+              .filter([](const auto& event) { return event.task != downtime; })
+              .size();
+    }
+    return number_of_events;
+  }
+
+  [[nodiscard]] auto to_ascii() const -> std::string
+  {
+    std::stringstream out;
+
+    for (const auto& [subject, events] : m_events)
+    {
+      out << subject << ": ";
       for (const auto& event : events)
       {
-        const auto length = event.timespan.end - event.timespan.start + 1;
+        const auto length = event.timespan.end - event.timespan.start;
         if (event.task)
         {
           std::stringstream str;
@@ -161,33 +189,17 @@ class Timeline
           // FIXME: this won't work if event_name.length() > 1
           for (VS::Index i = 0; i < length; ++i)
           {
-            std::cout << event_name;
+            out << event_name;
           }
         }
         else
         {
-          std::cout << std::string(length, '.');
+          out << std::string(length, '.');
         }
-        // if (event.task)
-        // {
-        //   std::stringstream str;
-        //   str << event.task.value();
-        //   const auto event_name = str.str();
-
-        //   const auto diff = (length - event_name.size());
-        //   const auto left_padding = diff / 2;
-        //   const auto right_padding = diff / 2 + diff % 2;
-
-        //   std::cout << '|' << std::string(left_padding, '.') << event_name
-        //             << std::string(right_padding, '.');
-        // }
-        // else
-        // {
-        //   std::cout << '|' << std::string(length, '-');
-        // }
       }
-      std::cout << '\n';
+      out << '\n';
     }
+    return out.str();
   }
 
  private:
@@ -197,7 +209,7 @@ class Timeline
   constexpr void resize_to_fit(const Timespan<Time>& timespan)
   {
     const auto current_end = makespan();
-    if (timespan.end < current_end)
+    if (timespan.end <= current_end)
     {
       return;
     }
@@ -218,15 +230,16 @@ class Timeline
     }
   }
 
+  constexpr void remove_trailing_downtime()
+  {
+    (void)*this;
+    (void)2;
+  }
+
   [[nodiscard]] constexpr auto is_free(const Subject& subject,
                                        const Timespan<Time>& timespan) const
       -> bool
   {
-    if (timespan.start >= makespan())
-    {
-      return true;
-    }
-
     const auto& events = get_events_by(subject);
     return std::ranges::any_of(events,
                                [&timespan](const auto& event) -> bool {

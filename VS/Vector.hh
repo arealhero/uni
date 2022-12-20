@@ -133,6 +133,20 @@ class Vector
 
   constexpr void reserve(const Size size) { m_data.reserve(size); }
 
+  // FIXME: remove NOLINT
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+  [[nodiscard]] constexpr auto subvector(const Index start,
+                                         const Size count) const
+  {
+    auto result = Vector<ContainedType>{};
+    result.reserve(count);
+    for (Index i = start; i < start + count; ++i)
+    {
+      result.push_back(at(i));
+    }
+    return result;
+  }
+
   [[nodiscard]] constexpr auto filter(auto&& function) const
       -> Vector<ContainedType>
   {
