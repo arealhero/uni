@@ -31,6 +31,9 @@ void named_plot(const std::string& name, const std::vector<Point>& points);
 void named_plot(const std::string& name,
                 const std::vector<std::size_t>& xs,
                 const std::vector<std::size_t>& ys);
+void named_plot(const std::string& name,
+                const std::vector<long double>& xs,
+                const std::vector<long double>& ys);
 void show_plot();
 
 }  // namespace Uni::Gui

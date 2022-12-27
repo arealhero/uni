@@ -111,6 +111,12 @@ void named_plot(const std::string& name,
 {
   plt::named_plot(name, xs, ys);
 }
+void named_plot(const std::string& name,
+                const std::vector<long double>& xs,
+                const std::vector<long double>& ys)
+{
+  plt::named_plot(name, xs, ys);
+}
 
 void show_plot()
 {
