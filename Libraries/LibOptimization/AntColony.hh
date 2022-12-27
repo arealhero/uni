@@ -8,11 +8,9 @@
 #include <VS/Types.hh>
 #include <algorithm>
 #include <cassert>
-#include <chrono>
 #include <cstdint>
-#include <future>
+#include <iomanip>
 #include <iostream>
-#include <random>
 #include <set>
 #include <thread>
 
@@ -25,6 +23,19 @@ concept AntColonyTraits = requires(const VS::Indices& path)
   typename Traits::Weight;
   typename Traits::PathLength;
 
+  typename Traits::EdgeWeight;
+
+  requires requires(typename Traits::EdgeWeight edge)
+  {
+    {
+      edge.desirability
+      } -> std::same_as<long double&>;
+
+    {
+      edge.pheromone_level
+      } -> std::same_as<long double&>;
+  };
+
   {
     Traits::calculate_path_length(path)
     } -> std::same_as<typename Traits::PathLength>;
@@ -35,6 +46,15 @@ concept AntColonyTraits = requires(const VS::Indices& path)
       Traits::find_best_path_index(lengths)
       } -> std::same_as<VS::Index>;
   };
+
+  requires requires(const DirectedGraph<typename Traits::EdgeWeight>& graph,
+                    const long double desirability_weight,
+                    const long double pheromone_weight)
+  {
+    {
+      Traits::create_ant_path(graph, desirability_weight, pheromone_weight)
+      } -> std::same_as<VS::Indices>;
+  };
 };
 
 template <AntColonyTraits Traits>
@@ -42,7 +62,7 @@ class AntColony
 {
  public:
   // FIXME: get from Traits?
-  using Number = double;
+  using Number = long double;
 
   using Path = VS::Indices;
   using Weight = typename Traits::Weight;
@@ -64,14 +84,10 @@ class AntColony
     std::size_t ants;
     std::size_t moving_average_count;
     Number stagnation_eps;
+    std::size_t iterations;
   };
 
-  struct EdgeWeight
-  {
-    Number desirability;
-    Number pheromone_level;
-  };
-
+  using EdgeWeight = typename Traits::EdgeWeight;
   using AntGraph = DirectedGraph<EdgeWeight>;
 
   // FIXME: move to JobShopBuilder or something
@@ -111,7 +127,8 @@ class AntColony
   constexpr explicit AntColony(const Params& params) : m_params(params) {}
 
   // FIXME: think of a return type
-  [[nodiscard]] constexpr auto run(const DirectedGraph<Weight>& graph) const
+  [[nodiscard]] constexpr auto run(const DirectedGraph<Weight>& graph,
+                                   const bool use_iterations = false) const
       -> Result
   {
     assert(graph.number_of_nodes() > 1);
@@ -139,19 +156,48 @@ class AntColony
       }
 
       return mean(last_controls.template map<Number>(
-          [](const auto& control) -> Number { return Number(control.mean); }));
+          [](const auto& control) -> Number { return Number(control.min); }));
     };
 
     Number prev_moving_average = 0;
+    Number moving_average_diff = 0;
 
     Path best{};
     PathLength best_path_length = 100'000'000;
 
-    // FIXME: change to moving average
-    VS::Index iteration = 0;
-    do
+    const auto iteration = [&](const VS::Index iteration)
     {
       std::cout << "Iteration " << iteration << '\n';
+
+      // {
+      //   const std::size_t column_width = 10;
+      //   std::cout << " === Graph === \n";
+      //   std::cout << std::setw(column_width) << ' ';
+      //   for (VS::Index from = 0; from < ant_graph.number_of_nodes(); ++from)
+      //   {
+      //     std::cout << std::setw(column_width) << from << ' ';
+      //   }
+      //   std::cout << '\n';
+
+      //   for (VS::Index from = 0; from < ant_graph.number_of_nodes(); ++from)
+      //   {
+      //     std::cout << std::setw(column_width) << from << ' ';
+      //     for (VS::Index to = 0; to < ant_graph.number_of_nodes(); ++to)
+      //     {
+      //       const auto& weight = ant_graph.get_weight(from, to);
+      //       if (weight)
+      //       {
+      //         std::cout << std::setw(column_width)
+      //                   << weight.value().pheromone_level << ' ';
+      //       }
+      //       else
+      //       {
+      //         std::cout << std::setw(column_width) << "N/A" << ' ';
+      //       }
+      //     }
+      //     std::cout << '\n';
+      //   }
+      // }
 
       // FIXME: change to `Matrix<Number>`?
       auto contributions = VS::Vector<VS::Vector<Number>>(
@@ -174,12 +220,18 @@ class AntColony
         const auto run_ant = [&](const VS::Index ant_index) -> void
         {
           const auto ant = Ant{get_params(), ant_index};
-          // std::cout << "Ant " << ant_index << ": walking\n";
           const auto path = ant.walk(ant_graph);
-          // std::cout << "Ant " << ant_index << ": walking done\n";
           const auto path_length = calculate_path_length(path);
 
           std::lock_guard<std::mutex> guard(paths_mutex);
+          std::cout << "Ant " << ant_index << " path:\n";
+          for (auto index : path)
+          {
+            std::cout << index << ' ';
+          }
+          std::cout << "\npath length = " << path_length << ", contribution = "
+                    << (pheromone_contribution() / (long double)path_length)
+                    << '\n';
           for (VS::Index j = 0; j < path.size() - 1; ++j)
           {
             const auto current_index = path.at(j);
@@ -188,24 +240,18 @@ class AntColony
             // FIXME: make this division optional (sometimes ACO should prefer
             // longer paths)
             contributions.at(current_index).at(next_index) +=
-                pheromone_contribution() / path_length;
+                pheromone_contribution() / (long double)path_length;
           }
 
-          // std::cout << "Ant " << ant_index << ": updating best path\n";
           if (path_length < best_path_length)
           {
             best = path;
             best_path_length = path_length;
           }
 
-          // std::cout << "Ant " << ant_index
-          //           << ": pushing back current results\n";
-
           current_paths.push_back(path);
           path_lengths.push_back(path_length);
           current_lengths.push_back(path_length);
-
-          // std::cout << "Ant " << ant_index << ": done\n";
         };
 
         // FIXME: use optimal number of threads & give them tasks when needed
@@ -226,42 +272,41 @@ class AntColony
           {min(current_lengths), mean(current_lengths), max(current_lengths)});
 
       update_pheromones(ant_graph, contributions);
-
       const auto current_moving_average = calculate_moving_average();
       moving_averages.push_back(current_moving_average);
 
-      const auto moving_average_diff =
-          std::abs(current_moving_average - prev_moving_average);
+      moving_average_diff = current_moving_average - prev_moving_average;
 
       std::cout << "Previous moving average: " << prev_moving_average
                 << ", current moving average: " << current_moving_average
                 << " (diff: " << moving_average_diff << ")\n";
 
-      iteration += 1;
-      if (iteration >= moving_average_count() &&
-          // current_moving_average < prev_moving_average &&
-          moving_average_diff < stagnation_eps())
-      {
-        break;
-      }
-
       prev_moving_average = current_moving_average;
-      // if (current_moving_average == last_moving_average)
-      // {
-      //   // std::cout << "Moving average didn't change (" <<
-      //   // current_moving_average
-      //   //           << "), increasing stagnation count\n";
-      //   stagnation_count += 1;
-      // }
-      // else
-      // {
-      //   // std::cout << "Moving average has changed (" <<
-      //   // current_moving_average
-      //   //           << "), updating\n";
-      //   last_moving_average = current_moving_average;
-      //   stagnation_count = 0;
-      // }
-    } while (true);
+    };
+
+    if (use_iterations)
+    {
+      for (VS::Index i = 0; i < m_params.iterations; ++i)
+      {
+        iteration(i);
+      }
+    }
+    else
+    {
+      VS::Index i = 0;
+      do
+      {
+        iteration(i);
+
+        i += 1;
+        if (i >= moving_average_count() &&
+            std::abs(moving_average_diff) < stagnation_eps())
+        {
+          break;
+        }
+
+      } while (true);
+    }
 
     return {{best, best_path_length},
             best_paths,
@@ -314,93 +359,16 @@ class AntColony
     {
     }
 
+    // FIXME: make this function generic (it now fits JSSP only)
     [[nodiscard]] auto walk(const AntGraph& graph) const -> VS::Indices
     {
-      const auto number_of_nodes = graph.number_of_nodes();
-      std::set<VS::Index> available_indices{};
-      for (VS::Index i = 0; i < number_of_nodes; ++i)
-      {
-        available_indices.insert(i);
-      }
-
-      auto current_index = m_params.start_node_index;
-      available_indices.erase(current_index);
-
-      auto ant_path = VS::Indices{current_index};
-      ant_path.reserve(number_of_nodes);
-
-      while (!available_indices.empty())
-      {
-        const auto next_node_index =
-            choose_next_node(graph, available_indices, current_index);
-
-#ifdef DEBUG_PRINT
-        std::cout << "Available indices: ";
-        for (auto index : available_indices)
-        {
-          std::cout << index << ' ';
-        }
-        std::cout << "\nnext_node_index: " << next_node_index << '\n';
-#endif
-
-        ant_path.push_back(next_node_index);
-        available_indices.erase(next_node_index);
-        current_index = next_node_index;
-      }
-
-      return ant_path;
+      return create_ant_path(
+          graph, m_params.desirability_weight, m_params.pheromone_weight);
     }
 
    private:
     const Params& m_params;
     const std::size_t m_index;
-
-    [[nodiscard]] auto choose_next_node(
-        const AntGraph& graph,
-        const std::set<VS::Index>& available_indices,
-        const VS::Index current_node_index) const -> std::size_t
-    {
-      auto probabilities =
-          VS::Vector<Number>(graph.number_of_nodes(), Number{0});
-
-      for (auto index : available_indices)
-      {
-        const auto& weight = graph.get_weight(current_node_index, index);
-
-        if (weight)
-        {
-          const auto& [desirability, pheromone] = weight.value();
-          probabilities.at(index) =
-              std::pow(desirability, m_params.desirability_weight) *
-              std::pow(pheromone, m_params.pheromone_weight);
-        }
-      }
-
-      Number sum{0};
-      for (auto probability : probabilities)
-      {
-        sum += probability;
-      }
-
-      if (sum == 0)
-      {
-        return *(available_indices.begin());
-      }
-
-#ifdef DEBUG_PRINT
-      std::cout << "Probabilities: ";
-      for (auto probability : probabilities)
-      {
-        std::cout << probability << ' ';
-      }
-      std::cout << '\n';
-#endif
-
-      std::mt19937 generator(m_params.seed + m_index);
-      std::discrete_distribution<VS::Index> distribution(probabilities.begin(),
-                                                         probabilities.end());
-      return distribution(generator);
-    }
   };
 
   [[nodiscard]] constexpr auto build_ant_graph(
@@ -451,11 +419,27 @@ class AntColony
 
           auto level =
               contributions.at(from).at(to) + evaporation_rate() * old_level;
-          weight = {desirability,
-                    high_pass_filter(level, minimal_pheromone_level())};
+          level = std::max(level, minimal_pheromone_level());
+          weight = {desirability, level};
+
+          if (level != old_level)
+          {
+            std::cout << "Edge (" << from << ", " << to
+                      << "): old level: " << old_level << ", new level: "
+                      << std::max(level, minimal_pheromone_level()) << '\n';
+          }
         }
       }
     }
+  }
+
+  [[nodiscard]] constexpr static auto create_ant_path(
+      const AntGraph& graph,
+      const Number desirability_weight,
+      const Number pheromone_weight) -> VS::Indices
+  {
+    return Traits::create_ant_path(
+        graph, desirability_weight, pheromone_weight);
   }
 
   [[nodiscard]] constexpr static auto calculate_path_length(const Path& path)

@@ -62,12 +62,6 @@ class Graph
     return m_edges.at(node_index);
   }
 
-  // [[nodiscard]] constexpr auto get_edge(const Index& from, const Index& to)
-  //     -> Edge&
-  // {
-  //   return m_edges.at(from).at(to);
-  // }
-
   [[nodiscard]] constexpr auto get_weight(const VS::Index& from,
                                           const VS::Index& to)
       -> std::optional<Weight>&
@@ -80,13 +74,6 @@ class Graph
   {
     return m_edges.at(from).at(to);
   }
-
-  // [[nodiscard]] constexpr auto get_edge(const Index& from,
-  //                                       const Index& to) const -> const
-  //                                       Edge&
-  // {
-  //   return m_edges.at(from).at(to);
-  // }
 
   constexpr void insert(const Edge& edge)
   {

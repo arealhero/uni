@@ -10,12 +10,15 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <random>
 
 using Path = VS::Indices;
 using Time = std::size_t;
 
 std::size_t optimum;
 Time infinity = 0;
+
+std::size_t seed = 0;
 
 struct ScheduleTraits
 {
@@ -39,20 +42,20 @@ struct ScheduleTraits
 
 auto machines = VS::Vector<ScheduleTraits::Machine>{};
 auto jobs = VS::Vector<ScheduleTraits::Job>{};
-auto operation_order = VS::Vector<VS::Indices>{};
+auto presedence_constraints = VS::Vector<VS::Indices>{};
 
 auto index_to_operation(const VS::Index index)
     -> VS::Pair<VS::Index, VS::Index>
 {
-  const auto machine_index = index % machines.size();
-  const auto job_index = index / machines.size();
+  const auto machine_index = (index - 1) % machines.size();
+  const auto job_index = (index - 1) / machines.size();
   return {machine_index, job_index};
 }
 
 auto operation_to_index(const VS::Index machine_index,
                         const VS::Index job_index) -> VS::Index
 {
-  return job_index * machines.size() + machine_index;
+  return job_index * machines.size() + machine_index + 1;
 }
 
 [[nodiscard]] static auto path_to_schedule(const Path& path)
@@ -64,11 +67,12 @@ auto operation_to_index(const VS::Index machine_index,
     {
       continue;
     }
-    const auto& pair = index_to_operation(index - 1);
+    const auto& pair = index_to_operation(index);
     const auto machine_index = pair.first;
     const auto job_index = pair.second;
     schedule.schedule_job_for_machine(machine_index, job_index);
   }
+
   return schedule;
 }
 
@@ -84,12 +88,138 @@ struct ACO_JSP_Traits
     using Subject = VS::Index;
   };
 
+  using Number = long double;
+
+  struct EdgeWeight
+  {
+    Number desirability;
+    Number pheromone_level;
+  };
+
+  using AntGraph = Uni::DirectedGraph<EdgeWeight>;
+
   [[nodiscard]] static auto build_timeline(const Path& path)
   {
     // Convert path to schedule
     const auto schedule = path_to_schedule(path);
-    return Uni::JobShopTraits<ScheduleTraits>::build_timeline(schedule,
-                                                              operation_order);
+    return Uni::JobShopTraits<ScheduleTraits>::build_timeline(
+        schedule, presedence_constraints);
+  }
+
+  // FIXME: remove NOLINT
+  [[nodiscard]] static auto create_ant_path(
+      const AntGraph& graph,
+      // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+      const Number desirability_weight,
+      const Number pheromone_weight) -> VS::Indices
+  {
+    VS::Indices path = {0};
+    std::set<VS::Index> available_indices{};
+
+    for (VS::Index job_index = 0; job_index < jobs.size(); ++job_index)
+    {
+      const auto& job_constraints = presedence_constraints.at(job_index);
+      const auto first_machine_index = job_constraints.at(0);
+
+      const auto graph_index =
+          operation_to_index(first_machine_index, job_index);
+
+      available_indices.insert(graph_index);
+    }
+
+    const auto get_random_available_index =
+        [&](const VS::Index current_index) -> VS::Index
+    {
+      auto probabilities = VS::Vector<Number>{};
+      probabilities.reserve(available_indices.size());
+
+      Number total_sum{0};
+
+      for (const auto& index : available_indices)
+      {
+        const auto optional_weight = graph.get_weight(current_index, index);
+
+        if (optional_weight)
+        {
+          const auto& weight = optional_weight.value();
+          const auto& [desirability, pheromone] = weight;
+
+          const auto probability =
+              std::pow(desirability, desirability_weight) *
+              std::pow(pheromone, pheromone_weight);
+
+          probabilities.push_back(probability);
+          total_sum += probability;
+          // std::cout << "desirability: " << desirability
+          //           << ", pheromone: " << pheromone
+          //           << "\nprobability: " << probabilities.back() << '\n';
+          // probabilities.push_back(
+          //     1.0 / (std::pow(desirability, desirability_weight) *
+          //            std::pow(pheromone, pheromone_weight)));
+        }
+        else
+        {
+          throw std::runtime_error{
+              "Unexpected empty std::optional encountered"};
+        }
+      }
+
+      // Normalization
+      for (auto& probability : probabilities)
+      {
+        probability /= total_sum;
+      }
+
+      // std::cout << " === Probabilities === \n";
+      // for (const auto probability : probabilities)
+      // {
+      //   std::cout << probability << ' ';
+      // }
+      // std::cout << '\n';
+
+      // std::random_device rd;
+      static std::mt19937 generator(seed);
+      std::discrete_distribution<VS::Index> distribution(probabilities.begin(),
+                                                         probabilities.end());
+      const auto offset = distribution(generator);
+
+      auto it = available_indices.begin();
+      for (VS::Index i = 0; i < offset; ++i)
+      {
+        ++it;
+      }
+      return *it;
+    };
+
+    VS::Index prev_index = 0;
+    while (!available_indices.empty())
+    {
+      const auto next_index = get_random_available_index(prev_index);
+      const auto [machine_index, job_index] = index_to_operation(next_index);
+
+      const auto& job_constraints = presedence_constraints.at(job_index);
+      for (VS::Index i = 0; i < machines.size(); ++i)
+      {
+        if (job_constraints.at(i) == machine_index)
+        {
+          if (i != machines.size() - 1)
+          {
+            const auto next_machine_index = job_constraints.at(i + 1);
+            const auto graph_index =
+                operation_to_index(next_machine_index, job_index);
+
+            available_indices.insert(graph_index);
+          }
+        }
+      }
+
+      available_indices.erase(next_index);
+      path.push_back(next_index);
+
+      prev_index = next_index;
+    }
+
+    return path;
   }
 
   // FIXME: make this function constexpr
@@ -99,7 +229,9 @@ struct ACO_JSP_Traits
 
     if (is_deadlock)
     {
-      return infinity / (1 + timeline.get_number_of_events());
+      // return infinity / (1 + timeline.get_number_of_events());
+      std::cout << " === DEADLOCK ===\n" << timeline.to_ascii() << '\n';
+      throw std::runtime_error{"DEADLOCK"};
     }
 
     return timeline.makespan();
@@ -142,7 +274,7 @@ struct ACO_JSP_Traits
 
   for (VS::Index job = 0; job < number_of_jobs; ++job)
   {
-    operation_order.push_back(VS::Indices{});
+    presedence_constraints.push_back(VS::Indices{});
     VS::Index prev = 0;
     for (VS::Index i = 0; i < number_of_machines; ++i)
     {
@@ -155,10 +287,10 @@ struct ACO_JSP_Traits
 
       infinity += operation_time;
 
-      const VS::Index current = operation_to_index(machine, job) + 1;
+      const VS::Index current = operation_to_index(machine, job);
       graph.get_weight(prev, current) = operation_time;
 
-      operation_order.at(job).push_back(machine);
+      presedence_constraints.at(job).push_back(machine);
       prev = current;
     }
   }
@@ -173,7 +305,7 @@ struct ACO_JSP_Traits
       const auto from_operation_time = times.at(from_job).at(from_machine);
 
       const auto start_index = 0;
-      const auto from_index = operation_to_index(from_machine, from_job) + 1;
+      const auto from_index = operation_to_index(from_machine, from_job);
       graph.get_weight(start_index, from_index) = from_operation_time;
 
       for (VS::Index to_job = 0; to_job < number_of_jobs; ++to_job)
@@ -187,32 +319,34 @@ struct ACO_JSP_Traits
           }
 
           const auto to_operation_time = times.at(to_job).at(to_machine);
-          const auto to_index = operation_to_index(to_machine, to_job) + 1;
+          const auto to_index = operation_to_index(to_machine, to_job);
           graph.get_weight(from_index, to_index) = to_operation_time;
         }
       }
     }
   }
 
-  // for (VS::Index machine = 0; machine < machines; ++machine)
-  // {
-  //   for (VS::Index i = 0; i < jobs; ++i)
+  //   for (VS::Index machine = 0; machine < machines.size(); ++machine)
   //   {
-  //     for (VS::Index j = i + 1; j < jobs; ++j)
+  //     for (VS::Index i = 0; i < jobs.size(); ++i)
   //     {
-  //       const VS::Index from = operation_to_index(machine, i) + 1;
-  //       const VS::Index to = operation_to_index(machine, j) + 1;
+  //       for (VS::Index j = i + 1; j < jobs.size(); ++j)
+  //       {
+  //         const VS::Index from = operation_to_index(machine, i);
+  //         const VS::Index to = operation_to_index(machine, j);
 
-  //       std::cout << "creating edge (" << from << ", " << to << ") \t("
-  //                 << machine << ", " << i << ")\n";
-  //       graph.get_weight(from, to) = times.at(i).at(machine);
+  //         graph.get_weight(from, to) = times.at(i).at(machine);
+  //         graph.get_weight(to, from) = times.at(j).at(machine);
 
-  //       std::cout << "creating edge (" << to << ", " << from << ") \t("
-  //                 << machine << ", " << j << ")\n";
-  //       graph.get_weight(to, from) = times.at(j).at(machine);
+  // #ifdef DEBUG_PRINT
+  //         std::cout << "creating edge (" << to << ", " << from << ") \t("
+  //                   << machine << ", " << j << ")\n";
+  //         std::cout << "creating edge (" << from << ", " << to << ") \t("
+  //                   << machine << ", " << i << ")\n";
+  // #endif
+  //       }
   //     }
   //   }
-  // }
 
   return graph;
 }
@@ -242,7 +376,8 @@ auto read_params(const std::string& config)
 
       >> params.ants
       >> params.moving_average_count
-      >> params.stagnation_eps;
+      >> params.stagnation_eps
+      >> params.iterations;
   // clang-format on
 
   if (params.seed == 0)
@@ -254,6 +389,8 @@ auto read_params(const std::string& config)
     params.seed = dis(gen);
     std::cout << "SEED: " << params.seed << '\n';
   }
+
+  seed = params.seed;
 
   return params;
 }
@@ -276,67 +413,80 @@ auto main(int argc, const char* argv[]) -> int
 
   auto aco = Uni::AntColony<ACO_JSP_Traits>{params};
 
+  // struct Result
+  // {
+  //   struct
+  //   {
+  //     Path path;
+  //     PathLength length;
+  //   } best;
+  //   VS::Vector<Path> best_paths;
+  //   VS::Vector<PathLength> path_lengths;
+  //   VS::Vector<ControlData> controls;
+  //   VS::Vector<PathLength> moving_averages;
+  // };
+  // const std::size_t N = 100;
+
+  // using Result = Uni::AntColony<ACO_JSP_Traits>::Result;
+
+  // VS::Vector<Result> results;
+  // for (VS::Index iteration = 0; iteration < N; ++iteration)
+  // {
+  //   const auto result = aco.run(graph);
+  //   results.push_back(result);
+  // }
+
+  // VS::Vector<long double> upper_bound(params.iterations, 0);
+  // VS::Vector<long double> mean_values(params.iterations, 0);
+  // VS::Vector<long double> best_values(params.iterations, 0);
+  // VS::Vector<long double> lower_bound(params.iterations, 0);
+
+  // for (VS::Index i = 0; i < params.iterations; ++i)
+  // {
+  //   const auto lengths = results.template map<long double>(
+  //       [i](const auto& result) { return result.controls.at(i).min; });
+
+  //   const auto avg = Uni::mean(lengths);
+
+  //   long double diff = 0;
+  //   for (const auto& length : lengths)
+  //   {
+  //     diff += (avg - length) * (avg - length);
+  //   }
+  //   diff /= results.size();
+
+  //   const auto stddev = std::sqrt(diff);
+  //   const long double Z = 1.96;
+
+  //   const long double error = Z * stddev / std::sqrt(N);
+
+  //   upper_bound.at(i) = avg + error;
+  //   mean_values.at(i) = avg;
+  //   lower_bound.at(i) = avg - error;
+  // }
+
   try
   {
-    // auto nodes = graph.get_reachable_nodes(0);
-    // std::cout << "Available nodes: ";
-    // for (auto index : nodes)
-    // {
-    //   std::cout << index << ' ';
-    // }
-    // std::cout << '\n';
-
     std::cout << "Running simulations...\n";
     const auto start_time = std::chrono::high_resolution_clock::now();
-    auto result = aco.run(graph);
+    auto result = aco.run(graph, true);
     const std::chrono::duration<double, std::milli> total_time =
         std::chrono::high_resolution_clock::now() - start_time;
     std::cout << total_time.count() << " ms elapsed\n";
 
     const auto& [path, length] = result.best;
-    std::cout << "Best path (length: " << length << ", optimum: " << optimum
-              << ")\n";
     for (const auto& element : path)
     {
       std::cout << element << ' ';
     }
-    std::cout << '\n';
 
-    // {
-    //   auto schedule = path_to_schedule(path);
-    //   const auto [timeline, is_deadlock] =
-    //       Uni::JobShopTraits<ScheduleTraits>::build_timeline(schedule,
-    //                                                          operation_order);
+    const auto [best_timeline, _] = ACO_JSP_Traits::build_timeline(path);
 
-    //   std::cout << "Timeline (is deadlock? " << (is_deadlock ? "yes" : "no")
-    //             << ")\n"
-    //             << timeline.to_ascii() << '\n';
-    // }
+    std::cout << "\nBest path (length: " << length << ", optimum: " << optimum
+              << ")\n"
+              << best_timeline.to_ascii() << '\n';
 
-    // {
-    //   auto schedule = std::map<std::size_t, Path>{};
-    //   for (const auto& index : path)
-    //   {
-    //     if (index == 0)
-    //     {
-    //       continue;
-    //     }
-    //     const auto& pair = index_to_operation(index - 1);
-    //     const auto machine_index = pair.first;
-    //     const auto job_index = pair.second;
-    //     schedule[machine_index].push_back(job_index);
-    //   }
-
-    //   for (const auto& [machine_index, machine_schedule] : schedule)
-    //   {
-    //     std::cout << "schedule for machine " << machine_index << ": ";
-    //     for (const auto& index : machine_schedule)
-    //     {
-    //       std::cout << index << ' ';
-    //     }
-    //     std::cout << '\n';
-    //   }
-    // }
+    const auto lengths = result.path_lengths;
 
     auto mins = VS::Vector<Time>{};
     auto means = VS::Vector<Time>{};
@@ -351,6 +501,7 @@ auto main(int argc, const char* argv[]) -> int
       maxs.push_back(control.max);
 
       iters.push_back(iteration);
+
       iteration += 1;
     }
 
@@ -364,9 +515,6 @@ auto main(int argc, const char* argv[]) -> int
     Uni::Gui::legend();
     Uni::Gui::subplot(2, 1, 2);
     Uni::Gui::named_plot("min", iters.get_std(), mins.get_std());
-    // Uni::Gui::named_plot(
-    //     "moving average", iters.get_std(),
-    //     result.moving_averages.get_std());
     Uni::Gui::legend();
     Uni::Gui::show_plot();
   }
