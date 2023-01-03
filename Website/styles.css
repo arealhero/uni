@@ -1,0 +1,277 @@
+.controls {
+    padding: 5px;
+}
+
+.tickets {
+  max-width: 900px;
+}
+
+.ticket {
+  font-weight: bold;
+}
+
+.questions {
+  max-width: 800px;
+}
+
+.question {
+  margin: 10px 0 10px 0;
+  max-width: 800px;
+}
+
+.quote {
+  margin: 20px 0 20px 30px;
+}
+
+.defs {
+  margin: 20px 0 20px 30px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.defs::before {
+  content: 'Обозначения: ';
+  font-weight: bold;
+}
+
+.assumptions {
+  margin: 20px 0 20px 30px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.assumptions::before {
+  content: 'Предположения: ';
+  font-weight: bold;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.answer {
+  margin: 5px 0 5px 0;
+}
+
+.answer::before {
+  content: 'Ответ: ';
+  font-weight: bold;
+}
+
+.notation {
+  margin: 5px 0 5px 0;
+}
+
+.notation::before {
+  content: 'Обозначение: ';
+  font-weight: bold;
+}
+
+.definition {
+  margin: 5px 0 5px 0;
+}
+
+.definition::before {
+  content: 'Определение: ';
+  font-weight: bold;
+}
+
+.note::before {
+  content: 'Замечание: ';
+  font-weight: bold;
+}
+
+.remark::before {
+  content: 'Замечание: ';
+  font-weight: bold;
+}
+
+.images {
+  max-width: 700px;
+  margin: 10px auto 10px auto;
+  text-align: center;
+}
+
+.images img {
+  max-width: 700px;
+}
+
+.statement::before {
+  content: 'Утверждение. ';
+  font-weight: bold;
+}
+
+.corollary::before {
+  content: 'Следствие. ';
+  font-weight: bold;
+}
+
+.theorem::before {
+  content: 'Теорема. ';
+  font-weight: bold;
+}
+
+.lemma::before {
+  content: 'Лемма. ';
+  font-weight: bold;
+}
+
+.proof::before {
+  content: 'Доказательство. ';
+  font-style: italic;
+}
+
+.proof::after {
+  content: ' \25A1';
+}
+
+.problem {
+  margin: 10px 0 10px 0;
+}
+
+.problem::before {
+  content: 'Задача. ';
+  font-weight: bold;
+}
+
+.solution::before {
+  content: 'Решение. ';
+  font-style: italic;
+}
+
+.repeat {
+  color: var(--blue-color);
+}
+
+.todo::after {
+  content: 'TODO';
+  color: var(--red-color);
+  font-weight: bold;
+}
+
+/*
+ * TODO:
+ *   - move theme, variables & markup in separate files
+ *   - use prefers-color-scheme (see https://css-tricks.com/dark-modes-with-css/)
+ *   - migrate from css to scss
+ */
+
+:root {
+  --background-color: white;
+  --text-color: black;
+  --border-color: black;
+
+  --blue-color: blue;
+  --red-color: red;
+
+  --link-color: var(--blue-color);
+  --visited-link-color: var(--red-color);
+
+  --width-s: 600px;
+  --width-m: 768px;
+  --width-l: 992px;
+  --width-xl: 1200px;
+}
+
+/* @media (prefers-color-scheme: dark) { */
+/*     :root { */
+/* 	--background-color: #1c1c1c; */
+/* 	--text-color: white; */
+/* 	--border-color: white; */
+
+/* 	--blue-color: lightblue; */
+/* 	--red-color: lightpink; */
+/*     } */
+/* } */
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding-bottom: 50px;
+}
+
+@media only screen and (min-width: 992px) {
+  body {
+    margin: 0 20%;
+  }
+}
+
+nav {
+  border-bottom: 2px solid var(--border-color);
+  padding: 5px;
+}
+
+nav a {
+  padding-right: 15px;
+}
+
+table.teachers {
+    margin-top: 20px;
+}
+
+table.teachers th,
+table.teachers td {
+    vertical-align: top;
+    padding-right: 5px;
+}
+
+table.teachers tr > td:first-of-type {
+    font-weight: bold;
+}
+
+table.tasks,
+table.tasks th,
+table.tasks td,
+table.tasks table {
+    border: 1px solid var(--text-color);
+    border-collapse: collapse;
+}
+
+table.tasks th,
+table.tasks td {
+    vertical-align: top;
+    padding: 5px;
+}
+
+table.homework,
+table.homework th,
+table.homework td,
+table.homework table {
+    border: 1px solid var(--text-color);
+    border-collapse: collapse;
+}
+
+table.homework th,
+table.homework td {
+    vertical-align: top;
+    padding: 5px;
+}
+
+li.marked::marker {
+    color: red;
+}
+
+#title {
+  margin: auto;
+  text-align: center;
+
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:visited {
+  color: var(--link-color);
+}
+
+div.break {
+    width: 60px;
+    border-bottom: 2px solid black;
+    margin: 24px auto;
+}
+
+
+
