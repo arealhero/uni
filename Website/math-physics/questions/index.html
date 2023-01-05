@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Вопросы &mdash; УМФ</title>
+
+    <link href="/assets/css/styles.css" rel="stylesheet">
+    <script type="text/javascript" async src="/assets/js/questions.js"></script>
+
+    <link rel="stylesheet" href="/assets/css/katex.min.css">
+    <script defer src="/assets/js/katex.min.js"></script>
+    <script defer src="/assets/js/auto-render.min.js"></script>
+
+    <script>
+     document.addEventListener("DOMContentLoaded", function() {
+       renderMathInElement(document.body, {
+	 // customised options
+	 // • auto-render specific keys, e.g.:
+	 delimiters: [
+	   {left: '$$', right: '$$', display: true},
+	   {left: '$', right: '$', display: false},
+	   {left: '\\(', right: '\\)', display: false},
+	   {left: '\\[', right: '\\]', display: true}
+	 ],
+	 // • rendering keys, e.g.:
+	 throwOnError : false
+       });
+     });
+    </script>
+  </head>
+  <body>
+    <h1 id="title">Вопросы &mdash; УМФ</h1>
+    <nav>
+      <a href="/">Домой</a>
+      <a href="/math-physics">УМФ</a>
+    </nav>
+
+    <div class="controls">
+      <button onclick="HideQuestions()">Скрыть вопросы</button>
+      <button onclick="ShowQuestions()">Показать вопросы</button>
+      <button onclick="HideAnswers()">Скрыть ответы</button>
+      <button onclick="ShowAnswers()">Показать ответы</button>
+      <button onclick="HideProofs()">Скрыть доказательства</button>
+      <button onclick="ShowProofs()">Показать доказательства</button>
+      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
+    </div>
+
+    <div style="display:none">
+      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+
+      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
+      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
+      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
+      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+
+      $\global\def\paren#1{\left( #1 \right)}$
+
+      $\global\def\mbox#1{\text{#1}}$
+
+      $\global\def\div{\text{div}\,}$
+      $\global\def\dsum{\displaystyle\sum\,}$
+      $\global\def\grad{\text{grad}\,}$
+      $\global\def\rot{\text{rot}\,}$
+
+      $\global\def\vb#1{\textbf{#1}}$
+
+      $\global\def\const{\text{const}\,}$
+      $\global\def\res{\text{res}\,}$
+      $\global\def\Res{\text{Res}\,}$
+      $\global\def\Re{\text{Re}\,}$
+      $\global\def\Im{\text{Im}\,}$
+      $\global\def\ch{\text{ch}\,}$
+      $\global\def\sh{\text{sh}\,}$
+      $\global\def\argtg{\text{argtg}\,}$
+    </div>
+
+    <ol id="questions">
+      <li class="question">
+        <div class="name">
+          Определение ДУЧП
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Рассмотрим $D \in \R^n, n\geq 2$. Пусть $x=(x_1,\dots,x_n)\in D, F(x,\dots,p_{i_1,\dots,i_n},\dots)$ - вещественная функция точек $x\in D$ и 
+          переменных $p_{i_1,\dots,i_n}, i_j \in \mathbb{Z}^{+}, \displaystyle\sum_{j=1}^n i_j = k, k=\overline{0,m}\\$
+          По крайней мере одна из частных производных $\dfrac{\partial F}{\partial p_{i_1,\dots,i_n}}\not = 0$. Так же $\displaystyle\sum_{j=1}^n i_j = k = m$. 
+          Тогда равенство 
+          \[
+          F\left(x,\dots, \dfrac{\partial^k u}{\partial x_1^{i_1},\dots,\partial x_n^{i_n}},\dots\right)=0
+          \]
+          называется ДУЧП (Дифференциальное Уравнение в Частных Производных) порядка $m$ относительно $u(x)\in C$
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Регулярное решение
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          $u(x)\in C^{(m)}(D)$, обращающая ДУЧП в тождество, - <i>регулярное решение</i>. 
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Фундаментальное решение
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Решение $u(x)\in C^{(m)}(D)$, теряющее свойство регулярности в изолированных точках, 
+          линиях, поверхностях или многообразиях особого рода - <i>фундаментальное решение</i>.  
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение линейного ДУЧП
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Если $F\left(x,\dots, \dfrac{\partial^k u}{\partial x_1^{i_1},\dots,\partial x_n^{i_n}},\dots\right)$ 
+          линейно относительно <i>всех переменных</i> $p_{i_1,\dots,i_n}$, то оно называется <i>линейным</i>, 
+          $\left(\displaystyle\sum_{j=1}^n i_j = k, k=\overline{0,m}\right)\\$ 
+          $Lu = f$ - обозначение линейного уравнения, $L$ - <i>линейный оператор</i>.$\\$
+          Если $f\equiv 0 \Rightarrow Lu = 0$ - <i>однородное</i>, $\\$
+          Если $f\not\equiv 0 \Rightarrow Lu = f$ - <i>неоднородное</i>
+        </div>  
+      </li>
+
+      <li class="question">
+        <div class="name">
+          ДУЧП 2 порядка в общем виде
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \displaystyle\sum_{j,k=1}^n A_{jk}(x)\dfrac{\partial^2 u}{\partial x_j \partial x_k} +
+          \displaystyle\sum_{j=1}^n B_j(x)\dfrac{\partial u}{\partial x_j}+c(x)u=f(x)
+          \]
+          Сокращенная запись:
+          \[
+          A_{\alpha \beta}(x)\dfrac{\partial^2 u}{\partial x_\alpha \partial x_\beta} +
+          B_\alpha(x)\dfrac{\partial u}{\partial x_\alpha}+c(x)u=f(x),\\ \alpha, \beta = \overline{1,n}
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение квазилинейного ДУЧП
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content"> 
+          Если $F\left(x,\dots, \dfrac{\partial^k u}{\partial x_1^{i_1},\dots,\partial x_n^{i_n}},\dots\right)$ 
+          линейно относительно <i>старших производных</i>, то оно называется <i>квазилинейным</i>, 
+          $\left(\displaystyle\sum_{j=1}^n i_j = m\right)$ 
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение колебательного процесса
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \rho \pdv2{u}{t} - \nabla \cdot (p \nabla u) + qu = f(x,t),
+          \]
+          где $p = p(x), \; q = q(x), \; \rho = \rho(x)$ определяются свойствами среды, в которой происходит
+          колебательный процесс, $f(x,t)$ &mdash; интенсивность внешнего возмущения, $u = u(x,t)$ &mdash;
+          отклонение точки $x$ в момент времени $t$ от положения равновесия.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение вынужденных малых поперечных колебаний струны
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \rho(x) \pdv2{u}{t} - T_0 \pdv2{u}{x} = F(x,t),
+          \]
+          где $\rho(x)$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
+          внешнего возмущения в точке $x$ в момент времени $t$.
+        </div>
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          Условие на малые колебания: $|\tan \alpha|=\dfrac{\partial u}{\partial x}\ll 1\\$
+          $u=u(x,t)$ - ур-е положения струны в момент $t$, натяжение струны $T(x,t)$ в точке $x$ направлено по касательной к струне. 
+          Любой участок струны $(a,b)$ при отклонение практически сохраняет исходную длину:
+          \[
+          \displaystyle\int_a^b \sqrt{1+\left( \dfrac{\partial^2 u}{\partial x^2} \right)}dx \approx b-a = l_0
+          \]
+          
+          В момент $t: T=T_0 +T_1$, где $T_0$ - натяжение струны в момент $t=0$, $T_1$ - дополнительное усилие в результате отклонения струны от положения равновесия.
+          По закону Гука, $T_1=E\dfrac{\Delta l}{l_0}S$, $E$ - модуль Юнга, $S$ - площадь поперечного сечения. 
+          Пусть $\left| \dfrac{\Delta l}{l_0}\right|\ll \dfrac{T_0}{ES} \Rightarrow |T(x,t)|\approx const = T_0$.
+          
+          По закону Ньютона, проектируя силы на вертикальную ось,
+          \[
+          T_0 \sin \alpha \big|_{x+dx} - T_0 \sin \alpha \big|_{x} + F(x,t)dx=\rho(x)dx\dfrac{\partial^2 u}{\partial t^2}
+          \]
+
+          \[
+          \sin\alpha \approx \alpha \approx \tan \alpha \approx \dfrac{\partial u}{\partial x} \Rightarrow
+          \]
+
+          \[
+          \rho \dfrac{\partial^2 u}{\partial t^2} -T_0 \dfrac{1}{dx} 
+          \left( \dfrac{\partial u(x+dx)}{\partial x} - \dfrac{\partial u(x,t)}{\partial x} \right) = F(x,t)
+          \]
+
+          При $dx \to 0$ имеем 
+          \[
+          \rho \dfrac{\partial^2 u}{\partial t^2} - T_0 \dfrac{\partial^2 u}{\partial x^2} = F(x,t)
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Одномерное волновое уравнение
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \pdv2{u}{t} - a^2 \pdv2{u}{x} = f(x,t),
+          \quad a = \sqrt{\frac{T_0}{\rho}},
+          \quad f(x,t) = \frac{F(x,t)}{\rho},
+          \]
+          где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
+          внешнего возмущения.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение малых свободных колебаний струны
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Получается из одномерного волнового уравнения при $F(x,t) = 0$:
+          \[
+          \pdv2{u}{t} = a^2 \pdv2{u}{x},
+          \quad a = \sqrt{\frac{T_0}{\rho}},
+          \]
+          где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Двумерное волновое уравнение
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \pdv2{u}{t} = a^2 \paren{\pdv2{u}{x_1} + \pdv2{u}{x_2}} + f(x,t),
+          \quad a = \sqrt{\frac{T_0}{\rho}},
+          \quad f(x,t) = \frac{F(x,t)}{\rho}
+          \]
+          где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
+          внешнего возмущения.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Трёхмерное волновое уравнение
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \pdv2{u}{t} = a^2 \paren{\pdv2{u}{x_1} + \pdv2{u}{x_2} + \pdv2{u}{x_3}} + f(x,t),
+          \quad a = \sqrt{\frac{T_0}{\rho}},
+          \quad f(x,t) = \frac{F(x,t)}{\rho}
+          \]
+          где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
+          внешнего возмущения.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнения колебания упругого стержня
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \rho S\dfrac{\partial^2 u}{\partial t^2} - \dfrac{\partial}{\partial x} \left(ES \dfrac{\partial u}{\partial x}\right)=SF(x,t)
+          \]
+          $\rho$ - объемная плотность, $E$ - модуль Юнга, $S$ - площадь поперечного сечения, 
+          $F(x,t)$ - сила на единицу объема
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнения колебания струны в среде с сопротивлением
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \dfrac{\partial^2 u}{\partial t^2} - a^2 \dfrac{\partial^2 u}{\partial x^2} + h\dfrac{\partial u}{\partial t}= f(x,t)
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Оператор Лапласа
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \Delta \overset{\mathrm{def}}{=} \pdv2{}{x_1} + \pdv2{}{x_2} + \pdv2{}{x_3}.
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Волновой оператор
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \square_a = \pdv2{}{t} - a^2 \Delta.
+          \]
+          В случае $a = 1$ принято $\square_1 \equiv \square$.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Единая запись волновых уравнений
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \pdv2{u}{t} = a^2 \Delta u + f
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Закон Фурье
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>тепла</i> в единицу времени через элемент поверхности $dS$ равен 
+          \[
+          dQ=-k\dfrac{\partial u}{\partial n}dS
+          \]
+        </div>
+      </li>
+
+      
+      <li class="question">
+        <div class="name">
+          Закон Нэрнста (аналог закона Фурье)
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>частиц</i> в единицу времени через элемент поверхности $dS$ равен 
+          \[
+          dQ=-D\dfrac{\partial u}{\partial n}dS
+          \]
+          $u(x,t)$ - плотность частиц в точке $x$ в момент времени $t$, $D$ - <i>коэффициент диффузии</i> 
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение диффузии
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \rho \pd{u}{t} - \nabla \cdot (k \nabla u) + qu = F(x,t)
+          \]
+          Альтернативная запись:
+          \[
+          \rho \pd{u}{t} - \div (p \; \grad u) + qu = F(x,t)
+          \]
+          $\rho$ - коэффициент пористости, $q$ - характеристика поглощения среды
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение теплопроводности
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \rho \pd{u}{t} - \div (p \; \grad u) + qu = F(x,t)
+          \]
+          $\rho$ - плотность, $u(x,t)$ - температура среды в точке $x=(x_1, x_2, x_3)$,
+          $F(x,t)$ - интенсивность источников тепла в точке $x$ в момент времени $t$ (кол-во тепла, поглощаемого или
+          выделяемого в единицу времени в единице объема)
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение теплопроводности (случай однородной среды)
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Среда однородна, поэтому её плотность, удельная плотность и коэффициент теплопроводности
+          постоянны ($\rho = \const, \; c = \const, \; k = \const$):
+          \[
+          \pd{u}{t} = a^2 \Delta u + f,
+          \quad a^2 = \frac{k}{c \rho},
+          \quad f = \frac{F}{c \rho}.
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Стационарное уравнение
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          - \nabla \cdot (k \nabla u) + qu = F(x).
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение Пуассона
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \Delta u = -f, \quad f = \frac{F}{k}
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Уравнение Лапласа
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          \[
+          \Delta u = 0
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Классификация линейных уравнений второго порядка
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Матрица линейного уравнения:
+          \[
+          A = \left(
+          \begin{array}{cccc}
+          A_{11} & A_{12} & \dots & A_{1n} \\
+          A_{21} & A_{22} & \dots & A_{2n} \\
+          \dots & \dots & \dots & \dots \\
+          A_{n1} & A_{n2} & \dots & A_{nn}
+          \end{array}
+          \right)
+          \]
+
+          Вычислим собственные числа матрицы $A$ в точке $x$: пусть в этой точке матрица имеет
+          $\alpha$ положительных, $\beta$ отрицательных и $\gamma$ нулевых характеристических чисел.
+          Тогда говорят, что в рассматриваемой точке $x$ линейное уравнение принадлежит к типу
+          $(\alpha, \, \beta, \, \gamma)$.
+        </div>
+
+      <li class="question">
+        <div class="name">
+          Определение гиперболического, параболического и эллиптического типов уравнений 2-го порядка
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          <ol>
+            <li>
+              $(n-1, 1, 0)$ или $(1, n-1, 0)$ &mdash; гиперболический тип. К нему принадлежит уравнение
+              колебаний струны, волновое уравнение;
+            </li>
+
+            <li>
+              $(n-1, 0, 1)$ или $(0, n-1, 1)$ &mdash; параболический тип &mdash; уравнение теплопроводности.
+            </li>
+
+            <li>
+              $(n, 0, 0)$ или $(0, n, 0)$ &mdash; эллиптический тип. Получается как из волнового уравнения,
+              так и из уравнения теплопроводности, если рассматривается стационарный процесс.
+            </li>
+          </ol>
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Задача Дирихле
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Пусть в теле стационарное распределение температур. В $\R^3$ в неоднородной и анизотропной среде 
+          под действием источников тепла интенсивности $F(x_1, x_2, x_3)$ имеем 
+          <i>стационарное распределение температур</i> (эллиптическое уравнение):
+          \[
+          \sum_{j,k=1}^3 \pd{}{x_j} \paren{A_{jk}(x) \pd{u}{x_k}} = f(x)
+          \]
+          Пусть можно измерить температуру на границе $\Gamma = \partial \Omega \Rightarrow$ считаем известной функцию
+          \[
+          \varphi(x): u \big|_{\Gamma}=\varphi(x)
+          \]
+          Имеем задачу Дирихле:
+          \[
+          \left\{
+          \begin{aligned}
+          &\sum_{j,k=1}^3 \pd{}{x_j} \paren{A_{jk}(x) \pd{u}{x_k}} = f(x), \\
+          &\left. u \right|_\Gamma = \varphi(x), \quad x \in \Gamma
+          \end{aligned}
+          \right.
+          \]
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Задача Неймана
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          При известном тепловом потоке через $\Gamma=\partial D$ считаем:
+          \[
+          \sum_{j,k=1}^3 A_{jk}(x)\pd{u}{x_k}\cos (\textbf{n},x_i) \big|_{\Gamma}=\psi(x) 
+          \]
+          $\psi(x)$ совпадает с точностью до константы с интенсивностью потока тепла в точке $x\in\Gamma$
+      
+          Задача Неймана:
+          \[
+          \left\{
+          \begin{aligned}
+          &\sum_{j,k=1}^3 \pd{}{x_j} \left( A_{jk}(x)\pd{u}{x_k} \right) = f(x), \\
+          &\sum_{j,k=1}^3 A_{jk}(x)\pd{u}{x_k}\cos (\textbf{n},x_i) \big|_{\Gamma}=\psi(x)
+          \end{aligned}
+          \right.
+          \]
+
+          При условии $A_{jk} = \delta_{jk}$, имеем вид задачи Неймана:
+          \[
+          \left\{
+          \begin{aligned}
+          &\Delta u = f, \\
+          &\left. \pd{u}{\vb{n}} \right|_\Gamma = \psi(x),
+          \end{aligned}
+          \right.
+          \]
+          где $\vb{n}$ &mdash; внешняя нормаль.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Постановка задачи Коши для линейного уравнения 2-го порядка
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Рассмотрим линейное уравнение второго порядка:
+          \[
+          \sum_{k,j=1}^n A_{jk} \ppdv{u}{x_j}{x_k} + \sum_{j=1}^n B_j \pd{u}{x_j} + Cu = f(x).
+          \]
+
+          Пусть $\Gamma \subset \mathbb{R}^n$. С каждой точкой $x \in \Gamma$ свяжем
+          направление $\lambda$, некасательное к $\Gamma$.
+
+          Постановка задачи Коши: в окрестности $\Gamma$ требуется найти решение линейного уравнения,
+          удовлетворяющее <i>условиям Коши</i>
+          \[
+          \left. u \right|_\Gamma = \varphi_0(x), \quad \left. \pd{u}{\lambda} \right|_\Gamma = \varphi_1(x),
+          \]
+          где $\varphi_0(x) \in C^2(\Gamma), \; \varphi_1(x) \in C^1(\Gamma)$ называются <i>данными Коши</i>,
+          а $\Gamma$ &mdash; <i>поверхностью Коши</i>.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение: банахово пространство
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          <div class="definition">
+            Полное нормированное векторное пространство называется <i>банаховым</i>.
+          </div>
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение: гильбертово пространство
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          <div class="definition">
+            Полное унитарное векторное пространство называется <i>гильбертовым</i>.
+          </div>
+
+          <div class="note">
+            Всякое гильбертово пространство является банаховым. Обратное неверно.
+          </div>
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение: корректная краевая задача
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          <div class="definition">
+            Краевая задача называется <i>корректной</i> в паре банаховых пространств
+            $(B_1, B_2)$, если решение краевой задачи единственно в $B_1$ и существует
+            при любых данных из $B_2$, и если достаточно малому изменению данных в норме
+            $B_2$ соответствует сколь угодно малое изменение в норме $B_1$.
+          </div>
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение: уравнение характеристик, характеристическая поверхность, характеристическая форма
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Рассмотрим квазилинейное уравнение
+          \[
+          A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} + \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+          \quad \alpha, \beta = \overline{1,n}.
+          \]
+
+          <div class="definition">
+            Уравнение
+            \[
+            A_{\alpha \beta} \pd{\omega}{x_\alpha} \pd{\omega}{x_\beta} = 0
+            \]
+            называют <i>уравнением характеристик</i> исходного дифференциального уравнения.
+          </div>
+
+          <div class="definition">
+            Если $\omega(x_1, \dots, x_n)$ удовлетворяет уравнению характеристик, то поверхность
+            \[
+            \omega(x_1, \dots, x_n) = C = \const
+            \]
+            называется <i>характеристической поверхностью</i> (<i>характеристикой</i>) исходного уравнения.
+          </div>
+
+          <div class="definition">
+            Квадратичная форма
+            \[
+            (At, t) = A_{\alpha \beta} t_\alpha t_\beta
+            \]
+            называется <i>характеристической формой</i> исходного уравнения.
+          </div>
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+          Определение: слабый разрыв, фронт волны
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+          Рассмотрим квазилинейное уравнение
+          \[
+          A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} + \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+          \quad \alpha, \beta = \overline{1,n}.
+          \]
+
+          Пусть данные Коши заданы на достаточно гладкой поверхности $\Gamma$, определяемой уравнением
+          \[
+          \mu(x_1, \dots, x_n) = 0.
+          \]
+
+          <div class="definition">
+            Говорят, что решение квазилинейного уравнения второго порядка имеет на поверхности $\mu(x_1, \dots, x_n) = 0$
+            <i>слабый разрыв</i>, если при переходе через эту поверхность это решение и его первые производные
+            непрерывны, а некоторые производные порядка выше первого терпят разрыв первого рода.
+          </div>
+
+          Обозначив $x_n = t$, поверхность запишется в виде
+          \[
+          \mu(x_1, \dots, x_{n-1}, t) = 0,
+          \]
+          откуда, выразив $t$, получим
+          \[
+          t = \nu(x_1, \dots, x_{n-1}).
+          \]
+
+          <div class="definition">
+            Поверхность $\nu(x_1, \dots, x_{n-1}) = \const$ в пространстве $\mathbb{R}^{n-1}$ называют <i>фронтом волны</i>.
+          </div>
+        </div>
+      </li>
+
+      
+
+
+    </ol>
+  </body>
+</html>
+
+
