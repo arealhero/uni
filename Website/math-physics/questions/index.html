@@ -807,18 +807,22 @@
 	  \[
 	  \ppdv{u}{x_1}{x_2} = 0;
 	  \]
-	  оно гиперболическое:
-	  \[
-	  \begin{gathered}
-	  A = \left(
-	  \begin{array}{cc}
-	  0 & 1/2 \\
-	  1/2 & 0
-	  \end{array}
-	  \right), \\
-	  \lambda^2 - 1/4 = 0 \implies \lambda = \pm 1/2.
-	  \end{gathered}
-	  \]
+	  оно гиперболическое.
+	  <button class="derivation-toggle"></button>
+	  <div class="derivation">
+	    Проверим по определению:
+	    \[
+	    \begin{gathered}
+	    A = \left(
+	    \begin{array}{cc}
+	    0 & 1/2 \\
+	    1/2 & 0
+	    \end{array}
+	    \right), \\
+	    \lambda^2 - 1/4 = 0 \implies \lambda = \pm 1/2.
+	    \end{gathered}
+	    \]
+	  </div>
 
 	  <div class="remark">
 	    Это уравнение переходит в однородное уравнение колебаний струны при замене
@@ -846,17 +850,13 @@
 
 	  <br/>
 
-	  Для непрерывности решения $u(x, t)$ должны выполняться условия
+	  Для непрерывности решения $u(x_1, x_2)$ должны выполняться условия
 	  \[
 	  \begin{array}{cc}
 	  \varphi_1(0) = \psi_1(0), & \varphi_2(0) = \psi_1(1), \\
 	  \varphi_1(1) = \psi_2(0), & \varphi_2(1) = \psi_2(1).
 	  \end{array}
 	  \]
-
-	  <b>Спойлер:</b> задача неразрешима при произвольно заданных функциях из $B_2$.
-
-	  <br/>
 
 	  Найдём общее решение гиперболического уравнения:
 	  \[
