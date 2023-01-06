@@ -1,3 +1,5 @@
+// FIXME: remove code duplication
+
 var randomIndex = 0;
 var randomQuestions = [];
 
@@ -43,6 +45,16 @@ function ShowProof(proof, button) {
   proof.style.display = "block";
 }
 
+function HideDerivation(derivation, button) {
+  button.textContent = "Показать вывод";
+  derivation.style.display = "none";
+}
+
+function ShowDerivation(derivation, button) {
+  button.textContent = "Скрыть вывод";
+  derivation.style.display = "block";
+}
+
 function ToggleProofVisibility() {
   var button = this.querySelector(".proof-toggle");
   var proof = this.querySelector(".proof");
@@ -51,6 +63,17 @@ function ToggleProofVisibility() {
     ShowProof(proof, button);
   } else {
     HideProof(proof, button);
+  }
+}
+
+function ToggleDerivationVisibility() {
+  var button = this;
+  var derivation = this.nextElementSibling;
+
+  if (derivation.style.display === "none") {
+    ShowDerivation(derivation, button);
+  } else {
+    HideDerivation(derivation, button);
   }
 }
 
@@ -73,6 +96,15 @@ function ShowProofs() {
   }
 }
 
+function HideDerivations() {
+  var derivationButtons = document.getElementsByClassName("derivation-toggle");
+  for (var i = 0; i < derivationButtons.length; ++i) {
+    var button = derivationButtons[i];
+    var derivation = button.nextElementSibling;
+    HideDerivation(derivation, button);
+  }
+}
+
 function SetProofButtonsHandlers() {
   var proofButtons = document.getElementsByClassName("proof-toggle");
   for (var i = 0; i < proofButtons.length; ++i) {
@@ -80,6 +112,15 @@ function SetProofButtonsHandlers() {
     var buttonParent = button.parentNode;
     button.textContent = "Скрыть доказательство";
     button.onclick = ToggleProofVisibility.bind(buttonParent);
+  }
+}
+
+function SetDerivationButtonsHandlers() {
+  var derivationButtons = document.getElementsByClassName("derivation-toggle");
+  for (var i = 0; i < derivationButtons.length; ++i) {
+    var button = derivationButtons[i];
+    button.textContent = "Показать вывод";
+    button.onclick = ToggleDerivationVisibility.bind(button);
   }
 }
 
@@ -95,6 +136,7 @@ function HideQuestions() {
   }
 
   HideProofs();
+  HideDerivations();
 }
 
 function ShowQuestions() {
@@ -160,6 +202,9 @@ window.onload = function() {
   }
 
   SetProofButtonsHandlers();
+
+  SetDerivationButtonsHandlers();
+  HideDerivations();
 
   var nonEmptyQuestions = Array.from(questions).filter((question) => {
     var name = question.querySelector(".name");
