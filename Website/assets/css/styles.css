@@ -143,8 +143,8 @@
   color: var(--blue-color);
 }
 
-.todo::after {
-  content: 'TODO';
+.todo::before {
+  content: 'TODO: ';
   color: var(--red-color);
   font-weight: bold;
 }
