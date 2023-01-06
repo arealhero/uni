@@ -728,6 +728,75 @@
 
       <li class="question">
         <div class="name">
+	  Пример Адамара некорректной краевой задачи
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+	  Рассмотрим
+	  \[
+	  \pdv2{u}{x} + \pdv2{u}{x} = 0.
+	  \]
+	  Поверхность Коши $\Gamma$ &mdash; ось $x$, условия Коши:
+	  \[
+	  \left. u \right|_{y=0} = \varphi(x), \quad \left. \pd{u}{y} \right|_{y=0} = 0.
+	  \]
+
+	  Будем искать решение в полосе $0 < y < \delta, \; \delta > 0$:
+	  \[
+	  \Omega = \left\{ (x,y): x \in \mathbb{R}, y \in (0, \delta) \right\};
+	  \]
+	  в качестве $\lambda$ взято направление $y$.
+
+	  <br/>
+
+	  Совокупность данных &mdash; единственная функция $\varphi(x)$:
+	  \[
+	  B_2 := \varphi(x) \in C(\mathbb{R}), \quad \abs{\varphi(x)} < \infty;
+	  \]
+	  $B_1 := C(\Omega)$ &mdash; пространство функций, непрерывных и ограниченных в $\Omega$.
+
+	  <br/>
+
+	  За область определеня оператора краевой задачи примем множество функций $u(x,y) \in C(\Omega)$, имеющих
+	  непрерывные вторые производные и удовлетворяющие условию
+	  \[
+	  \left. \pd{u}{y} \right|_{y=0} = 0.
+	  \]
+
+	  <div class="todo">Доказать единственность решения этой задачи.</div>
+
+	  Из единственности решения этой задачи следует, что функции $\varphi(x) \equiv 0$
+	  соответствует решение $u(x,y) \equiv 0$.
+
+	  Рассмотрим теперь изменённые условия Коши
+	  \[
+	  \left. u \right|_{y=0} = \frac{\cos nx}{n}, \quad \left. \pd{u}{y} \right|_{y=0} = 0, \quad n \in \mathbb{N}.
+	  \]
+	  Решением задачи является функция
+	  \[
+	  u(x,y) = \frac{\cos nx \, \ch ny}{n}.
+	  \]
+
+	  Изменение в норме $B_2$ мало:
+	  \[
+	  \norm{\varphi}_{B_2} = \norm{\frac{\cos nx}{n}}_{B_2} =
+	    \max_{x \in \mathbb{R}} \abs{\frac{\cos nx}{n}} = \frac{1}{n}
+	    \underset{n \to \infty}{\longrightarrow} 0.
+	  \]
+
+	  В то же время
+	  \[
+	  \norm{u}_{B_1} =
+	    \max_{(x,y) \in \Omega} \abs{\frac{\cos nx \, \ch ny}{n}} = \frac{\ch n\delta}{n}
+	    \underset{n \to \infty}{\longrightarrow} \infty,
+	  \]
+	  следовательно, сколь угодно малые по норме $B_2$ изменения данных могут вызвать
+	  сколь угодно большие по норме $B_1$ изменения решения.
+        </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
           Определение: уравнение характеристик, характеристическая поверхность, характеристическая форма
         </div>
         <button class="toggle-button"></button>
