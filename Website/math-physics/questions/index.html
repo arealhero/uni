@@ -1073,13 +1073,14 @@
 
       <li class="question">
         <div class="name">
-          Определение: уравнение характеристик, характеристическая поверхность, характеристическая форма
+	  Определение: уравнение характеристик
         </div>
         <button class="toggle-button"></button>
         <div class="content">
           Рассмотрим квазилинейное уравнение
           \[
-          A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} + \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+          A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} +
+	  \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
           \quad \alpha, \beta = \overline{1,n}.
           \]
 
@@ -1090,23 +1091,104 @@
             \]
             называют <i>уравнением характеристик</i> исходного дифференциального уравнения.
           </div>
+	</div>
+      </li>
 
+      <li class="question">
+        <div class="name">
+          Определение: характеристическая поверхность (характеристика)
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
           <div class="definition">
-            Если $\omega(x_1, \dots, x_n)$ удовлетворяет уравнению характеристик, то поверхность
+            Если $\omega(x_1, \dots, x_n)$ удовлетворяет уравнению характеристик
+            \[
+            A_{\alpha \beta} \pd{\omega}{x_\alpha} \pd{\omega}{x_\beta} = 0,
+            \]
+	    то поверхность
             \[
             \omega(x_1, \dots, x_n) = C = \const
             \]
-            называется <i>характеристической поверхностью</i> (<i>характеристикой</i>) исходного уравнения.
+            называется <i>характеристической поверхностью</i> (<i>характеристикой</i>) исходного
+	    уравнения.
           </div>
+	</div>
+      </li>
 
+      <li class="question">
+        <div class="name">
+          Определение: характеристическая форма
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
           <div class="definition">
             Квадратичная форма
             \[
             (At, t) = A_{\alpha \beta} t_\alpha t_\beta
             \]
-            называется <i>характеристической формой</i> исходного уравнения.
+            называется <i>характеристической формой</i> исходного квазилинейного ДУЧП.
           </div>
         </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+	  Свойство характеристик: инвариантность при преобразовании независимых переменных
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+	  <div class="theorem">
+	    Пусть $\omega(x_1, \dots, x_n)$ &mdash; решение уравнения
+	    \[
+	    A_{\alpha \beta} \pd{\omega}{x_\alpha} \pd{\omega}{x_\beta} = 0,
+	    \]
+	    (другими словами, $\omega(x)$ &mdash; характеристика).
+
+	    <p>
+	      Тогда если преобразование (<span class="todo">невырожденное?</span>)
+	      \[
+	      \xi_\gamma = \xi_\gamma(x_1, \dots, x_n), \quad \gamma = \overline{1,n}
+	      \]
+	      переводит функцию $\omega(x)$ в функцию
+	      $\widetilde{\omega}(\xi_1(x), \dots, \xi_n(x))$, то функция $\widetilde{\omega}$
+	      является решением уравнения
+	      \[
+	      \widetilde{A}_{\alpha \beta} \pd{\widetilde{\omega}}{\xi_\alpha}
+	      \pd{\widetilde{\omega}}{\xi_\beta} = 0,
+	      \]
+	      то есть является характеристикой преобразованного квазилинейного ДУЧП.
+	    </p>
+	  </div>
+
+	  <button class="proof-toggle"></button>
+	  <div class="proof">
+	    Найдём производные:
+	    \[
+	    \pd{\omega}{x_\alpha} = \pd{\widetilde{\omega}}{\xi_\gamma} \pd{\xi_\gamma}{x_\alpha},
+	    \quad
+	    \pd{\omega}{x_\beta} = \pd{\widetilde{\omega}}{\xi_\mu} \pd{\xi_\mu}{x_\beta},
+	    \]
+	    тогда уравнение характеристик примет вид
+	    \[
+	    A_{\alpha \beta}
+	    \pd{\widetilde{\omega}}{\xi_\gamma} \pd{\xi_\gamma}{x_\alpha}
+	    \pd{\widetilde{\omega}}{\xi_\mu} \pd{\xi_\mu}{x_\beta}
+	    =
+	    \underbrace{
+	    A_{\alpha \beta}
+	    \pd{\xi_\gamma}{x_\alpha}
+	    \pd{\xi_\mu}{x_\beta}
+	    }_{\displaystyle \widetilde{A}_{\gamma \mu}}
+	    \pd{\widetilde{\omega}}{\xi_\gamma}
+	    \pd{\widetilde{\omega}}{\xi_\mu}
+	    =
+	    \widetilde{A}_{\gamma \mu}
+	    \pd{\widetilde{\omega}}{\xi_\gamma}
+	    \pd{\widetilde{\omega}}{\xi_\mu}
+	    = 0.
+	    \]
+	  </div>
+	</div>
       </li>
 
       <li class="question">
@@ -1146,18 +1228,6 @@
           </div>
         </div>
       </li>
-
-      <li class="question">
-        <div class="name">
-          
-        </div>
-        <button class="toggle-button"></button>
-        <div class="content">
-          
-        </div>
-      </li>
-
-
     </ol>
   </body>
 </html>
