@@ -169,7 +169,7 @@ button.derivation-toggle {
   color: var(--blue-color);
 }
 
-.todo {
+div.todo {
     margin: 0 10px;
     padding: 0 10px;
     border-left: 3px solid var(--red-color);
