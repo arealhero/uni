@@ -68,6 +68,7 @@
 
       $\global\def\vb#1{\textbf{#1}}$
 
+      $\global\def\def{\text{def}}$
       $\global\def\const{\text{const}\,}$
       $\global\def\res{\text{res}\,}$
       $\global\def\Res{\text{Res}\,}$
@@ -929,6 +930,145 @@
 	    $F_1(0) = 0$. Эту гипотезу необходимо формально проверить.
 	  </div>
         </div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+	  Определение: невырожденное преобразование независимых переменных
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+	  <div class="definition">
+	    Преобразование
+	    \[
+	    \xi_r = \xi_r(x_1, \dots, x_n), \quad r = \overline{1,n}
+	    \]
+	    называется <i>независимым</i> в некоторой области изменения точки $x$,
+	    если в ней оно взаимно однозначно, т.е. его якобиан не равен нулю.
+	  </div>
+	</div>
+      </li>
+
+      <li class="question">
+        <div class="name">
+	  Теорема о сохранении типа квазилинейного ДУЧП при
+	  невырожденном преобразовании независимых переменных
+        </div>
+        <button class="toggle-button"></button>
+        <div class="content">
+	  <div class="theorem">
+	    Тип квазилинейного ДУЧП
+	    \[
+	    A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta}
+	    + \Phi \paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+	    \quad \alpha,\beta = \overline{1,n},
+	    \]
+	    не меняется при невырожденном преобразовании независимых
+	    переменных
+	    \[
+	    \xi_r = \xi_r(x_1, \dots, x_n), \quad r = \overline{1,n}.
+	    \]
+	  </div>
+
+	  <button class="proof-toggle"></button>
+	  <div class="proof">
+	    <p>
+	      Найдём вид уравнения, полученного из исходного невырожденным
+	      преобразованием.
+	    </p>
+
+	    <p>
+	      Пусть все $\xi_r$ имеют непрерывные вторые производные. Тогда
+	      \[
+	      \begin{gathered}
+	      \pd{u}{x_\beta} = \pd{u}{\xi_\gamma} \pd{\xi_\gamma}{x_\beta}, \\
+	      \ppdv{u}{x_\alpha}{x_\beta} = \pd{}{x_\alpha}
+	      \paren{\pd{u}{\xi_\gamma} \pd{\xi_\gamma}{x_\beta}}
+	      = \ppdv{u}{\xi_\mu}{\xi_\gamma} \pd{\xi_\mu}{x_\alpha}
+	      \pd{\xi_\gamma}{x_\beta} + \pd{u}{\xi_\gamma}
+	      \ppdv{\xi_\gamma}{x_\alpha}{x_\beta},
+	      \end{gathered}
+	      \]
+	      где $\mu, \gamma = \overline{1,n}$. Квазилинейное уравнение тогда
+	      запишется в виде
+	      \[
+	      A_{\alpha \beta} \pd{\xi_\gamma}{x_\beta} \pd{\xi_\mu}{x_\alpha}
+	      \ppdv{u}{\xi_\gamma}{\xi_\mu}
+	      +
+	      A_{\alpha \beta} \pd{u}{\xi_\gamma} \ppdv{\xi_\gamma}{x_\alpha}{x_\beta}
+	      + \Phi = 0.
+	      \]
+
+	      Введём обозначения:
+	      \[
+	      \begin{gathered}
+	      \widetilde{A}_{\gamma \mu} := A_{\alpha \beta} \pd{\xi_\gamma}{x_\beta}
+	      \pd{\xi_\mu}{x_\alpha}, \quad
+	      \Phi_1 := \Phi + A_{\alpha \beta} \ppdv{\xi_\gamma}{x_\alpha}{x_\beta}
+	      \pd{u}{\xi_\gamma},
+	      \end{gathered}
+	      \]
+	      тогда исходное уравнение примет вид
+	      \[
+	      \widetilde{A}_{\gamma \mu} \ppdv{u}{\xi_\gamma}{\xi_\mu}
+	      + \Phi_1 \paren{\xi_1, \dots, \xi_n, u, \pd{u}{\xi_1}, \dots, \pd{u}{\xi_n}} = 0.
+	      \]
+	    </p>
+
+	    <div class="statement">
+	      Матрица $\widetilde{A}_{\gamma \mu}$ симметрична.
+
+	      <button class="derivation-toggle"></button>
+	      <div class="derivation">
+		\[
+		\widetilde{A}_{\gamma \mu} = A_{\alpha \beta}
+		\pd{\xi_\gamma}{x_\beta} \pd{\xi_\mu}{x_\alpha}
+		= A_{\beta \alpha} \pd{\xi_\mu}{x_\alpha} \pd{\xi_\gamma}{x_\beta}.
+		\]
+
+		В последней сумме поменяем местами $\alpha$ и $\beta$:
+		\[
+		\widetilde{A}_{\gamma \mu} = A_{\alpha \beta}
+		\pd{\xi_\mu}{x_\beta} \pd{\xi_\gamma}{x_\alpha} =
+		\widetilde{A}_{\mu \gamma}, \overset{\def}{\implies}
+		\mbox{матрица $\widetilde{A}$ симметрична}.
+		\]
+	      </div>
+	    </div>
+
+	    <p>
+	      Из симметричности матрицы $\widetilde{A}$ следует, что квазилинейное
+	      ДУЧП после невырожденного преобразования остаётся квазилинейным ДУЧП.
+	    </p>
+
+	    <p>
+	      Остаётся проверить тип полученного ДУЧП.
+	    </p>
+
+	    <p>
+	      Пусть $J$ &mdash; матрица Якоби преобразования $\xi$; оно невырожденное,
+	      то есть $\det J \neq 0$, откуда следует существование обратной матрицы
+	      $J^{-1}$. Тогда
+	      \[
+	      \widetilde{A} = J A J^T.
+	      \]
+
+	      Пусть невырожденное линейное преобразование с матрицей $\Sigma$
+	      преобразовывает матрицу $A$ в диагональную матрицу $D$, то есть
+	      \[
+	      A = \Sigma D \Sigma^T.
+	      \]
+	      Тогда
+	      \[
+	      \widetilde{A} = J \Sigma D \Sigma^T J^T = (J \Sigma) D (J \Sigma)^T,
+	      \]
+	      то есть матрица $\widetilde{A}$ сводится невырожденным преобразованием
+	      с матрицей $J\Sigma$ к той же диагональной матрице $D$,
+	      поэтому количество положительных, отрицательных и нулевых собственных
+	      чисел матриц $A$ и $\widetilde{A}$ совпадают.
+	    </p>
+	  </div>
+	</div>
       </li>
 
       <li class="question">
