@@ -106,6 +106,12 @@
   font-weight: bold;
 }
 
+.theorem {
+    margin: 10px;
+    padding: 0 10px;
+    border-left: 1px solid black;
+}
+
 .theorem::before {
   content: 'Теорема. ';
   font-weight: bold;
