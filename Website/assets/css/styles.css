@@ -106,7 +106,11 @@
   font-weight: bold;
 }
 
-.theorem {
+.definition,
+.theorem,
+.lemma,
+.proof,
+.derivation {
     margin: 10px;
     padding: 0 10px;
     border-left: 1px solid black;
@@ -134,12 +138,6 @@
 button.derivation-toggle {
     display: block;
     margin-bottom: 5px;
-}
-
-.derivation {
-    margin: 0 10px;
-    padding: 0 10px;
-    border-left: 3px solid black;
 }
 
 .derivation::before {
