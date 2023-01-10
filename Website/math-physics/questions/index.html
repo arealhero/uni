@@ -78,92 +78,193 @@
     $\global\def\Im{\text{Im}\,}$
     $\global\def\ch{\text{ch}\,}$
     $\global\def\sh{\text{sh}\,}$
+    $\global\def\tg{\mathrm{tg}\,}$
     $\global\def\argtg{\text{argtg}\,}$
   </div>
 
   <ol id="questions">
     <li class="question">
       <div class="name">
-        Определение ДУЧП
+        Определение: дифференциальное уравнение в частных производных порядка $m$
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Рассмотрим $D \in \R^n, n\geq 2$. Пусть $x=(x_1,\dots,x_n)\in D, F(x,\dots,p_{i_1,\dots,i_n},\dots)$ -
-        вещественная функция точек $x\in D$ и
-        переменных $p_{i_1,\dots,i_n}, i_j \in \mathbb{Z}^{+}, \displaystyle\sum_{j=1}^n i_j = k, k=\overline{0,m}\\$
-        По крайней мере одна из частных производных $\dfrac{\partial F}{\partial p_{i_1,\dots,i_n}}\not = 0$. Так же
-        $\displaystyle\sum_{j=1}^n i_j = k = m$.
-        Тогда равенство
+        <div class="assumptions">
+          <ul>
+            <li>
+              Задана область $D \subset \R^n, \; n \geqslant 2$.
+            </li>
+
+            <li>
+              Точка $x \in D$, причём $x_1, \dots, x_n$ &mdash; её декартовые прямоугольные
+              координаты.
+            </li>
+
+            <li>
+              $p_{i_1 \dots i_n}$ &mdash; вещественные переменные, где
+              $i_j \in \mathbb{Z}^+, \; j = \overline{1,n}$, причём для любого
+              $p_{i_1 \dots i_n}$
+              \[
+              \sum_{j=1}^n i_j = k, \quad k = \overline{0,m}, \quad m \geqslant 1.
+              \]
+            </li>
+
+            <li>
+              $F(x_1, \dots, x_n, p_{i_1 \dots i_n}, \dots)$ &mdash; заданная вещественная
+              функция, для которой
+              \[
+              \exists p_{i_1 \dots i_n}, \quad \sum_{j=1}^n i_j = m:
+              \quad \pd{F}{p_{i_1 \dots i_n}} \neq 0.
+              \]
+            </li>
+          </ul>
+        </div>
+
+        <div class="definition">
+          Равенство вида
+          \[
+          F\paren{x, \dots, \frac{\partial^k u}{\partial x_1^{i_1} \dots \partial x_n^{i_n}}, \dots} = 0
+          \]
+          называется <i>дифференциальным уравнением в частных производных (ДУЧП) порядка $m$</i>
+          относительно функции $u \in C(D)$.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: регулярное решение ДУЧП
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Функция
+          \[
+          u: D \to \mathbb{R}, \quad u \in C^m(D),
+          \]
+          обращающая ДУЧП в тождество, называется
+          <i>регулярным решением</i>.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: фундаментальное решение ДУЧП
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Решение $u(x) \in C^m(D)$, теряющее свойство регулярности в изолированных точках,
+          линиях, поверхностях или многообразиях особого рода, называется
+          <i>фундаментальным решением</i>.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: линейное ДУЧП
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Дифференциальное уравнение
+          \[
+          F\paren{x, \dots, \frac{\partial^k u}{\partial x_1^{i_1} \dots \partial x_n^{i_n}}, \dots} = 0
+          \]
+          называется <i>линейным</i>, если $F$ &mdash; линейная функция относительно всех своих переменных.
+        </div>
+
+        <p>
+          Обозначение: $\mathrm{L} u = f$, где $\mathrm{L}$ &mdash; линейный дифференциальный оператор,
+          $f$ &mdash; неоднородность.
+        </p>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: квазилинейное ДУЧП
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Дифференциальное уравнение
+          \[
+          F\paren{x, \dots, \frac{\partial^k u}{\partial x_1^{i_1} \dots \partial x_n^{i_n}}, \dots} = 0
+          \]
+          называется <i>квазилинейным</i>, если $F$ &mdash; линейная функция относительно старших
+          производных, то есть относительно переменных
+          $p_{i_1 \dots i_n}$, у которых $\sum\limits_{j=1}^n i_j = m$.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Общий вид линейного ДУЧП 2-го порядка
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <p>
+          \[
+          \sum_{j,k=1}^n A_{jk}(x) \ppdv{u}{x_j}{x_k} +
+          \sum_{j=1}^n B_j(x) \pd{u}{x_j} + C(x) u = f(x),
+          \]
+          где $A_{jk}, B_j, C, f$ &mdash; заданные в $D$ вещественные функции.
+        </p>
+
+        Сокращенная форма записи:
         \[
-        F\left(x,\dots, \dfrac{\partial^k u}{\partial x_1^{i_1},\dots,\partial x_n^{i_n}},\dots\right)=0
-        \]
-        называется ДУЧП (Дифференциальное Уравнение в Частных Производных) порядка $m$ относительно $u(x)\in C$
-      </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Регулярное решение
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        $u(x)\in C^{(m)}(D)$, обращающая ДУЧП в тождество, - <i>регулярное решение</i>.
-      </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Фундаментальное решение
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        Решение $u(x)\in C^{(m)}(D)$, теряющее свойство регулярности в изолированных точках,
-        линиях, поверхностях или многообразиях особого рода - <i>фундаментальное решение</i>.
-      </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Определение линейного ДУЧП
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        Если $F\left(x,\dots, \dfrac{\partial^k u}{\partial x_1^{i_1},\dots,\partial x_n^{i_n}},\dots\right)$
-        линейно относительно <i>всех переменных</i> $p_{i_1,\dots,i_n}$, то оно называется <i>линейным</i>,
-        $\left(\displaystyle\sum_{j=1}^n i_j = k, k=\overline{0,m}\right)\\$
-        $Lu = f$ - обозначение линейного уравнения, $L$ - <i>линейный оператор</i>.$\\$
-        Если $f\equiv 0 \Rightarrow Lu = 0$ - <i>однородное</i>, $\\$
-        Если $f\not\equiv 0 \Rightarrow Lu = f$ - <i>неоднородное</i>
-      </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        ДУЧП 2 порядка в общем виде
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        \[
-        \displaystyle\sum_{j,k=1}^n A_{jk}(x)\dfrac{\partial^2 u}{\partial x_j \partial x_k} +
-        \displaystyle\sum_{j=1}^n B_j(x)\dfrac{\partial u}{\partial x_j}+c(x)u=f(x)
-        \]
-        Сокращенная запись:
-        \[
-        A_{\alpha \beta}(x)\dfrac{\partial^2 u}{\partial x_\alpha \partial x_\beta} +
-        B_\alpha(x)\dfrac{\partial u}{\partial x_\alpha}+c(x)u=f(x),\\ \alpha, \beta = \overline{1,n}
+        A_{\alpha \beta}(x) \ppdv{u}{x_\alpha}{x_\beta} +
+        B_\alpha(x) \pd{u}{x_\alpha} + C(x) u = f(x), \quad \alpha,\beta = \overline{1,n}.
         \]
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Определение квазилинейного ДУЧП
+        Лемма о симметричности матрицы коэффициентов линейного ДУЧП 2-го порядка
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Если $F\left(x,\dots, \dfrac{\partial^k u}{\partial x_1^{i_1},\dots,\partial x_n^{i_n}},\dots\right)$
-        линейно относительно <i>старших производных</i>, то оно называется <i>квазилинейным</i>,
-        $\left(\displaystyle\sum_{j=1}^n i_j = m\right)$
+        <div class="lemma">
+          Матрица коэффициентов $A$ линейного ДУЧП 2-го порядка
+          \[
+          A_{\alpha \beta}(x) \ppdv{u}{x_\alpha}{x_\beta} +
+          B_\alpha(x) \pd{u}{x_\alpha} + C(x) u = f(x), \quad \alpha,\beta = \overline{1,n}.
+          \]
+          симметрична.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          Из непрерывности функции $u$ следует равенство смешанных производных:
+          \[
+          \ppdv{u}{x_j}{x_k} = \ppdv{u}{x_k}{x_j}, \quad j,k = \overline{1,n},
+          \]
+          причём
+          \[
+          \ppdv{u}{x_j}{x_k} = \ppdv{u}{x_k}{x_j} = \frac{1}{2}
+          \paren{\ppdv{u}{x_j}{x_k} + \ppdv{u}{x_k}{x_j}}.
+          \]
+          Тогда
+          \[
+          \begin{aligned}
+          A_{jk} \ppdv{u}{x_j}{x_k} + A_{kj} \ppdv{u}{x_k}{x_j}
+          &=
+          \frac{A_{jk}}{2} \paren{\ppdv{u}{x_j}{x_k} + \ppdv{u}{x_k}{x_j}}
+          +
+          \frac{A_{kj}}{2} \paren{\ppdv{u}{x_j}{x_k} + \ppdv{u}{x_k}{x_j}} \\
+          &=
+          \frac{A_{jk} + A_{kj}}{2} \paren{\ppdv{u}{x_j}{x_k} + \ppdv{u}{x_k}{x_j}} \\
+          &=
+          \frac{A_{jk} + A_{kj}}{2} \ppdv{u}{x_j}{x_k} + \frac{A_{jk} + A_{kj}}{2} \ppdv{u}{x_k}{x_j},
+          \end{aligned}
+          \]
+          откуда $A_{jk} = A_{kj}$.
+        </div>
       </div>
     </li>
 
@@ -196,49 +297,116 @@
 
     <li class="question">
       <div class="name">
+        Определение: струна
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          <i>Струна</i> &mdash; упругая нить, не сопротивляющаяся изгибу.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод уравнения малых поперечных колебаний струны
+      </div>
+      <button class="toggle-button"></button>
+      <p>
+        Малые колебания струны характеризуются условием
+        \[
+        \abs{\tg \alpha} = \abs{\pd{u}{x}} \ll 1,
+        \]
+        где $u = u(x,t)$ &mdash; уравнение положения струны в момент времени $t$.
+
+        <div class="images">
+          <img alt="колебание струны" src="images/string-oscillation.png" />
+        </div>
+      </p>
+
+      <p>
+        Из определения струны следует, что натяжение струны $T(x,t)$ в точке $x$ в момент времени $t$
+        направлено по касательной. Кроме того, любой участок струны $(a,b)$ при малом отклонении от
+        прямолинейного положения равновесия практически сохраняет свою длину:
+        \[
+        \int\limits_a^b \sqrt{1 + \paren{\pd{u}{x}}^2} dx \approx \int\limits_a^b dx = b - a = l_0.
+        \]
+      </p>
+
+      <p>
+        В момент времени $t$ натяжение струны можно представить в виде
+        \[
+        T = T_0 + T_1,
+        \]
+        где $T_0$ &mdash; натяжение струны в начальный момент времени $t = 0$, а $T_1$ &mdash;
+        дополнительное усилие в результате отклонения струны от положения равновесия.
+      </p>
+
+      <p>
+        По закону Гука
+        \[
+        T_1 = E \frac{\Delta l}{l_0} S, \quad \text{где } \Delta l = l - l_0.
+        \]
+        Полагая, что
+        \[
+        E \abs{\frac{\Delta l}{l_0}} S \ll T_0, \quad \text{ или, иначе, } \quad
+        \abs{\frac{\Delta l}{l_0}} \ll \frac{T_0}{ES},
+        \]
+        получаем
+        \[
+        \abs{T} \approx T_0 = \const.
+        \]
+      </p>
+
+      <p>
+        Пусть $F(x,t)$ &mdash; плотность внешних сил в точке $x$ в момент времени $t$, направленных
+        перпендикулярно оси $x$, а $\rho(x)$ &mdash; линейная плотность в точке $x$, то есть
+        $\rho dx$ &mdash; масса элемента $dx$.
+      </p>
+
+      <p>
+        Согласно закону Ньютона, проецируя все силы на вертикальную ось, получим
+        \[
+        \at{T \sin\alpha}{x + dx} - \at{T \sin\alpha}{x} + F(x,t) dx = \rho(x) dx \pdv2{u}{t}.
+        \]
+        Так как при малых $\alpha$
+        \[
+        \sin\alpha \sim \alpha \sim \tg\alpha \sim \pd{u}{x}, \qquad \abs{T} \approx T_0,
+        \]
+        то
+        \[
+        \rho \pdv2{u}{t} - T_0 \frac{1}{dx} \paren{\pd{u(x + dx, t)}{x} - \pd{u(x,t)}{x}} = F(x, t).
+        \]
+        При $dx \to 0$ приходим к уравнению <i>вынужденных малых поперечных колебаний струны</i>:
+        \[
+        \rho \pdv2{u}{t} - T_0 \pdv2{u}{x} = F(x,t).
+        \]
+      </p>
+    </li>
+
+    <li class="question">
+      <div class="name">
         Уравнение вынужденных малых поперечных колебаний струны
       </div>
       <button class="toggle-button"></button>
       <div class="content">
         \[
-        \rho(x) \pdv2{u}{t} - T_0 \pdv2{u}{x} = F(x,t),
+        \rho \pdv2{u}{t} - T_0 \pdv2{u}{x} = F(x,t),
         \]
-        где $\rho(x)$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
-        внешнего возмущения в точке $x$ в момент времени $t$.
-      </div>
-      <button class="proof-toggle"></button>
-      <div class="proof">
-        Условие на малые колебания: $|\tan \alpha|=\dfrac{\partial u}{\partial x}\ll 1\\$
-        $u=u(x,t)$ - ур-е положения струны в момент $t$, натяжение струны $T(x,t)$ в точке $x$ направлено по касательной
-        к струне.
-        Любой участок струны $(a,b)$ при отклонение практически сохраняет исходную длину:
-        \[
-        \displaystyle\int_a^b \sqrt{1+\left( \dfrac{\partial^2 u}{\partial x^2} \right)}dx \approx b-a = l_0
-        \]
+        где
+        <ul>
+          <li>
+            $\rho(x)$ &mdash; линейная плотность струны;
+          </li>
 
-        В момент $t: T=T_0 +T_1$, где $T_0$ - натяжение струны в момент $t=0$, $T_1$ - дополнительное усилие в
-        результате отклонения струны от положения равновесия.
-        По закону Гука, $T_1=E\dfrac{\Delta l}{l_0}S$, $E$ - модуль Юнга, $S$ - площадь поперечного сечения.
-        Пусть $\left| \dfrac{\Delta l}{l_0}\right|\ll \dfrac{T_0}{ES} \Rightarrow |T(x,t)|\approx const = T_0$.
+          <li>
+            $T_0$ &mdash; сила натяжения струны в момент времени $t = 0$;
+          </li>
 
-        По закону Ньютона, проектируя силы на вертикальную ось,
-        \[
-        T_0 \sin \alpha \big|_{x+dx} - T_0 \sin \alpha \big|_{x} + F(x,t)dx=\rho(x)dx\dfrac{\partial^2 u}{\partial t^2}
-        \]
-
-        \[
-        \sin\alpha \approx \alpha \approx \tan \alpha \approx \dfrac{\partial u}{\partial x} \Rightarrow
-        \]
-
-        \[
-        \rho \dfrac{\partial^2 u}{\partial t^2} -T_0 \dfrac{1}{dx}
-        \left( \dfrac{\partial u(x+dx)}{\partial x} - \dfrac{\partial u(x,t)}{\partial x} \right) = F(x,t)
-        \]
-
-        При $dx \to 0$ имеем
-        \[
-        \rho \dfrac{\partial^2 u}{\partial t^2} - T_0 \dfrac{\partial^2 u}{\partial x^2} = F(x,t)
-        \]
+          <li>
+            $F(x,t)$ &mdash; плотность внешних сил в точке $x$ в момент времени $t$.
+          </li>
+        </ul>
       </div>
     </li>
 
@@ -250,11 +418,22 @@
       <div class="content">
         \[
         \pdv2{u}{t} - a^2 \pdv2{u}{x} = f(x,t),
-        \quad a = \sqrt{\frac{T_0}{\rho}},
+        \quad \text{где} \quad a = \sqrt{\frac{T_0}{\rho}},
         \quad f(x,t) = \frac{F(x,t)}{\rho},
         \]
-        где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
-        внешнего возмущения.
+        <ul>
+          <li>
+            $\rho = \const$ &mdash; линейная плотность струны;
+          </li>
+
+          <li>
+            $T_0$ &mdash; сила натяжения струны в момент времени $t = 0$;
+          </li>
+
+          <li>
+            $F(x,t)$ &mdash; плотность внешних сил в точке $x$ в момент времени $t$.
+          </li>
+        </ul>
       </div>
     </li>
 
@@ -264,7 +443,8 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Получается из одномерного волнового уравнения при $F(x,t) = 0$:
+        Получается из одномерного волнового уравнения при отсутствии внешних возмущений, то есть при
+        $F(x,t) = 0$:
         \[
         \pdv2{u}{t} = a^2 \pdv2{u}{x},
         \quad a = \sqrt{\frac{T_0}{\rho}},
@@ -302,34 +482,6 @@
         \]
         где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения, $F(x,t)$ &mdash; плотность
         внешнего возмущения.
-      </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Уравнения колебания упругого стержня
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        \[
-        \rho S\dfrac{\partial^2 u}{\partial t^2} - \dfrac{\partial}{\partial x} \left(ES \dfrac{\partial u}{\partial
-        x}\right)=SF(x,t)
-        \]
-        $\rho$ - объемная плотность, $E$ - модуль Юнга, $S$ - площадь поперечного сечения,
-        $F(x,t)$ - сила на единицу объема
-      </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Уравнения колебания струны в среде с сопротивлением
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        \[
-        \dfrac{\partial^2 u}{\partial t^2} - a^2 \dfrac{\partial^2 u}{\partial x^2} + h\dfrac{\partial u}{\partial t}=
-        f(x,t)
-        \]
       </div>
     </li>
 
@@ -376,18 +528,64 @@
 
     <li class="question">
       <div class="name">
-        Закон Фурье
+        Уравнение колебания струны в среде с сопротивлением
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>тепла</i> в единицу времени через элемент
-        поверхности $dS$ равен
         \[
-        dQ=-k\dfrac{\partial u}{\partial n}dS
+        \pdv2{u}{t} - a^2 \pdv2{u}{x} + h \pd{u}{t} = f(x,t), \qquad h = \const.
         \]
       </div>
     </li>
 
+    <li class="question">
+      <div class="name">
+        Уравнение продольного колебания упругого стержня
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        \[
+        \rho S \pdv2{u}{t} - \pd{}{x} \paren{ES \pd{u}{x}} = S F(x,t),
+        \]
+        где
+        <ul>
+          <li>
+            $\rho$ &mdash; объемная плотность;
+          </li>
+
+          <li>
+            $E$ &mdash;
+            <a href="https://wikiless.org/wiki/Модуль_Юнга?lang=ru">
+              модуль Юнга
+            </a>;
+          </li>
+
+          <li>
+            $S$ &mdash; площадь поперечного сечения;
+          </li>
+
+          <li>
+            $F(x,t)$ &mdash; сила на единицу объема.
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Закон Фурье
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>тепла</i> в единицу времени
+          через элемент поверхности $dS$ равен
+          \[
+          dQ = -k \pd{u}{n} dS
+          \]
+        </div>
+      </div>
+    </li>
 
     <li class="question">
       <div class="name">
@@ -395,8 +593,8 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>частиц</i> в единицу времени через элемент
-        поверхности $dS$ равен
+        В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>частиц</i> в единицу времени
+        через элемент поверхности $dS$ равен
         \[
         dQ=-D\dfrac{\partial u}{\partial n}dS
         \]
