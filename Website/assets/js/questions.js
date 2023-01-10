@@ -5,49 +5,55 @@ var randomQuestions = [];
 
 var scrollingSpeed = 200;
 
+function ScrollHalfPageDown()
+{
+  window.scrollBy({
+    top: 0.5 * window.innerHeight,
+    left: 0,
+  });
+}
+
+function ScrollHalfPageUp()
+{
+  window.scrollBy({
+    top: -0.5 * window.innerHeight,
+    left: 0,
+  });
+}
+
 function handleKeyDown(event) {
   const { ctrlKey, key } = event;
   switch (key) {
     case 'd':
       {
-	if (ctrlKey)
-	{
-	  window.scrollBy({
-	    top: 0.5 * window.innerHeight,
-	    left: 0,
-	  });
-
-	  event.preventDefault();
-	}
+        if (ctrlKey) {
+          ScrollHalfPageDown();
+          event.preventDefault();
+        }
       }
       break;
     case 'u':
       {
-	if (ctrlKey)
-	{
-	  window.scrollBy({
-	    top: -0.5 * window.innerHeight,
-	    left: 0,
-	  });
-
-	  event.preventDefault();
-	}
+        if (ctrlKey) {
+          ScrollHalfPageUp();
+          event.preventDefault();
+        }
       }
       break;
     case 'j':
       {
-	window.scrollBy({
-	  top: 0.5 * scrollingSpeed,
-	  left: 0,
-	});
+        window.scrollBy({
+          top: 0.5 * scrollingSpeed,
+          left: 0,
+        });
       }
       break;
     case 'k':
       {
-	window.scrollBy({
-	  top: -0.5 * scrollingSpeed,
-	  left: 0,
-	});
+        window.scrollBy({
+          top: -0.5 * scrollingSpeed,
+          left: 0,
+        });
       }
       break;
     default:
@@ -106,6 +112,8 @@ function HideDerivation(derivation, button) {
 function ShowDerivation(derivation, button) {
   button.textContent = "Скрыть вывод";
   derivation.style.display = "block";
+  derivation.scrollIntoView();
+  ScrollHalfPageUp();
 }
 
 function ToggleProofVisibility() {
@@ -245,7 +253,7 @@ function ShowAnswers() {
   }
 }
 
-window.onload = function() {
+window.onload = function () {
   var questions = document.getElementsByClassName("question");
   for (var i = 0; i < questions.length; ++i) {
     var question = questions[i];
