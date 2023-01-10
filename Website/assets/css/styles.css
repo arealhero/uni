@@ -45,6 +45,17 @@
   font-weight: bold;
 }
 
+.given {
+  margin: 20px 0 20px 30px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.given::before {
+  content: 'Дано: ';
+  font-weight: bold;
+}
+
 .name {
   font-weight: bold;
 }
