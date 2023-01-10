@@ -109,11 +109,16 @@
 .definition,
 .theorem,
 .lemma,
-.proof,
-.derivation {
+.proof {
     margin: 10px;
     padding: 0 10px;
     border-left: 1px solid black;
+}
+
+.derivation {
+    margin: 10px;
+    padding: 0 10px;
+    border-left: 3px solid blue;
 }
 
 .theorem::before {
