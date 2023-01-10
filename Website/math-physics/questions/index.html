@@ -54,6 +54,8 @@
     $\global\def\abs#1{\left\lvert #1 \right\rvert}$
     $\global\def\norm#1{\left\lVert #1 \right\rVert}$
 
+    $\global\def\dp#1#2{#1 \cdot #2\,}$
+
     $\global\def\dv#1#2{\frac{d #1}{d #2}}$
     $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
     $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
@@ -318,11 +320,11 @@
         \abs{\tg \alpha} = \abs{\pd{u}{x}} \ll 1,
         \]
         где $u = u(x,t)$ &mdash; уравнение положения струны в момент времени $t$.
-
-        <div class="images">
-          <img alt="колебание струны" src="images/string-oscillation.png" />
-        </div>
       </p>
+
+      <div class="images">
+        <img alt="колебание струны" src="images/string-oscillation.png" />
+      </div>
 
       <p>
         Из определения струны следует, что натяжение струны $T(x,t)$ в точке $x$ в момент времени $t$
@@ -579,9 +581,9 @@
       <div class="content">
         <div class="theorem">
           В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>тепла</i> в единицу времени
-          через элемент поверхности $dS$ равен
+          $dt$ через элемент поверхности $dS$ равен
           \[
-          dQ = -k \pd{u}{n} dS
+          dQ = -k \pd{u}{n} dS dt
           \]
         </div>
       </div>
@@ -589,16 +591,274 @@
 
     <li class="question">
       <div class="name">
-        Закон Нэрнста (аналог закона Фурье)
+        Определение: изотропность среды
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        В направлении вектора нормали $\textbf{n}$ к поверхности $S$ поток <i>частиц</i> в единицу времени
-        через элемент поверхности $dS$ равен
+        <div class="definition">
+          Среда называется <i>изотропной</i>, если её физические свойства не зависят от направления.
+        </div>
+
+        <div class="example">
+          Пусть $c(x)$ &mdash; удельная теплоёмкость среды, $k(x)$ &mdash; коэффициент теплопроводности.
+          Если $c = \const$ и $k = \const$, то среда изотропна.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name repeat">
+        Формула Гаусса-Остроградского
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="assumptions">
+          <ul>
+            <li>
+              $\vb{n}$ &mdash; вектор внешней нормали к $S$.
+            </li>
+          </ul>
+        </div>
         \[
-        dQ=-D\dfrac{\partial u}{\partial n}dS
+        \iint\limits_S \dp{\vb{a}}{\vb{n}} dS = \iiint\limits_V \div \vb{a} \, dV.
         \]
-        $u(x,t)$ - плотность частиц в точке $x$ в момент времени $t$, $D$ - <i>коэффициент диффузии</i>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод уравнения теплопроводности (распространения тепла)
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="assumptions">
+          <ul>
+            <li>
+              $V \subset \mathbb{R}^3$ &mdash; область, $S = \partial V$.
+            </li>
+
+            <li>
+              $u(x,t)$ &mdash; температура среды в точке $x \in V$ в момент времени $t$.
+            </li>
+
+            <li>
+              Среда изотропна:
+              (<span class="todo">нужно ли? Вроде можно и без этого условия обойтись</span>)
+
+              <ul>
+                <li>
+                  $\rho = \const$ &mdash; плотность;
+                </li>
+
+                <li>
+                  $c = \const$ &mdash; удельная теплоёмкость;
+                </li>
+
+                <li>
+                  $k = \const$ &mdash; коэффициент теплопроводности.
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              $F(x,t)$ &mdash; интенсивность источников тепла в точке $x$ в момент времени $t$,
+              то есть количество тепла, поглощаемого или выделяемого в единицу времени в единице объёма.
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          Пусть за промежуток времени $(t_1, t_2)$
+        </p>
+
+        <ul>
+          <li>
+            $Q_1$ &mdash; количество поступившего через $S$ в $V$ количество тепла;
+          </li>
+
+          <li>
+            $Q_2$ &mdash; количество выделенного в $V$ внешними источниками тепла;
+          </li>
+
+          <li>
+            $Q_3$ &mdash; суммарное изменение количества тепла в $V$.
+          </li>
+        </ul>
+
+        <p>
+          В результате поступления тепла $Q_3$ за достаточно малый промежуток времени $(t_1, t_2)$
+          приращение температуры равно
+          \[
+          du = u(x, t + dt) - u(x, t) \approx \pd{u}{t} dt,
+          \]
+          поэтому
+          \[
+          dQ_3 = c \, dm \, du \approx c \rho dV \pd{u}{t} dt,
+          \]
+          или
+          \[
+          Q_3 = \int\limits_{t_1}^{t_2} dt \iiint\limits_V c \rho \pd{u}{t} dV.
+          \]
+        </p>
+
+        <p>
+          Так как $k > 0$, то из закона Фурье
+          \[
+          dQ_1 = -k \pd{u}{n} dS dt
+          \]
+          следует, что при росте температуры в направлении вектора $\vb{n}$ (то есть $\pd{u}{n} > 0$)
+          за промежуток времени $(t_1, t_2)$ поток тепла имеет противоположное направление
+          ($dQ_1 &lt; 0$).
+        </p>
+
+        <p>
+          Пусть $\vb{n}$ &mdash; внешняя нормаль к $S$, тогда по закону Фурье через $S$ в $V$ за
+          промежуток времени $(t_1, t_2)$ поступает количество тепла
+          \[
+          Q_1 = \int\limits_{t_1}^{t_2} dt \iint\limits_S k \pd{u}{n} dS
+          = \int\limits_{t_1}^{t_2} dt \iint\limits_S \dp{k \nabla u}{\vb{n}} dS.
+          \]
+
+          В силу формулы Гаусса-Остроградского
+          \[
+          Q_1 = \int\limits_{t_1}^{t_2} dt \iiint\limits_V \dp{\nabla}{(k \nabla u)} dV.
+          \]
+
+          Кроме того, внешние источники за время $dt$ выделяют количество тепла
+          \[
+          Q_2 = \int\limits_{t_1}^{t_2} dt \iiint\limits_V F(x,t) dV.
+          \]
+        </p>
+
+        <p>
+          Составляя баланс тепла, получаем
+          \[
+          Q_3 = Q_1 + Q_2, \qquad Q_3 - Q_1 - Q_2 = 0,
+          \]
+          или
+          \[
+          \int\limits_{t_1}^{t_2} dt \iiint\limits_V
+          \paren{c \rho \pd{u}{t} - \dp{\nabla}{k \nabla u} - F(x,t)} dV = 0,
+          \]
+          откуда, в силу произвольности промежутка времени $(t_1, t_2)$ и области $V$, заключаем, что
+          \[
+          c \rho \pd{u}{t} - \dp{\nabla}{k \nabla u} - F(x,t) = 0.
+          \]
+
+          Это &mdash; <i>уравнение теплопроводности</i>.
+        </p>
+
+        <div class="todo">
+          Я не уверен, но, кажется, можно сюда добавить характеристику поглощения среды $q = q(x)$;
+          тогда, обозначив количество поглощённого средой тепла за промежуток времени $(t_1, t_2)$ как
+          $Q_4$, можно записать
+          \[
+          Q_4 = \int\limits_{t_1}^{t_2} dt \iiint\limits_V q(x) u(x,t) dV,
+          \]
+          а суммарное изменение количества тепла запишется как
+          \[
+          Q_3 = Q_1 + Q_2 - Q_4.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Уравнение теплопроводности для неоднородной среды
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="defs">
+          <ul>
+            <li>
+              $u = u(x,t)$ &mdash; температура среды в точке $x$ в момент времени $t$;
+            </li>
+
+            <li>
+              $\rho = \rho(x)$ &mdash; плотность среды;
+            </li>
+
+            <li>
+              $c = c(x)$ &mdash; удельная теплоёмкость среды;
+            </li>
+
+            <li>
+              $k = k(x)$ &mdash; коэффициент теплопроводности среды;
+            </li>
+
+            <li>
+              $F(x,t)$ &mdash; интенсивность внешних источников тепла.
+            </li>
+          </ul>
+        </div>
+
+        \[
+        c \rho \pd{u}{t} - \dp{\nabla}{k \nabla u} - F(x,t) = 0,
+        \]
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Уравнение теплопроводности для однородной среды
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="defs">
+          <ul>
+            <li>
+              $u = u(x,t)$ &mdash; температура среды в точке $x$ в момент времени $t$;
+            </li>
+
+            <li>
+              $\rho = \const$ &mdash; плотность среды;
+            </li>
+
+            <li>
+              $c = \const$ &mdash; удельная теплоёмкость среды;
+            </li>
+
+            <li>
+              $k = \const$ &mdash; коэффициент теплопроводности среды;
+            </li>
+
+            <li>
+              $F(x,t)$ &mdash; интенсивность внешних источников тепла.
+            </li>
+          </ul>
+        </div>
+
+        \[
+        \pd{u}{t} - a^2 \Delta u = f, \quad \text{где } \quad
+        a^2 = \frac{k}{c \rho}, \quad f = \frac{F}{c \rho},
+        \]
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Закон Нэрнста
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          В направлении вектора нормали $\vb{n}$ к поверхности $S$ поток частиц за единицу времени $dt$
+          через элемент поверхности $dS$ равен
+          \[
+          dQ = -D \pd{u}{n} dS dt,
+          \]
+          где
+          <ul>
+            <li>
+              $u(x,t)$ &mdash; плотность частиц в точке $x$ в момент времени $t$,
+            </li>
+
+            <li>
+              $D(x)$ &mdash; коэффициент диффузии.
+            </li>
+          </ul>
+        </div>
       </div>
     </li>
 
@@ -609,44 +869,26 @@
       <button class="toggle-button"></button>
       <div class="content">
         \[
-        \rho \pd{u}{t} - \nabla \cdot (k \nabla u) + qu = F(x,t)
+        \rho \pd{u}{t} - \nabla \cdot (D \nabla u) + qu = F(x,t),
         \]
-        Альтернативная запись:
-        \[
-        \rho \pd{u}{t} - \div (p \; \grad u) + qu = F(x,t)
-        \]
-        $\rho$ - коэффициент пористости, $q$ - характеристика поглощения среды
-      </div>
-    </li>
+        где
+        <ul>
+          <li>
+            $u = u(x,t)$ &mdash; плотность частиц в точке $x$ в момент времени $t$;
+          </li>
 
-    <li class="question">
-      <div class="name">
-        Уравнение теплопроводности
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        \[
-        \rho \pd{u}{t} - \div (p \; \grad u) + qu = F(x,t)
-        \]
-        $\rho$ - плотность, $u(x,t)$ - температура среды в точке $x=(x_1, x_2, x_3)$,
-        $F(x,t)$ - интенсивность источников тепла в точке $x$ в момент времени $t$ (кол-во тепла, поглощаемого или
-        выделяемого в единицу времени в единице объема)
-      </div>
-    </li>
+          <li>
+            $\rho = \rho(x)$ &mdash; коэффициент пористости среды;
+          </li>
 
-    <li class="question">
-      <div class="name">
-        Уравнение теплопроводности (случай однородной среды)
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        Среда однородна, поэтому её плотность, удельная плотность и коэффициент теплопроводности
-        постоянны ($\rho = \const, \; c = \const, \; k = \const$):
-        \[
-        \pd{u}{t} = a^2 \Delta u + f,
-        \quad a^2 = \frac{k}{c \rho},
-        \quad f = \frac{F}{c \rho}.
-        \]
+          <li>
+            $D = D(x)$ &mdash; коэффициент диффузии;
+          </li>
+
+          <li>
+            $q = q(x)$ - характеристика поглощения среды.
+          </li>
+        </ul>
       </div>
     </li>
 
@@ -656,6 +898,11 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
+        Для стационарных процессов $F(x,t) = F(x), \; u(x,t) = u(x)$,
+        \[
+        \pd{u}{t} \equiv 0, \quad \pdv2{u}{t} \equiv 0,
+        \]
+        поэтому как уравнение колебаний, так и уравнение теплопроводности (диффузии) принимают вид
         \[
         - \nabla \cdot (k \nabla u) + qu = F(x).
         \]
@@ -668,6 +915,11 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
+        Стационарное уравнение
+        \[
+        - \nabla \cdot (k \nabla u) + qu = F(x).
+        \]
+        при $k = \const, \; q = 0$ сводится к <i>уравнению Пуассона</i>:
         \[
         \Delta u = -f, \quad f = \frac{F}{k}
         \]
@@ -680,6 +932,11 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
+        Уравнение Пуассона
+        \[
+        \Delta u = -f
+        \]
+        при $f = 0$ называется <i>уравнением Лапласа</i>:
         \[
         \Delta u = 0
         \]
@@ -747,7 +1004,7 @@
           <b>Пример</b>:
           Уравнение Лапласа
           \[
-          \nabla u = f(x,t)
+          \Delta u = f(x,t)
           \]
         </ol>
       </div>

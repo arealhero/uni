@@ -149,6 +149,11 @@ button.derivation-toggle {
   content: ' \25A1';
 }
 
+.example::before {
+  content: 'Пример. ';
+  font-weight: bold;
+}
+
 .problem {
   margin: 10px 0 10px 0;
 }
@@ -165,6 +170,11 @@ button.derivation-toggle {
 
 .repeat {
   color: var(--blue-color);
+}
+
+.repeat::after {
+    content: ' (повторение)';
+    color: var(--blue-color);
 }
 
 div.todo {
