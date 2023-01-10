@@ -185,6 +185,22 @@ function SetDerivationButtonsHandlers() {
   }
 }
 
+function ShowSubtitles()
+{
+  var subtitles = document.getElementsByClassName("subtitle");
+  for (var i = 0; i < subtitles.length; ++i) {
+    subtitles[i].style.display = "block";
+  }
+}
+
+function HideSubtitles()
+{
+  var subtitles = document.getElementsByClassName("subtitle");
+  for (var i = 0; i < subtitles.length; ++i) {
+    subtitles[i].style.display = "none";
+  }
+}
+
 function HideQuestions() {
   var questions = document.getElementsByClassName("question");
   for (var i = 0; i < questions.length; ++i) {
@@ -198,6 +214,7 @@ function HideQuestions() {
 
   HideProofs();
   HideDerivations();
+  HideSubtitles();
 }
 
 function ShowQuestions() {
@@ -212,6 +229,7 @@ function ShowQuestions() {
   }
 
   ShowProofs();
+  ShowSubtitles();
 }
 
 function ShowRandomQuestion() {
