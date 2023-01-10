@@ -921,7 +921,7 @@
         \]
         при $k = \const, \; q = 0$ сводится к <i>уравнению Пуассона</i>:
         \[
-        \Delta u = -f, \quad f = \frac{F}{k}
+        \Delta u = -f, \quad f = \frac{F}{k}.
         \]
       </div>
     </li>
@@ -938,75 +938,160 @@
         \]
         при $f = 0$ называется <i>уравнением Лапласа</i>:
         \[
-        \Delta u = 0
+        \Delta u = 0.
         \]
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Классификация линейных уравнений второго порядка
+        Определение: тип квазилинейного ДУЧП 2-го порядка
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Матрица линейного уравнения:
-        \[
-        A = \left(
-        \begin{array}{cccc}
-        A_{11} & A_{12} & \dots & A_{1n} \\
-        A_{21} & A_{22} & \dots & A_{2n} \\
-        \dots & \dots & \dots & \dots \\
-        A_{n1} & A_{n2} & \dots & A_{nn}
-        \end{array}
-        \right)
-        \]
+        <p>
+          Рассмотрим квазилинейное ДУЧП 2-го порядка
+          \[
+          A_{\alpha \beta}(x) \ppdv{u}{x_\alpha}{x_\beta} +
+          \Phi(x_1, \dots, x_n, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}) = 0,
+          \quad \alpha,\beta = \overline{1,n}.
+          \]
 
-        Вычислим собственные числа матрицы $A$ в точке $x$: пусть в этой точке матрица имеет
-        $\alpha$ положительных, $\beta$ отрицательных и $\gamma$ нулевых характеристических чисел.
-        Тогда говорят, что в рассматриваемой точке $x$ линейное уравнение принадлежит к типу
-        $(\alpha, \, \beta, \, \gamma)$.
+          Рассмотрим матрицу
+          \[
+          A = \left(
+          \begin{array}{cccc}
+          A_{11} & A_{12} & \dots & A_{1n} \\
+          A_{21} & A_{22} & \dots & A_{2n} \\
+          \dots & \dots & \dots & \dots \\
+          A_{n1} & A_{n2} & \dots & A_{nn}
+          \end{array}
+          \right).
+          \]
+        </p>
+
+        <div class="definition">
+          Пусть в точке $x$ матрица $A$ имеет $\alpha$ положительных, $\beta$ отрицательных и
+          $\gamma$ нулевых характеристических чисел. Тогда говорят, что в рассматриваемой точке
+          $x$ линейное уравнение <i>принадлежит к типу $(\alpha, \, \beta, \, \gamma)$</i>.
+        </div>
+
+        <div class="remark">
+          Изменение знака не меняет типа квазилинейного уравнения, поэтому тип $(\alpha, \beta, \gamma)$
+          равносилен типу $(\beta, \alpha, \gamma)$.
+        </div>
       </div>
+    </li>
 
     <li class="question">
       <div class="name">
-        Определение гиперболического, параболического и эллиптического типов уравнений 2-го порядка
+        Определение: гиперболический, параболический и эллиптический тип квазилинейных ДУЧП 2-го порядка
       </div>
       <button class="toggle-button"></button>
       <div class="content">
+        <div class="defs">
+          <ul>
+            <li>
+              $(\alpha, \beta, \gamma)$ &mdash; матрица $A$ квазилинейного ДУЧП 2-го порядка
+              имеет $\alpha$ положительных, $\beta$ отрицательных и $\gamma$ нулевых собственных чисел.
+            </li>
+          </ul>
+        </div>
+
         <ol>
           <li>
-            $(n-1, 1, 0)$ или $(1, n-1, 0)$ &mdash; гиперболический тип. К нему принадлежит уравнение
-            колебаний струны, волновое уравнение;
-          </li>
-          <b>Примеры</b>:
+            $(n-1, 1, 0)$ или $(1, n-1, 0)$ &mdash; <i>гиперболический</i> тип.
 
-          Колебание струны
-          \[
-          \pdv2{u}{t}-a^2\pdv2{u}{x}=f(x,t)
-          \]
-          Волновое уравнение
-          \[
-          \pdv2{u}{t}-a^2\nabla u=f(x,t)
-          \]
-          <li>
-            $(n-1, 0, 1)$ или $(0, n-1, 1)$ &mdash; параболический тип &mdash; уравнение теплопроводности.
+            <div class="example">
+              Колебание струны
+              \[
+              \pdv2{u}{t} - a^2 \pdv2{u}{x} = f(x,t).
+              \]
+
+              <button class="derivation-toggle"></button>
+              <div class="derivation">
+                <div class="todo">расписать</div>
+              </div>
+            </div>
+
+            <div class="example">
+              Волновое уравнение
+              \[
+              \pdv2{u}{t} - a^2 \Delta u = f(x,t).
+              \]
+
+              <button class="derivation-toggle"></button>
+              <div class="derivation">
+                <div class="todo">расписать</div>
+              </div>
+            </div>
           </li>
-          <b>Пример</b>:
-          Уравнение теплопроводности (диффузии)
-          \[
-          \pd{u}{t}-a^2\nabla u=f(x,t)
-          \]
 
           <li>
-            $(n, 0, 0)$ или $(0, n, 0)$ &mdash; эллиптический тип. Получается как из волнового уравнения,
-            так и из уравнения теплопроводности, если рассматривается стационарный процесс.
+            $(n-1, 0, 1)$ или $(0, n-1, 1)$ &mdash; <i>параболический</i> тип.
+
+            <div class="example">
+              Уравнение теплопроводности (диффузии)
+              \[
+              \pd{u}{t} - a^2 \Delta u = f(x,t).
+              \]
+
+              <button class="derivation-toggle"></button>
+              <div class="derivation">
+                <div class="todo">расписать</div>
+              </div>
+            </div>
           </li>
-          <b>Пример</b>:
-          Уравнение Лапласа
-          \[
-          \Delta u = f(x,t)
-          \]
+
+          <li>
+            $(n, 0, 0)$ или $(0, n, 0)$ &mdash; <i>эллиптический</i> тип.
+
+            <div class="remark">
+              получается как из волнового уравнения, так и из уравнения теплопроводности
+              в случае стационарного процесса.
+            </div>
+
+            <div class="example">
+              Уравнение Пуассона
+              \[
+              \Delta u = -f.
+              \]
+
+              <button class="derivation-toggle"></button>
+              <div class="derivation">
+                Матрица $A$ уравнения Пуассона имеет вид
+                \[
+                A = \left(
+                \begin{array}{cccc}
+                1 & 0 & \dots & 0 \\
+                0 & 1 & \dots & 0 \\
+                \dots & \dots & \dots & \dots \\
+                0 & 0 & \dots & 1
+                \end{array}
+                \right);
+                \]
+                её характеристический многочлен
+                \[
+                p(\lambda) = \det \paren{A - \lambda I} = (1 - \lambda)^n
+                \]
+                имеет $n$ положительных корней $\lambda = 1$, то есть тип уравнения &mdash; $(n, 0, 0)$.
+              </div>
+            </div>
+          </li>
         </ol>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: квазилинейное ДУЧП смешанного типа
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Квазилинейные ДУЧП, меняющие тип в зависимости от $x$, называются уравнениями
+          <i>смешанного типа</i>.
+        </div>
       </div>
     </li>
 
