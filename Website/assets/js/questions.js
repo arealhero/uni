@@ -56,6 +56,22 @@ function handleKeyDown(event) {
         });
       }
       break;
+    case 'g':
+      {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+        });
+      }
+      break;
+    case 'G':
+      {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          left: 0,
+        });
+      }
+      break;
     default:
       break;
   }

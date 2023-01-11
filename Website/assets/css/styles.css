@@ -83,17 +83,17 @@
 }
 
 .definition::before {
-  content: 'Определение: ';
+  content: 'Определение. ';
   font-weight: bold;
 }
 
 .note::before {
-  content: 'Замечание: ';
+  content: 'Замечание. ';
   font-weight: bold;
 }
 
 .remark::before {
-  content: 'Замечание: ';
+  content: 'Замечание. ';
   font-weight: bold;
 }
 
@@ -121,10 +121,17 @@
 .theorem,
 .lemma,
 .example,
+.remark,
+.reminder,
 .proof {
     margin: 10px;
     padding: 0 10px;
     border-left: 1px solid black;
+}
+
+.reminder::before {
+    content: 'Напоминание. ';
+    font-weight: bold;
 }
 
 .derivation {

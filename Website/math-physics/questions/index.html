@@ -55,6 +55,7 @@
     $\global\def\norm#1{\left\lVert #1 \right\rVert}$
 
     $\global\def\dp#1#2{#1 \cdot #2\,}$
+    $\global\def\vp#1#2{#1 \times #2\,}$
 
     $\global\def\dv#1#2{\frac{d #1}{d #2}}$
     $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
@@ -71,6 +72,8 @@
     $\global\def\rot{\text{rot}\,}$
 
     $\global\def\vb#1{\textbf{#1}}$
+
+    $\global\def\op#1{\mathrm{#1}\,}$
 
     $\global\def\bydef{\mathrm{def}}$
     $\global\def\const{\text{const}\,}$
@@ -488,6 +491,30 @@
         \]
         где $\rho = \const$ &mdash; линейная плотность струны, $T_0$ &mdash; сила натяжения,
         $F(x,t)$ &mdash; плотность внешнего возмущения.
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name repeat">
+        Определение: дивергенция
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        \[
+        \div \vec{v} \overset{\bydef}{=} \dp{\nabla}{\vec{v}}.
+        \]
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name repeat">
+        Определение: ротор
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        \[
+        \rot \vec{v} \overset{\bydef}{=} \vp{\nabla}{\vec{v}}.
+        \]
       </div>
     </li>
 
@@ -1306,7 +1333,7 @@
             <li>
               Известен тепловой поток через границу:
               \[
-              \sum_{j,k=1}^3 \at{A_{jk}(x) \pd{u}{x_k} \cos(\vb{n},x_i)}{\Gamma} = \psi(x),
+              \sum_{j,k=1}^3 \at{A_{jk}(x) \pd{u}{x_k} \cos(\vb{n},x_j)}{\Gamma} = \psi(x),
               \]
               причём $\psi(x)$ с точностью до константы совпадает с интенсивностью потока тепла
               в точке $x \in \Gamma$, а $\vb{n}$ &mdash; внешняя нормаль.
@@ -1642,7 +1669,7 @@
         <p>
           Рассмотрим
           \[
-          \pdv2{u}{x} + \pdv2{u}{x} = 0.
+          \pdv2{u}{x} + \pdv2{u}{y} = 0.
           \]
           Поверхность Коши $\Gamma$ &mdash; ось $x$, условия Коши:
           \[
@@ -1855,7 +1882,7 @@
     <h2 class="subtitle">БИЛЕТ 7</h2>
 
     <li class="question">
-      <div class="name">
+      <div class="name repeat">
         Определение: невырожденное преобразование независимых переменных
       </div>
       <button class="toggle-button"></button>
@@ -2154,7 +2181,7 @@
           \]
           и имеют вид
           \[
-          \at{u}{\Gamma} = \varphi_0(x), \quad \at{\pd{u}{\lambda}}{\Gamma} = \varphi(x),
+          \at{u}{\Gamma} = \varphi_0(x), \quad \at{\pd{u}{\lambda}}{\Gamma} = \varphi_1(x),
           \]
           где $\lambda$ &mdash; некасательное направление к $\Gamma$. Из данных Коши можно найти
           все производные ${\displaystyle \pd{u}{x_j}}, \; j = \overline{1,n}$ на $\Gamma$.
@@ -2610,7 +2637,7 @@
             \]
             Вдоль неё
             \[
-            \pd{\omega}{x} dx + \pd{\omega}{y} = 0.
+            \pd{\omega}{x} dx + \pd{\omega}{y} dy = 0.
             \]
             Это равенство можно переписать в виде
             \[
@@ -2625,7 +2652,7 @@
 
             Также из равенства
             \[
-            \pd{\omega}{x} dx + \pd{\omega}{y} = 0
+            \pd{\omega}{x} dx + \pd{\omega}{y} dy = 0
             \]
             следует, что
             \[
@@ -2659,7 +2686,7 @@
 
             Учитывая, что
             \[
-            \pd{\omega}{x} dx + \pd{\omega}{y} = 0 \implies
+            \pd{\omega}{x} dx + \pd{\omega}{y} dy = 0 \implies
             \left. \pd{\omega}{x} \middle/ \pd{\omega}{y} \right. = -\frac{dy}{dx},
             \]
             для всех точек этой интегральной кривой справедливо
@@ -2799,13 +2826,13 @@
           \]
         </p>
 
-        <p>
-          Напоминание:
+        <div class="reminder">
+          Матрица ДУЧП в новых координатах ищется по формулам
           \[
           \widetilde{A}_{\gamma \mu} = A_{\alpha \beta}
           \pd{\xi_\gamma}{x_\beta} \pd{\xi_\mu}{x_\alpha}.
           \]
-        </p>
+        </div>
 
         <p>
           Замена переменных
@@ -2819,7 +2846,9 @@
           \[
           \ppdv{u}{\xi}{\eta} = 0.
           \]
+        </p>
 
+        <div class="remark">
           Отсюда следует, что
           \[
           u = f_1(\xi) + f_2(\eta),
@@ -2828,7 +2857,7 @@
           \[
           u(x,y) = f_1(x + y - \cos x) + f_2(x - y + \cos x).
           \]
-        </p>
+        </div>
 
         <p>
           Другая замена
@@ -2855,233 +2884,656 @@
 
     <li class="question">
       <div class="name">
-        Задача о неограниченной струне
+        Задача о неограниченной струне: применение метода характеристик
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Уравнение свободных колебаний:
-        \[
-        \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0,\; a=\sqrt{\dfrac{T}{\rho}}
-        \]
+        <p>
+          Уравнение свободных колебаний:
+          \[
+          \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0, \quad a=\sqrt{\dfrac{T}{\rho}};
+          \]
+          его уравнение характеристик:
+          \[
+          \paren{\pd{w}{t}}^2 - a^2 \paren{\pd{w}{x}}^2 = 0.
+          \]
+          Сведём его к ОДУ:
+          \[
+          dx^2 - a^2 dt^2 = 0;
+          \]
+          его общий интеграл: $x \pm at = \const$.
+        </p>
 
-        Уравнение характеристик:
-        \[
-        \left( \dfrac{\partial w}{\partial t} \right)^2 -
-        a^2 \left( \dfrac{\partial w}{\partial x} \right)^2 = 0
-        \]
-        Сведем к ОДУ:
-        \[
-        dx^2-a^2dt^2=0
-        \]
-        Его решения: $x\pm at=const$ - характеристика, общий интеграл.
-        \[
-        \left\{\begin{aligned}
-        \xi = x - at \\
-        \eta = x + at
-        \end{aligned}\right.
-        \]
-        Тогда
-        \[
-        \dfrac{\partial^2 u}{\partial\xi \partial\eta} = 0
-        \]
-        $x$ - <i>неподвижная ось координат</i>, $x-at$ - <i>подвижная ось координат</i>, движущаяся
-        со скоростью $a$ вправо.
+        <p>
+          Используя замену
+          \[
+          \begin{cases}
+          \xi = x - at \\
+          \eta = x + at,
+          \end{cases}
+          \]
+          получим канонический вид уравнения:
+          \[
+          \ppdv{u}{\xi}{\eta} = 0,
+          \]
+          откуда
+          \[
+          u = g_1(\xi) + g_2(\eta), \implies u = g_1(x - at) + g_2(x + at).
+          \]
+        </p>
 
-        \[
-        \dfrac{\partial^2 u}{\partial\xi \partial\eta} = 0 \Rightarrow u=g_1(\xi)+g_2(\eta)=
-        g_1(x-at)+g_2(x+at)
-        \]
+        <h3>Физический смысл</h3>
+        <p>
+          При движении наблюдателя со скоростью $a$ в положительном направлении оси $x$ наблюдатель
+          будет видеть то же положение точки, которое он видел в момент $t = 0$.
+        </p>
 
-        $\\$ <b>Физический смысл</b> $\\$
-        При движении наблюдателя со скоростью $a$ в положительном направлении оси $x$ наблюдатель
-        будет видеть то же положение точки, которое он видел в момент $t=0.\\$
-        Явление, описываемое функцией $u_1 = g_1(x-at)$, называется <i>распространением <b>прямой</b> волны</i>,
-        функцией $u_2 = g_2(x+at)$ - <i><b>обратной</b> волны</i>
+        <div class="definition">
+          Явление, описываемое функцией $u_1 = g_1(x + at)$, называется
+          <i>распространением прямой волны</i>, а функцией $u_2 = g_2(x - at)$ &mdash;
+          <i>обратной волны</i>.
+        </div>
       </div>
-
     </li>
 
     <li class="question">
       <div class="name">
-        Задача Коши для неограниченной струны
+        Вывод обобщённого решения задачи Коши для неограниченной струны
       </div>
       <button class="toggle-button"></button>
       <div class="content">
         Поставим для
         \[
-        \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0,\; a=\sqrt{\dfrac{T}{\rho}}
+        \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0, \quad a=\sqrt{\frac{T}{\rho}}
         \]
         задачу Коши с начальными условиями:
         \[
-        \left\{\begin{aligned}
-        u\big|_{t=0}=\psi_1(x) \\
-        \dfrac{\partial u}{\partial t}\big|_{t=0} = \psi_2(x)
-        \end{aligned}\right.
+        \at{u}{t=0} = \psi_1(x), \qquad \at{\pd{u}{t}}{t=0} = \psi_2(x).
         \]
 
+        Используя метод характеристик, можем найти, что
         \[
-        u = g_1(x-at)+g_2(x+at)
+        u = g_1(x - at) + g_2(x + at).
         \]
 
-        Из двух уравнений выше получаем:
+        Из начальных условий получаем, что
         \[
-        \left\{\begin{aligned}
-        u\big|_{t=0}= u(x,0) = g_1(x)+g_2(x) = \psi_1(x) \\
-        \dfrac{\partial u}{\partial t}\big|_{t=0} = -a(g'_1(x)-g'_2(x)) = \psi_2(x)
-        \end{aligned}\right.
+        \begin{aligned}
+        \at{u}{t=0} = \psi_1(x) &= g_1(x) + g_2(x) \\
+        \at{\pd{u}{t}}{t=0} = \psi_2(x) &= -a (g_1'(x) - g_2'(x)),
+        \end{aligned}
         \]
 
-        Откуда
-        \[
-        \left\{\begin{aligned}
-        g_1(x)-g_2(x) = -\dfrac{1}{a}\int_{x_0}^x \psi_2(z)dz \\
-        g_1(x)+g_2(x) = \psi_1(x)
-        \end{aligned}\right.
-        \Rightarrow\]
-
-        \[\Rightarrow
-        \left\{\begin{aligned}
-        g_1(x) = \dfrac{1}{2}\psi_1(x) - \dfrac{1}{2a}\int_{x_0}^x \psi_2(z)dz \\
-        g_2(x) = \dfrac{1}{2}\psi_1(x) + \dfrac{1}{2a}\int_{x_0}^x \psi_2(z)dz
-        \end{aligned}\right.
-        \]
-
-        Отсюда имеем
-        \[
-        u(x,t)=g_1(x-at)+g_2(x+at) = \dfrac{1}{2}(\psi_1(x-at)+\psi_1(x+at))
-        + \dfrac{1}{2a}\int_{x-at}^{x+at} \psi_2(z)dz
-        \]
-        Полученное решение называется <i>решением в форме <b>Даламбера</b></i>
-      </div>
-
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Частные случаи решения в форме Даламбера
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        <b><u>Первый.</u></b> Пусть $\psi_2(x)=0\\$
-        Тогда
-        \[
-        u(x,t) = \dfrac{1}{2}(\psi_1(x-at)+\psi_1(x+at)),
-        \]
-        причем при $t=0$ задано <i>отклонение струны</i>:
-
-        \[
-        \left\{\begin{aligned}
-        u\big|_{t=0}=\psi_1(x) = \left\{\begin{aligned} 0, |x|>b \\ \psi(x), |x|\leq b \end{aligned}\right.\\
-        \dfrac{\partial u}{\partial t}\bigg|_{t=0} = \psi_2(x) = 0
-        \end{aligned}\right.
-        \]
-        <b>Этапы прохождения струны:</b> $\\$
-        при $x-at>b$ волна еще не дошла до $x\\$
-
-        при $x-at=b$ имеем: $t$ - момент
-        прохождения <i>переднего фронта прямой волны</i> - начало колебаний в точке $x$ (волна пришла из точки $b$) $\\$
-
-        $x-at\in(-b,b): u(x,t)=\dfrac{1}{2}\psi(x-at)$ - прямая волна прошла через точку $x$,
-        но ее <b>задний фронт</b> еще не прошел через $x\\$
-
-        $x-at=-b: u(x,t)=\dfrac{1}{2}\psi(-b)$. Имеем: $t$ - момент прохождения <i>заднего фронта прямой волны</i>,
-        пришедшей из точки $-b\\$
-
-        $x-at<-b: u(x,t)=0$ - после прохождения <b>заднего фронта</b> $\\$
-
-          <b><u>Второй.</u></b> Пусть $\psi_1(x)=0 $
-          Тогда
-          \[
-          u(x,t) = \dfrac{1}{2a}\int_{x-at}^{x+at} \psi_2(z)dz,
-          \]
-
-          причем при $t=0$ задана <i>скорость возмущения</i>:
-          \[
-          \left\{\begin{aligned}
-          \dfrac{\partial u}{\partial t}\bigg|_{t=0} = \psi_2(x) = \left\{\begin{aligned} 0, |x|>b \\ \psi(x), |x|\leq b
-          \end{aligned}\right.\\
-          u\big|_{t=0} = \psi_1(x) = 0
-          \end{aligned}\right.
-          \]
-
-          <b>Этапы прохождения струны:</b> $\\$
-          $x-at>b: (-b,b)\cap(x-at,x+at)=\varnothing \Rightarrow u(x,t)=0\\$
-
-          $x-at\in(-b,b) \Rightarrow (-b,b)\cap(x-at,x+at) = (x-at, b) \not=\varnothing \Rightarrow$
-          \[
-          \Rightarrow u(x,t) = \dfrac{1}{2a}\int_{x-at}^{b} \psi_2(\alpha)d\alpha \not = 0
-          \]
-
-          $x-at < -b \Rightarrow (-b,b)\cap(x-at,x+at)=(-b,b) \Rightarrow$ \[ \Rightarrow
-            u(x,t)=\dfrac{1}{2a}\int_{x-at}^{x+at} \psi_2(\alpha)d\alpha=\dfrac{1}{2a} \left( \int_{x-at}^{-b}
-            \psi_2(\alpha)d\alpha + \int_{-b}^{b} \psi_2(\alpha)d\alpha + \int_{b}^{x+at} \psi_2(\alpha)d\alpha
-            \right)=\\ \dfrac{1}{2a}\int_{-b}^{b} \psi_2(\alpha)d\alpha=g(b)-g(-b)=const \] </div>
-    </li>
-
-    <li class="question">
-      <div class="name">
-        Задача Коши для ограниченной струны
-      </div>
-      <button class="toggle-button"></button>
-      <div class="content">
-        Свободные колебания струны
-        \[
-        \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0,\; a=\sqrt{\dfrac{T}{\rho}}
-        \]
-        Установим <i>граничные условия (краевые)</i>:
+        откуда
         \[
         \left\{
         \begin{aligned}
-        u\big|_{x=0} = 0 \\
-        u\big|_{x=l} = 0
+        g_1(x) + g_2(x) &= \psi_1(x) \\
+        g_1(x) - g_2(x) &= -\frac{1}{a} \int\limits_{x_0}^x \psi_2(z) dz,
         \end{aligned}
         \right.
         \]
-
-        и <i>начальные условия</i>:
+        или, выражая $g_1$ и $g_2$,
         \[
         \left\{
         \begin{aligned}
-        u\big|_{t=0} = \varphi_1(x) \\
-        \dfrac{\partial u}{\partial t}\bigg|_{t=0} = \varphi_2(x)
+        g_1(x) &= \frac{1}{2}\psi_1(x) - \frac{1}{2a}\int\limits_{x_0}^x \psi_2(z)dz \\
+        g_2(x) &= \frac{1}{2}\psi_1(x) + \frac{1}{2a}\int\limits_{x_0}^x \psi_2(z)dz.
         \end{aligned}
         \right.
         \]
-
-        Из выражений
+        Тогда можно записать решение задачи Коши <i>в форме Даламбера</i>:
         \[
-        \left\{
-        \begin{aligned}
-        g_1(x) = \dfrac{1}{2}\psi_1(x) - \dfrac{1}{2a}\int_{x_0}^x \psi_2(z)dz \\
-        g_2(x) = \dfrac{1}{2}\psi_1(x) + \dfrac{1}{2a}\int_{x_0}^x \psi_2(z)dz
-        \end{aligned}
-        \right.
+        u(x,t) = g_1(x - at) + g_2(x + at) = \dfrac{1}{2}\paren{\psi_1(x - at) + \psi_1(x + at)}
+        + \dfrac{1}{2a}\int_{x-at}^{x+at} \psi_2(z) dz.
         \]
-        следует, что $\psi_1,\psi_2$ определены при $\forall \; z\in(-\infty,+\infty)$, так как
-        $z=x\pm at\in (-\infty,+\infty) \forall\; t\in(0,+\infty)\\$
-
-        <b>Задача</b> заключается в том, чтобы определить $\psi_k(x)$ через $\varphi_k(x)$ при $z<0, z>l$,
-          то есть задача сводится при $z\in(-\infty,+\infty)$ к задаче <i>продолжения $\varphi_k(z)$ на всю ось</i>
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Физический смысл задачи Коши для ограниченной струны
+        При каких условиях на начальные данные решение задачи Коши для неограниченной струны
+        существует?
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Продолжение функций $\varphi_1,\varphi_2$ на всю ось физически означает задание такого начального
-        возмущения для бесконечной струны, чтобы движение участка $[0,l]$ было такое же,
-        как если бы концы его были закреплены, а остальная часть струны отброшена.
+        Решение уравнения свободных колебаний неограниченной струны
+        \[
+        \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0
+        \]
+        с заданными начальными условиями
+        \[
+        \at{u}{t=0} = \psi_1(x), \qquad \at{\pd{u}{t}}{t=0} = \psi_2(x)
+        \]
+        существует, если
+        <ol>
+          <li>
+            $\psi_1(x)$ &mdash; дважды непрерывно дифференцируема;
+          </li>
+          <li>
+            $\psi_2(x)$ &mdash; один раз непрерывно дифференцируема.
+          </li>
+        </ol>
       </div>
     </li>
 
     <h2 class="subtitle">БИЛЕТ 14</h2>
+
+    <li class="question">
+      <div class="name">
+        Решение краевой задачи о колебании ограниченной струны
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим уравнение свободных колебаниий струны:
+        \[
+        \pdv2{u}{t} - a^2 \pdv2{u}{x} = 0.
+        \]
+        Поставим начальные
+        \[
+        \at{u}{t=0} = \varphi_1(x), \qquad \at{\pd{u}{t}}{t=0} = \varphi_2(x)
+        \]
+        и граничные условия:
+        \[
+        \at{u}{x=0} = 0, \qquad \at{u}{x=l} = 0.
+        \]
+
+        Рассмотрим решение Даламбера для задачи Коши:
+        \[
+        u(x,t) = g_1(x - at) + g_2(x + at),
+        \]
+        где
+        \[
+        \begin{aligned}
+        g_1(x) &= \frac{1}{2}\psi_1(x) - \frac{1}{2a} \int\limits_{x_0}^x \psi_2(z) dz \\
+        g_2(x) &= \frac{1}{2}\psi_1(x) + \frac{1}{2a} \int\limits_{x_0}^x \psi_2(z) dz.
+        \end{aligned}
+        \]
+        Из этих формул следует, что $\psi_1, \psi_2$ должны быть определены для всех $z \in \mathbb{R}$,
+        так как $z = x \pm at \in \mathbb{R}$ при $t \in (0, +\infty)$.
+
+        <p>
+          <b>Задача</b> заключается в том, чтобы определить $\psi_k(x)$
+          через $\varphi_k(x)$ при $z \lt 0, z \gt l$, то есть задача сводится при
+          $z \in \mathbb{R}$ к задаче продолжения $\varphi_k(z)$ на всю ось.
+        </p>
+
+        <div class="remark">
+          Продолжение функций $\varphi_1,\varphi_2$ на всю ось физически означает задание такого
+          начального возмущения для бесконечной струны, чтобы движение участка $[0,l]$ было такое же,
+          как если бы концы его были закреплены, а остальная часть струны отброшена.
+        </div>
+
+        <div class="todo">
+          Расписать (Греков, с.45).
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод явления отражения волн от концов ограниченной струны
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="todo">
+          Расписать (Греков, с.47).
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 15</h2>
+
+    <li class="question">
+      <div class="name">
+        Сведение задачи Коши для гиперболического уравнения с двумя неизвестными переменными
+        к системе интегральных уравнений
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <p>
+          Рассмотрим линейное ДУЧП 2-го порядка
+          \[
+          \ppdv{u}{x}{y} + a(x,y) \pd{u}{x} + b(x,y) \pd{u}{y} + c(x,y)u = f(x,y),
+          \]
+          где $a,b,c,f$ &mdash; непрерывные функции.
+        </p>
+
+        <p>
+          Из уравнения характеристик
+          \[
+          \pd{\omega}{x} \pd{\omega}{y} = 0 \implies \pd{\omega}{y} = 0, \pd{\omega}{x} = 0,
+          \]
+          откуда получаем решения уравнений: $\omega = f_1(y), \omega = f_2(x)$. Следовательно,
+          характеристиками являются
+          \[
+          x = \const, \quad y = \const.
+          \]
+        </p>
+
+        <p>
+          Пусть в плоскости $xOy$ дана дуга кривой $l$, которая пересекается с характеристиками
+          не более чем в одной точке. Пусть уравнение этой дуги:
+          \[
+          y = g(x) \quad \text{или} \quad x = h(y).
+          \]
+        </p>
+
+        <div class="images">
+          <img alt="дуга" src="images/cauchy-int.png" />
+        </div>
+
+        <p>
+          Будем считать, что существуют $g'(x) \neq 0$ и $h'(x) \neq 0$. Пусть вдоль $l$ заданы
+          \[
+          \at{u}{y = g(x)} = \varphi_0(x), \quad \at{\pd{u}{y}}{y = g(x)} = \varphi_1(x).
+          \]
+          Таким образом, поставлена задача Коши. Найдём другую частную производную на кривой Коши:
+          \[
+          \at{\dv{u}{x}}{y = g(x)} = \at{\pd{u}{x}}{y = g(x)}
+          + \overbrace{\at{\pd{u}{y}}{y = g(x)}}^{\displaystyle \varphi_1(x)} g'(x) = \varphi_0'(x),
+          \]
+          или
+          \[
+          \at{\pd{u}{x}}{y = g(x)} = \varphi_0'(x) - \varphi_1(x) g'(x) \equiv \psi(x).
+          \]
+          Введём функции
+          \[
+          v = \pd{u}{x}, \quad w = \pd{u}{y},
+          \]
+          тогда исходное уравнение равносильно следующей системе:
+          \[
+          \left\{
+          \begin{aligned}
+          \pd{v}{y} &= f - av - bw - cu, \\
+          \pd{w}{y} &= f - av - bw - cu, \\
+          \pd{u}{y} &= w
+          \end{aligned}
+          \right.
+          \]
+          с условиями
+          \[
+          \left\{
+          \begin{aligned}
+          \at{v}{y = g(x)} &= \psi(x), \\
+          \at{w}{y = g(x)} &= \varphi_1(x), \\
+          \at{u}{y = g(x)} &= \varphi_0(x).
+          \end{aligned}
+          \right.
+          \]
+        </p>
+
+        <p>
+          Зафиксируем в прямоугольнике $ABCD$ некоторую точку $N$ с координатами $(x,y)$,
+          через которую проведём характеристики $NP$ и $NQ$ до пересечения с $l$.
+          Интегрируя 1 и 2 уравнения системы вдоль $QN$, а второе &mdash; по $PN$,
+          учитывая условия, получим
+          \[
+          \left\{
+          \begin{aligned}
+          v(x,y) &= \psi(x) + \int\limits_{g(x)}^y \left[f(x,\tau) - av - bw - cu \right] d\tau, \\
+          w(x,y) &= \varphi_1(x) + \int\limits_{h(y)}^x \left[f(\tau, y) - av - bw - cu \right] d\tau, \\
+          u(x,y) &= \varphi_0(x) + \int\limits_{g(x)}^y w d\tau.
+          \end{aligned}
+          \right.
+          \]
+          Тем самым показано, что если $u(x,y)$ &mdash; решение исходной задачи Коши,
+          то $u,v,w$ удовлетворяют системе интегральных уравнений.
+        </p>
+
+        <div class="todo">
+          Расписать обратный вывод: повторить те же шаги, но в другом порядке.
+          (Греков, с.56)
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 16</h2>
+
     <h2 class="subtitle">БИЛЕТ 17</h2>
+
+    <li class="question">
+      <div class="name">
+        Постановка задачи Гурса
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Задача: найти решение уравнения
+        \[
+        \ppdv{u}{x}{y} + a(x,y) \pd{u}{x} + b(x,y) \pd{u}{y} + c(x,y)u = f(x,y),
+        \]
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 18</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: формально сопряжённое дифференциальное выражение 2-го порядка
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="given">
+          <ul>
+            <li>
+              $\Omega \subset \mathbb{R}^n$ &mdash; ограниченная область с кусочно-гладкой границей
+              $\Gamma = \partial\Omega$
+            </li>
+          </ul>
+        </div>
+        Рассмотрим линейное дифференциальное выражение 2-го порядка
+        \[
+        \op{L} u = A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} + A_\alpha \pd{u}{x_\alpha} + A_0 u,
+        \qquad x \in \mathbb{R}^n.
+        \]
+        Будем считать, что в замкнутом пространстве $\overline{\Omega} = \Omega \cup \Gamma$ выполнено:
+        <ul>
+          <li>
+            $A_{jk} \in C^2 (\overline{\Omega})$
+          </li>
+
+          <li>
+            $A_k \in C^1 (\overline{\Omega})$
+          </li>
+
+          <li>
+            $A_0 \in C^0 (\overline{\Omega})$
+          </li>
+
+          <li>
+            $u(x) \in C^2 (\overline{\Omega})$
+          </li>
+        </ul>
+
+        <div class="definition">
+          Дифференциальное выражение
+          \[
+          \op{M} u = \ppdv{\paren{A_{\alpha \beta} u}}{x_\alpha}{x_\beta}
+          - \pd{\paren{A_\alpha u}}{x_\alpha} + A_0 u.
+          \]
+          называется <i>формально сопряжённым</i> с $\op{L} u$.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод коммутативности формального сопряжения
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим дифференциальное выражение
+        \[
+        \op{L} u = A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} + A_\alpha \pd{u}{x_\alpha} + A_0 u
+        \]
+        и формально сопряжённое к нему
+        \[
+        \op{M} u = \ppdv{\paren{A_{\alpha \beta} u}}{x_\alpha}{x_\beta}
+        - \pd{\paren{A_\alpha u}}{x_\alpha} + A_0 u.
+        \]
+        Заметив, что
+        \[
+        \pd{\paren{A_{\alpha \beta} u}}{x_\beta} = \pd{A_{\alpha \beta}}{x_\beta} u
+        + A_{\alpha \beta} \pd{u}{x_\beta},
+        \]
+        перепишем исходное дифференциальное выражение, используя тот факт, что
+        \[
+        \pd{}{x_\alpha} \paren{
+        A_{\alpha \beta} \pd{u}{x_\beta}
+        }
+        =
+        \pd{A_{\alpha \beta}}{x_\alpha} \pd{u}{x_\beta}
+        +
+        A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta};
+        \]
+        тогда
+        \[
+        \op{L} u = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+        + B_\alpha \pd{u}{x_\alpha} + C u,
+        \]
+        где
+        \[
+        B_k = A_k - \pd{A_{\alpha k}}{x_\alpha}, \qquad C = A_0.
+        \]
+
+        <p>
+          Учитывая, что
+          \[
+          \ppdv{\paren{A_{\alpha \beta} u}}{x_\alpha}{x_\beta}
+          = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          + \pd{}{x_\alpha} \paren{\pd{A_{\alpha \beta}}{x_\beta} u},
+          \]
+
+          и, используя наше обозначение $B_k$,
+          \[
+          A_k u = B_k u + \pd{A_{\alpha k}}{x_\alpha} u \implies
+          \pd{\paren{A_\alpha u}}{x_\alpha}
+          =
+          \pd{\paren{B_\alpha u}}{x_\alpha}
+          + \pd{}{x_\alpha} \paren{\pd{A_{\alpha \beta}}{x_\beta} u},
+          \]
+          формально сопряжённое выражение можно записать в виде
+          \[
+          \begin{aligned}
+          \op{M} u
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          - \pd{}{x_\alpha} \paren{B_\alpha u} + C u \\
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          - \pd{B_\alpha}{x_\alpha} u - B_\alpha \pd{u}{x_\alpha} + C u \\
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          - B_\alpha \pd{u}{x_\alpha} + \paren{C - \pd{B_\alpha}{x_\alpha}} u.
+          \end{aligned}
+          \]
+        </p>
+
+        <div class="lemma">
+          Формальное сопряжённое коммутативно.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          Рассмотрим
+          \[
+          \begin{aligned}
+          \op{M} u
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          - B_\alpha \pd{u}{x_\alpha} +
+          \overbrace{\paren{C - \pd{B_\alpha}{x_\alpha}}}^{\displaystyle C_1} u \\
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          + \paren{- B_\alpha} \pd{u}{x_\alpha} + C_1 u.
+          \end{aligned}
+          \]
+          Пользуясь аналогичными рассуждениями, найдём формально сопряжённое ему дифференциальное
+          выражение:
+          \[
+          \begin{aligned}
+          \op{N} u
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          - \paren{- B_\alpha} \pd{u}{x_\alpha}
+          + \paren{C_1 - \pd{\paren{ -B_\alpha}}{x_\alpha}} u \\
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          + B_\alpha \pd{u}{x_\alpha}
+          + \paren{C - \cancel{\pd{B_\alpha}{x_\alpha}} + \cancel{\pd{B_\alpha}{x_\alpha}}} u \\
+          &= \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+          + B_\alpha \pd{u}{x_\alpha} + C u \\
+          &\equiv \op{L} u.
+          \end{aligned}
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод общего вида формально самосопряжённого дифференциального выражения
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим дифференциальное выражение
+        \[
+        \op{L} u = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+        + B_\alpha \pd{u}{x_\alpha} + C u,
+        \]
+        и формально сопряжённое ему
+        \[
+        \op{M} u
+        = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+        - \pd{}{x_\alpha} \paren{B_\alpha u} + C u.
+        \]
+
+        <div class="definition">
+          Если $\op{L} \equiv \op{M}$, то говорят, что $\op{L} u$ &mdash;
+          <i>формально самосопряжённое дифференциальное выражение</i>.
+        </div>
+
+        Выражения $\op{L} u$ и $\op{M} u$ отличаются только средними членами, поэтому
+        \[
+        \op{L} \equiv \op{M} \iff B_k \equiv 0, \quad k = \overline{1,n}.
+        \]
+        Отсюда следует, что самосопряжённое выражение 2-го порядка можно привести к виду
+        \[
+        \op{L} u = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}} + C u,
+        \quad A_{\alpha \beta} = A_{\beta \alpha}.
+        \]
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Является ли оператор Лапласа формально самосопряжённым?
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="answer">
+          Да, является:
+          \[
+          \Delta u \overset{\bydef}{=} \sum_{k=1}^n \pdv2{u}{x_k}.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Является ли волновой оператор формально самосопряжённым?
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="answer">
+          Да, является:
+          \[
+          \square_a u \overset{\bydef}{=} \pdv2{u}{t} - a^2 \sum_{k=1}^n \pdv2{u}{x_k}.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Является ли оператор теплопроводности формально самосопряжённым?
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="answer">
+          Нет, не является:
+          \[
+          \pd{u}{t} - a^2 \Delta u.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Первая формула Грина
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="assumptions">
+          <ul>
+            <li>
+              $\Omega \subset \mathbb{R}^n, \; \Gamma = \partial\Omega$.
+            </li>
+
+            <li>
+              $\vb{n}$ &mdash; внешняя нормаль к $\Gamma$.
+            </li>
+          </ul>
+        </div>
+
+        Для дифференциального выражения
+        \[
+        \op{L} u = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+        + B_\alpha \pd{u}{x_\alpha} + C u.
+        \]
+        можно записать <i>первую формулу Грина</i>:
+        \[
+        \iiint\limits_\Omega v \op{L} u d\Omega
+        = - \iiint\limits_\Omega A_{\alpha \beta} \pd{v}{x_\alpha} \pd{u}{x_\beta} d\Omega
+        + \iiint\limits_\Omega v \left[ B_\alpha \pd{u}{x_\alpha} + C u \right] d\Omega
+        + \iint\limits_\Gamma v A_{\alpha \beta} \pd{u}{x_\beta} \cos(\vb{n}, x_\alpha) d\Gamma.
+        \]
+
+        <button class="derivation-toggle"></button>
+        <div class="derivation">
+          <div class="todo">
+            Расписать (Греков, с.50)
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вторая формула Грина
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="assumptions">
+          <ul>
+            <li>
+              $\Omega \subset \mathbb{R}^n, \; \Gamma = \partial\Omega$.
+            </li>
+
+            <li>
+              $\vb{n}$ &mdash; внешняя нормаль к $\Gamma$.
+            </li>
+          </ul>
+        </div>
+
+        Для дифференциального выражения
+        \[
+        \op{L} u = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+        + B_\alpha \pd{u}{x_\alpha} + C u.
+        \]
+        и его формально сопряжённого
+        \[
+        \op{M} u
+        = \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}}
+        - \pd{}{x_\alpha} \paren{B_\alpha u} + C u.
+        \]
+        можно записать <i>вторую формулу Грина</i>:
+        \[
+        \begin{aligned}
+        \iiint\limits_\Omega \left[ v \op{L} u - u \op{M} v \right] d\Omega
+        &= \iint\limits_\Gamma \left[
+        A_{\alpha \beta} \paren{v \pd{u}{x_\alpha} - u \pd{v}{x_\alpha}} + B_\beta uv
+        \right] \cos(\vb{n}, x_\beta) d\Gamma \\
+        &= \iint\limits_\Gamma \left[
+        A \paren{v \nabla u - u \nabla v} + B uv
+        \right] \cdot \vb{n} \, d\Gamma.
+        \end{aligned}
+        \]
+
+        <button class="derivation-toggle"></button>
+        <div class="derivation">
+          <div class="todo">
+            Расписать (Греков, с.50)
+          </div>
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 19</h2>
     <h2 class="subtitle">БИЛЕТ 20</h2>
     <h2 class="subtitle">БИЛЕТ 21</h2>
