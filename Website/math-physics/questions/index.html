@@ -2303,13 +2303,14 @@
 
     <li class="question">
       <div class="name">
-        Определение: слабый разрыв, фронт волны
+        Определение: слабый разрыв
       </div>
       <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим квазилинейное уравнение
         \[
-        A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} + \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+        A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} +
+        \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
         \quad \alpha, \beta = \overline{1,n}.
         \]
 
@@ -2319,190 +2320,538 @@
         \]
 
         <div class="definition">
-          Говорят, что решение квазилинейного уравнения второго порядка имеет на поверхности $\mu(x_1, \dots, x_n) = 0$
-          <i>слабый разрыв</i>, если при переходе через эту поверхность это решение и его первые производные
-          непрерывны, а некоторые производные порядка выше первого терпят разрыв первого рода.
+          Говорят, что решение квазилинейного уравнения второго порядка имеет на поверхности
+          $\mu(x_1, \dots, x_n) = 0$ <i>слабый разрыв</i>, если при переходе через эту поверхность
+          это решение и его первые производные непрерывны, а некоторые производные порядка выше
+          первого терпят разрыв первого рода.
         </div>
-
-        Обозначив $x_n = t$, поверхность запишется в виде
-        \[
-        \mu(x_1, \dots, x_{n-1}, t) = 0,
-        \]
-        откуда, выразив $t$, получим
-        \[
-        t = \nu(x_1, \dots, x_{n-1}).
-        \]
-
-        <div class="definition">
-          Поверхность $\nu(x_1, \dots, x_{n-1}) = \const$ в пространстве $\mathbb{R}^{n-1}$ называют <i>фронтом
-            волны</i>.
-        </div>
-
-        <i>Скорость движения фронта волны</i>:
-        \[
-        w=|\textbf{w}|=\lim_{\Delta t \to 0} \dfrac{\Delta n}{\Delta t} = \lim_{\Delta n \to 0} \dfrac{1}{\dfrac{\Delta
-        t}{\Delta n}}
-        = \lim_{\Delta n \to 0} \dfrac{1}{\dfrac{\Delta \nu}{\Delta n}} = \dfrac{1}{\dfrac{d \nu}{d
-        n}}=\dfrac{1}{|\Delta \nu|}
-        \]
-        Тогда <i>вектор скорости движения фронта волны</i>:
-        \[
-        \textbf{w}=\dfrac{\nabla \nu}{|\nabla \nu|^2}
-        \]
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Приведение уравнений второго порядка к каноническому виду.
+        Определение: фронт волны
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Рассмотрим линейное невырожденное преобразование $\xi_\alpha = j_{\alpha \beta} x_\beta, \;
-        \alpha,\beta=\overline{1,n}$
-        Матричная форма:
+        <p>
+          Рассмотрим квазилинейное уравнение
+          \[
+          A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} +
+          \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+          \quad \alpha, \beta = \overline{1,n}.
+          \]
+
+          Пусть данные Коши заданы на достаточно гладкой поверхности $\Gamma$, определяемой уравнением
+          \[
+          \mu(x_1, \dots, x_n) = 0.
+          \]
+        </p>
+
+        <p>
+          Пусть решение имеет на поверхности $\Gamma$ слабый разрыв. Обозначив $x_n = t$,
+          поверхность запишется в виде
+          \[
+          \mu(x_1, \dots, x_{n-1}, t) = 0,
+          \]
+          откуда, выразив $t$, получим
+          \[
+          t = \nu(x_1, \dots, x_{n-1}).
+          \]
+        </p>
+
+        <div class="definition">
+          Поверхность $\nu(x_1, \dots, x_{n-1}) = t = \const$ в пространстве
+          $\mathbb{R}^{n-1}$ называют <i>фронтом волны</i>.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод формулы скорости движения фронта волны
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <p>
+          Рассмотрим квазилинейное уравнение
+          \[
+          A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta} +
+          \Phi\paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0,
+          \quad \alpha, \beta = \overline{1,n}.
+          \]
+
+          Пусть данные Коши заданы на достаточно гладкой поверхности $\Gamma$, определяемой уравнением
+          \[
+          \mu(x_1, \dots, x_n) = 0.
+          \]
+        </p>
+
+        <p>
+          Пусть решение имеет на поверхности $\Gamma$ слабый разрыв; обозначим фронт волны:
+          \[
+          t = \nu(x_1, \dots, x_{n-1}) = C.
+          \]
+        </p>
+
+        <div class="images">
+          <img alt="фронт волны" src="images/wave-front.png" />
+        </div>
+
+        <p>
+          С течением времени фронт волны перемещается в направлении вектора $\nabla \nu$. Для
+          определения скорости движения фронта волны, возьмём на нём некоторую точку $M$
+          и проведём из неё нормаль $\vb{n}$ в направлении вектора $\nabla \nu$. Фронт волны в момент
+          времени $t + \Delta t$ пересечёт нормаль $\vb{n}$ в некоторой точке $M_1$,
+          отстоящей от $M$ на расстоянии $\Delta n$. Для скорости движения фронта волны имеем
+          \[
+          w = \abs{\vb{w}} = \lim_{\Delta t \to 0} \frac{\Delta n}{\Delta t}
+          = \lim_{\Delta n \to 0} \frac{1}{\dfrac{\Delta t}{\Delta n}}
+          = \lim_{\Delta n \to 0} \frac{1}{\dfrac{\Delta \nu}{\Delta n}}
+          = \frac{1}{\dfrac{d \nu}{ d n}}
+          = \frac{1}{\abs{\nabla \nu}}.
+          \]
+
+          Следовательно, вектор скорости движения фронта волны определяется формулой
+          \[
+          \vb{w}
+          = w \frac{\nabla \nu}{\abs{\nabla \nu}}
+          = \frac{1}{\abs{\nabla \nu}} \frac{\nabla \nu}{\abs{\nabla \nu}}
+          = \frac{\nabla \nu}{\abs{\nabla \nu}^2}.
+          \]
+        </p>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 11</h2>
+
+    <li class="question">
+      <div class="name">
+        Приведение уравнений второго порядка к каноническому виду
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейное невырожденное преобразование
         \[
-        \xi=Jx
+        \xi = Jx.
         \]
-        Можно выбрать $J$ так, чтобы
+
+        Зафиксируем точку $x$; в ней можно выбрать $J$ так, чтобы
         \[
-        \tilde{A}=JAJ^{T}, \; \tilde{A_{ij}}=\nu_j \delta_{ij}
+        \widetilde{A} = JAJ^T, \; \widetilde{A}_{ij} = \nu_j \delta_{ij},
         \]
-        $\delta_{ij}$ - символ Кронекера. Короче, $\tilde{A}$ - диагональная
-        Тогда квазилинейное уравнение
+        где $\delta_{ij}$ - символ Кронекера, то есть $\widetilde{A}$ - диагональная. Тогда
+        квазилинейное уравнение
         \[
         A_{\alpha \beta} \ppdv{u}{x_\alpha}{x_\beta}
         + \Phi \paren{x, u, \pd{u}{x_1}, \dots, \pd{u}{x_n}} = 0
         \]
-        Сведется к каноническому виду
+        в выбранной точке $x$ принимает вид
         \[
         \sum_{k=1}^n \nu_k \pdv2{u}{\xi_k}
-        + \Phi_1 \paren{\xi, u, \pd{u}{\xi_1}, \dots, \pd{u}{\xi_n}} = 0
+        + \Phi_1 \paren{\xi, u, \pd{u}{\xi_1}, \dots, \pd{u}{\xi_n}} = 0,
         \]
-        $\nu_k = \tilde{A_{kk}}$
+        где $\nu_k = \widetilde{A}_{kk}$.
+
+        <div class="definition">
+          Такой вид уравнения 2-го порядка называется <i>каноническим</i>.
+        </div>
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Приведение уравнений второго порядка к каноническому виду. Случай двух переменных.
+        Закон инерции квадратичной формы (без доказательства)
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим квазилинейное ДУЧП второго порядка в каноническом виде
+        \[
+        \sum_{k=1}^n \nu_k \pdv2{u}{\xi_k}
+        + \Phi_1 \paren{\xi, u, \pd{u}{\xi_1}, \dots, \pd{u}{\xi_n}} = 0.
+        \]
+
+        <div class="theorem">
+          Общее число положительных и отрицательных коэффициентов $\nu_k$, равно
+          как и их разность, не зависит от преобразования, приводящего матрицу $A$ к диагональному виду.
+        </div>
+
+        <div class="definition">
+          Разность между числом положительных и отрицательных коэффициентов $\nu_k$ называется
+          <i>сигнатурой</i>.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Упрощение канонического вида линейного уравнения непараболического типа
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="todo">
+          Расписать (Греков, с.33)
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Приведение уравнений второго порядка к каноническому виду (cлучай двух переменных)
       </div>
       <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим квазилинейное ДУЧП 2 порядка
         \[
-        A\pdv2{u}{x}+2B\dfrac{\partial^2 u}{\partial x \partial y} + C\pdv2{u}{y} +
-        \Phi \left( x,y,u, \dfrac{\partial u}{\partial x}, \dfrac{\partial u}{\partial y} \right) = 0
+        A \pdv2{u}{x} + 2B\ppdv{u}{x}{y} + C\pdv2{u}{y}
+        + \Phi \paren{x,y,u, \pd{u}{x}, \pd{u}{y}} = 0.
         \]
-        Найдем с.ч. - решения уравнения $\lambda^2 -(A+C)\lambda - B^2 + AC = 0\\$
-        По т. Виета,
+
+        Найдём собственные числа:
         \[
-        \lambda_1\cdot\lambda_2=AC-B^2 \Rightarrow
+        \abs{
+        \begin{array}{cc}
+        A - \lambda & B \\
+        B & C - \lambda
+        \end{array}
+        } = 0 \quad \implies \quad \lambda^2 - (A + C) \lambda - B^2 + AC = 0.
         \]
-        имеем классификацию ДУЧП:
+        Дискриминант $D = (A + C)^2 + 4 B^2 \geqslant 0$, поэтому корни характеристического
+        полинома вещественны.
 
-        $\\$ <b>Эллиптический тип</b> $\\$
-        \[
-        AC-B^2 < 0 \Leftrightarrow \lambda_1\cdot\lambda_2> 0
-          \]
-          Канонический вид эллиптического ДУЧП 2 порядка в случае двух переменных:
+        <p>
+          По теореме Виета
           \[
-          \pdv2{u}{\xi}+\pdv2{u}{\eta}+\Phi_1 \left(\xi,\eta,u, \dfrac{\partial u}{\partial \xi}, \dfrac{\partial
-          u}{\partial \eta} \right)=0
+          \lambda_1 \lambda_2 = AC-B^2.
           \]
+        </p>
 
-          $\\$ <b>Гиперболический тип</b> $\\$
-          \[
-          AC-B^2 > 0 \Leftrightarrow \lambda_1\cdot\lambda_2 < 0 \] Канонический вид гиперболического ДУЧП 2 порядка в
-            случае двух переменных: \[ \pdv2{u}{\xi_1}-\pdv2{u}{\eta_1}+\Phi_3 \left(\xi_1,\eta_1,u, \dfrac{\partial
-            u}{\partial \xi_1}, \dfrac{\partial u}{\partial \eta_1} \right)=0 \] или \[ \dfrac{\partial^2 u}{\partial
-            \xi \partial\eta}+\Phi_3 \left(\xi,\eta,u, \dfrac{\partial u}{\partial \xi}, \dfrac{\partial u}{\partial
-            \eta} \right)=0 \] $\\$ <b>Параболический тип</b> $\\$
-            \[
-            AC-B^2 = 0 \Leftrightarrow \lambda_1\cdot\lambda_2 = 0
-            \]
-            Канонический вид параболического ДУЧП 2 порядка в случае двух переменных:
-            \[
-            \pdv2{u}{\eta}+\Phi_2 \left(\xi,\eta,u, \dfrac{\partial u}{\partial \xi}, \dfrac{\partial u}{\partial \eta}
-            \right)=0
-            \]
+        <h3>Классификация</h3>
+        <ol>
+          <li>
+            <i>Эллиптический тип</i>
+            <p>
+              \[
+              B^2 - AC \lt 0 \iff \lambda_1 \lambda_2 \gt 0.
+              \]
+              Канонический вид эллиптического ДУЧП 2 порядка в случае двух переменных:
+              \[
+              \pdv2{u}{\xi} + \pdv2{u}{\eta}
+              + \Phi_1 \paren{\xi, \eta, u, \pd{u}{\xi}, \pd{u}{\eta}} = 0.
+              \]
+            </p>
+          </li>
+
+          <li>
+            <i>Гиперболический тип</i>
+            <p>
+              \[
+              B^2 - AC \gt 0 \iff \lambda_1 \lambda_2 \lt 0.
+              \]
+              Канонический вид гиперболического ДУЧП 2 порядка в случае двух переменных:
+              \[
+              \pdv2{u}{\xi_1} - \pdv2{u}{\eta_1}
+              + \Phi_3 \paren{\xi_1, \eta_1, u, \pd{u}{\xi_1}, \pd{u}{\eta_1}} = 0
+              \]
+              или
+              \[
+              \ppdv{u}{\xi}{\eta}
+              + \Phi_3 \paren{\xi, \eta, u, \pd{u}{\xi}, \pd{u}{\eta}} = 0
+              \]
+            </p>
+          </li>
+
+          <li>
+            <i>Параболический тип</i>
+            <p>
+              \[
+              B^2 - AC = 0 \iff \lambda_1 \lambda_2 = 0.
+              \]
+              Канонический вид параболического ДУЧП 2 порядка в случае двух переменных:
+              \[
+              \pdv2{u}{\eta} + \Phi_2 \paren{\xi,\eta,u, \pd{u}{\xi}, \pd{u}{\eta}} = 0.
+              \]
+            </p>
+          </li>
+        </ol>
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Сведение ур-я характеристик к ОДУ
+        Сведение уравнения характеристик для ДУЧП 2-го порядка к ОДУ
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Рассмотрим уравнение характеристик для ДУЧП 2 порядка:
-        \[
-        A \left( \dfrac{\partial w}{\partial x} \right)^2 +
-        2B \dfrac{\partial w}{\partial x} \dfrac{\partial w}{\partial y} +
-        C \left( \dfrac{\partial w}{\partial y} \right)^2 = 0
-        \]
-        Оно сводится к ОДУ, так как $\dfrac{\partial w}{\partial x} / \dfrac{\partial w}{\partial y} = -dy/dx$
-        \[
-        Ady^2-2Bdxdy+Cdx^2
-        \]
+        <div class="theorem">
+          Рассмотрим уравнение характеристик для ДУЧП 2-го порядка
+          \[
+          A \paren{\pd{w}{x}}^2 + 2B \pd{w}{x} \pd{w}{y} + C \paren{\pd{w}{y}}^2 = 0
+          \]
+          и ОДУ
+          \[
+          A dy^2 - 2B dx dy + C dx^2 = 0.
+          \]
+          Тогда уравнение $\omega(x,y) = \const$ удовлетворяет уравнению характеристик
+          тогда и только тогда, когда оно удовлетворяет приведённому ОДУ.
+        </div>
 
-        Вектор $(dx,dy)$ - <i>характеристическое направление</i>.
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="necessity">
+            Рассмотрим уравнение характеристик для ДУЧП 2 порядка:
+            \[
+            A \paren{\pd{w}{x}}^2 + 2B \pd{w}{x} \pd{w}{y} + C \paren{\pd{w}{y}}^2 = 0.
+            \]
+
+            Пусть $\omega(x,y)$ &mdash; его решение. Рассмотрим характеристику
+            \[
+            \omega(x,y) = \const.
+            \]
+            Вдоль неё
+            \[
+            \pd{\omega}{x} dx + \pd{\omega}{y} = 0.
+            \]
+            Это равенство можно переписать в виде
+            \[
+            \dp{\nabla \omega}{(dx,dy)} = 0,
+            \]
+            откуда можно сделать вывод, что вектор $(dx,dy)$ лежит в плоскости,
+            касательной к характеристике.
+
+            <div class="definition">
+              Направление $(dx,dy)$ называется <i>характеристическим направлением</i>.
+            </div>
+
+            Также из равенства
+            \[
+            \pd{\omega}{x} dx + \pd{\omega}{y} = 0
+            \]
+            следует, что
+            \[
+            \left. \pd{\omega}{x} \middle/ \pd{\omega}{y} \right. = -\frac{dy}{dx}.
+            \]
+            Эта замена приводит уравнение характеристик к виду
+            \[
+            A dy^2 - 2B dx dy + C dx^2 = 0;
+            \]
+            $\omega(x,y) = \const$ &mdash; его общий интеграл.
+          </div>
+
+          <div class="sufficiency">
+            Пусть
+            \[
+            \omega(x,y) = \const
+            \]
+            является общим интегралом уравнения
+            \[
+            A dy^2 - 2B dx dy + C dx^2 = 0
+            \]
+            для любой точки $(x,y)$. Зафиксируем некоторую произвольную точку $(x_0, y_0)$
+            и проведём через неё интегральную кривую $\omega(x,y) = \const$, полагая
+            \[
+            \omega(x_0, y_0) = C_0.
+            \]
+            Тогда уравнение этой интегральной кривой:
+            \[
+            \omega(x,y) = C_0, \quad \text{или} \quad y = f(x, C_0).
+            \]
+
+            Учитывая, что
+            \[
+            \pd{\omega}{x} dx + \pd{\omega}{y} = 0 \implies
+            \left. \pd{\omega}{x} \middle/ \pd{\omega}{y} \right. = -\frac{dy}{dx},
+            \]
+            для всех точек этой интегральной кривой справедливо
+            \[
+            A \paren{\dv{y}{x}}^2 - 2 B \dv{y}{x} + C
+            =
+            \left[
+            A
+            \paren{
+            -\left. \pd{\omega}{x} \middle/ \pd{\omega}{y} \right.
+            }^2
+            - 2B
+            \paren{
+            -\left. \pd{\omega}{x} \middle/ \pd{\omega}{y} \right.
+            }
+            + C
+            \right]_{\displaystyle y = f(x, C_0)} = 0.
+            \]
+
+            Полагая $x = x_0$, окончательно получаем, что
+            \[
+            \left[
+            A \paren{\pd{w}{x}}^2 + 2B \pd{w}{x} \pd{w}{y} + C \paren{\pd{w}{y}}^2
+            \right]_{
+            \begin{aligned}
+            x &= x_0 \\
+            y &= y_0
+            \end{aligned}
+            } = 0
+            \]
+            в произвольной точке $(x_0, y_0)$. Таким образом, общий интеграл
+            $\omega(x,y) = \const$ ОДУ является характеристикой.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 12</h2>
+
+    <li class="question">
+      <div class="name">
+        Вывод канонического вида ДУЧП 2-го порядка эллиптического типа (случай двух переменных)
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Канонический вид ДУЧП 2-го порядка эллиптического типа в случае двух переменных:
+        \[
+        \pdv2{u}{\xi} + \pdv2{u}{\eta}
+        + \Phi_1 \paren{\xi, \eta, u, \pd{u}{\xi}, \pd{u}{\eta}} = 0.
+        \]
+        <div class="todo">
+          Расписать (Греков, с.37)
+        </div>
       </div>
     </li>
 
     <li class="question">
       <div class="name">
-        Пример уравнения гиперболического типа
+        Вывод канонического вида ДУЧП 2-го порядка параболического типа (случай двух переменных)
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Рассмотрим ДУЧП 2 порядка
+        Канонический вид ДУЧП 2-го порядка параболического типа в случае двух переменных:
         \[
-        \pdv2{u}{x}-2\sin x \dfrac{\partial^2 u}{\partial x \partial y} -
-        \cos^2 x \pdv2{u}{y} - \cos x \dfrac{\partial u}{\partial y} = 0
+        \pdv2{u}{\eta} + \Phi_2 \paren{\xi,\eta,u, \pd{u}{\xi}, \pd{u}{\eta}} = 0.
         \]
-        Ур. характеристик:
-        \[
-        \left( \dfrac{\partial w}{\partial x} \right)^2 -
-        2\sin x \dfrac{\partial w}{\partial x} \dfrac{\partial w}{\partial y} -
-        \cos^2 x \left( \dfrac{\partial w}{\partial y} \right)^2 = 0
-        \]
-        Оно сводится к ОДУ:
-        \[
-        dy^2+2\sin x dxdy - \cos^2 x dx^2 = 0
-        \]
-        Его решения (то есть характеристики): $y\mp x -\cos x=const$
-        \[
-        \left\{\begin{aligned}
-        \xi=x+y-\cos x = \omega\\
-        \eta=x-y+\cos x = \omega
-        \end{aligned}\right.
-        \]
-
-        Подставляем в уравнения характеристик и имеем:
-        \[
-        \dfrac{\partial^2 u}{\partial\xi \partial\eta} = 0
-        \]
-        Теперь рассмотрим замену
-        \[
-        \left\{\begin{aligned}
-        \xi=\xi_1 + \eta_1\\
-        \eta=\xi_1 - \eta_1
-        \end{aligned}\right. \Rightarrow
-        \]
-
-        \[\Rightarrow
-        \left\{\begin{aligned}
-        \xi_1=\dfrac{1}{2} \left( \xi+\eta \right) \\
-        \eta_1=\dfrac{1}{2} \left( \xi-\eta \right)
-        \end{aligned}\right.
-        \]
-        Подставляем в $\dfrac{\partial^2 u}{\partial\xi \partial\eta} \Rightarrow$
-        \[
-        \Rightarrow \left(\pdv2{u}{\xi_1} - \pdv2{u}{\eta_1} \right)=0
-        \]
+        <div class="todo">
+          Расписать (Греков, с.37)
+        </div>
       </div>
     </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод канонического вида ДУЧП 2-го порядка гиперболического типа (случай двух переменных)
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Канонический вид ДУЧП 2-го порядка гиперболического типа в случае двух переменных:
+        \[
+        \pdv2{u}{\xi_1} - \pdv2{u}{\eta_1}
+        + \Phi_3 \paren{\xi_1, \eta_1, u, \pd{u}{\xi_1}, \pd{u}{\eta_1}} = 0
+        \]
+        или
+        \[
+        \ppdv{u}{\xi}{\eta}
+        + \Phi_3 \paren{\xi, \eta, u, \pd{u}{\xi}, \pd{u}{\eta}} = 0
+        \]
+        <div class="todo">
+          Расписать (Греков, с.37)
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Пример нахождения канонического вида: уравнение гиперболического типа
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим ДУЧП 2-го порядка
+        \[
+        \pdv2{u}{x} - 2 \sin x \ppdv{u}{x}{y} - \cos^2 x \pdv2{u}{y}
+        - \cos x \pd{u}{y} = 0.
+        \]
+
+        <p>
+          Убедимся, что перед нами уравнение гиперболического типа:
+          \[
+          \begin{gathered}
+          A = 1, \quad B = -\sin x, \quad C = -\cos^2 x, \\
+          B^2 - AC = \sin^2 x + \cos^2 x = 1 > 0.
+          \end{gathered}
+          \]
+        </p>
+
+        <p>
+          Уравнение характеристик:
+          \[
+          \paren{\pd{w}{x}}^2 - 2 \sin x \pd{w}{x} \pd{w}{y} - \cos^2 x \paren{\pd{w}{y}}^2 = 0,
+          \]
+          тогда $\omega = \const$ &mdash; общий интеграл ОДУ
+          \[
+          dy^2 + 2 \sin x dx dy - \cos^2 x dx^2 = 0.
+          \]
+          Так как
+          \[
+          \begin{aligned}
+          dy^2 + 2 \sin x dx dy - \cos^2 x dx^2
+          &= dy^2 + 2 \sin x dx dy + \sin^2 x dx^2 - dx^2 = 0 \\
+          &= \paren{dy + \sin x dx}^2 - dx^2,
+          \end{aligned}
+          \]
+          то
+          \[
+          dy = (- \sin x \pm 1) dx, \implies y = \cos x \pm x + \const.
+          \]
+        </p>
+
+        <p>
+          Напоминание:
+          \[
+          \widetilde{A}_{\gamma \mu} = A_{\alpha \beta}
+          \pd{\xi_\gamma}{x_\beta} \pd{\xi_\mu}{x_\alpha}.
+          \]
+        </p>
+
+        <p>
+          Замена переменных
+          \[
+          \begin{gathered}
+          \xi = x + y - \cos x \\
+          \eta = x - y + \cos x
+          \end{gathered}
+          \]
+          даёт канонический вид:
+          \[
+          \ppdv{u}{\xi}{\eta} = 0.
+          \]
+
+          Отсюда следует, что
+          \[
+          u = f_1(\xi) + f_2(\eta),
+          \]
+          тогда общий интеграл принимает вид
+          \[
+          u(x,y) = f_1(x + y - \cos x) + f_2(x - y + \cos x).
+          \]
+        </p>
+
+        <p>
+          Другая замена
+          \[
+          \begin{gathered}
+          \xi = \xi_1 + \eta_1 \\
+          \eta = \xi_1 - \eta_1
+          \end{gathered}
+          \implies
+          \begin{gathered}
+          \xi_1 = \frac{1}{2}(\xi + \eta) \\
+          \eta_1 = \frac{1}{2}(\xi - \eta)
+          \end{gathered}
+          \]
+          даёт другой канонический вид:
+          \[
+          \pdv2{u}{\xi_1} - \pdv2{u}{\eta_1} = 0.
+          \]
+        </p>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 13</h2>
 
     <li class="question">
       <div class="name">
@@ -2727,6 +3076,18 @@
         как если бы концы его были закреплены, а остальная часть струны отброшена.
       </div>
     </li>
+
+    <h2 class="subtitle">БИЛЕТ 14</h2>
+    <h2 class="subtitle">БИЛЕТ 15</h2>
+    <h2 class="subtitle">БИЛЕТ 16</h2>
+    <h2 class="subtitle">БИЛЕТ 17</h2>
+    <h2 class="subtitle">БИЛЕТ 18</h2>
+    <h2 class="subtitle">БИЛЕТ 19</h2>
+    <h2 class="subtitle">БИЛЕТ 20</h2>
+    <h2 class="subtitle">БИЛЕТ 21</h2>
+    <h2 class="subtitle">БИЛЕТ 22</h2>
+    <h2 class="subtitle">БИЛЕТ 23</h2>
+    <h2 class="subtitle">БИЛЕТ 24</h2>
   </ol>
 </body>
 
