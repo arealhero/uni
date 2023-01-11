@@ -152,6 +152,29 @@
   content: ' \25A1';
 }
 
+.necessity,
+.sufficiency {
+    margin: 10px 0;
+}
+
+.necessity::before {
+  content: 'Необходимость. ';
+  font-style: italic;
+  color: blue;
+}
+
+.sufficiency::before {
+  content: 'Достаточность. ';
+  font-style: italic;
+  color: blue;
+}
+
+.necessity::after,
+.sufficiency::after {
+  content: ' \25A0';
+  color: blue;
+}
+
 button.derivation-toggle {
     display: block;
     margin-bottom: 5px;
