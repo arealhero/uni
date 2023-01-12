@@ -4242,6 +4242,17 @@
         </div>
 
         Таким образом, за область зависимости можно взять шар $B: \; \abs{x - x_0} \leqslant t_0$.
+
+        <div class="remark">
+          Для уравнения
+          \[
+          \square_a u = 0
+          \]
+          область зависимости в общем случае &mdash; шар
+          \[
+          \overline{B}: \; \abs{x - x_0} \leqslant at_0.
+          \]
+        </div>
       </div>
     </li>
 
@@ -4251,17 +4262,128 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        <div class="definition">
-          <i>Областью зависимости</i> для точки $(x_0, t_0)$ называется то множество
-          точек плоскости $t = 0$, на котором достаточно знать значения начальных
-          функций $\varphi_0(x), \varphi_1(x)$ для определения $u(x_0, t_0)$.
+        <p>
+          Из факта существования области зависимости и из вида этой области вытекают некоторые
+          физические следствия.
+        </p>
+
+        <p>
+          Рассмотрим однородное волновое уравнение и задачу Коши для него:
+          \[
+          \begin{gathered}
+          \pdv2{u}{t} - a^2 \Delta u = 0, \quad x \in \mathbb{R}^m, \\
+          \at{u}{t=0} = \varphi_0(x), \qquad \at{\pd{u}{t}}{t=0} = \varphi_1(x).
+          \end{gathered}
+          \]
+          Пусть $\varphi_0(x) \equiv \varphi_1(x) \equiv 0$ вне области $D \subset \mathbb{R}^m$.
+          Рассмотрим $x_0 \not\in D$. Положим $t = t_0 \lt \delta / a$, где $\delta$ &mdash; минимальное
+          расстояние от $x_0$ до $\partial D$.
+        </p>
+
+        <p>
+          Областью зависимости для точки $x_0$ в момент времени $t = t_0$ является шар
+          радиуса $at_0$. Так как $\varphi_0(x) \equiv \varphi_1(x) \equiv 0$ вне области $D$,
+          то $u(x_0, t_0) = 0$ для $t_0 \lt \delta / a$.
+        </p>
+
+        <div class="images">
+          <img alt="распространение волн" src="images/waves-distribution.png" />
         </div>
 
-        Таким образом, за область зависимости можно взять шар $B: \; \abs{x - x_0} \leqslant t_0$.
+        <p>
+          Огибающая $\Gamma_{t_0}$ всех сфер радиуса $at_0$ с центром на границе $\Gamma = \partial D$
+          отделяет область покоя от области возмущения.
+        </p>
+
+        <div class="definition">
+          <i>Волной</i> называется процесс распространения возмущения.
+        </div>
+
+        <div class="definition">
+          Поверхность $\Gamma_{t_0}$ называется <i>передним фронтом волны</i>.
+        </div>
+
+        <p>
+          Пусть $\delta = \min \rho(x_0, \Gamma)$; $d = \max \rho(x_0, \Gamma)$, тогда
+          $t = t_0 = \delta / a$ &mdash; момент прохождения переднего фронта волны через $x_0$,
+          а $t = t_1 = d / a$ &mdash; заднего фронта; $t_1 \lt t \lt t_0$ &mdash; время покоя.
+        </p>
+
+        <p>
+          После прохождения волны точка $x_0$ либо вернётся в своё первоначальное положение,
+          либо зафиксируется с полученным отклонением.
+        </p>
       </div>
     </li>
 
     <h2 class="subtitle">БИЛЕТ 22</h2>
+
+    <li class="question">
+      <div class="name">
+        Формула Пуассона
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <p>
+          Рассмотрим однородное волновое уравнение
+          \[
+          \square_a u = 0.
+          \]
+          Найдём решение, удовлетворяющее начальным условиям
+          \[
+          \at{u}{t=0} = \varphi_0(x), \qquad \at{\pd{u}{t}}{t=0} = \varphi_1(x).
+          \]
+          Будем считать, что $\varphi_0(x) \in C^3(\mathbb{R}^3), \; \varphi_1(x) \in C^2(\mathbb{R}^3)$.
+        </p>
+
+        <p>
+          Рассмотрим сферу $S_{at}$ радиуса $r = at = \abs{x - \xi}$ с центром в точке $x$.
+          Координаты точки $\xi \in S_{at}$ определяются формулами
+          \[
+          \left\{
+          \begin{aligned}
+          \xi_1 &= x_1 + n_1 at, \\
+          \xi_2 &= x_2 + n_2 at, \\
+          \xi_3 &= x_3 + n_3 at,
+          \end{aligned}
+          \right.
+          \]
+          где $n_i$ &mdash; направляющие косинусы вектора нормали сферы $S_{at}$:
+          \[
+          \left\{
+          \begin{aligned}
+          n_1 &= \sin\theta \cos\psi, \\
+          n_2 &= \sin\theta \sin\psi, \\
+          n_3 &= \cos\theta,
+          \end{aligned}
+          \right.
+          \qquad
+          \theta \in [0, \pi], \; \psi \in [0, 2\pi].
+          \]
+        </p>
+
+        <div class="images">
+          <img alt="сферы" src="images/spheres.png" />
+        </div>
+
+        <div class="theorem">
+          Справедлива <i>формула Пуассона</i>:
+          \[
+          u(x, t) = \frac{1}{4 \pi a} \pd{}{t}
+          \iint\limits_{S_{at}} \frac{\varphi_0(\xi)}{r} dS_{at}
+          + \frac{1}{4 \pi a} \iint\limits_{S_{at}} \frac{\varphi_1(\xi)}{r} dS_{at}.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="todo">
+            Расписать (Греков, с.74)
+          </div>
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 23</h2>
     <h2 class="subtitle">БИЛЕТ 24</h2>
   </ol>
