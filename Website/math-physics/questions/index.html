@@ -75,6 +75,7 @@
 
     $\global\def\op#1{\mathrm{#1}\,}$
 
+    $\global\def\proj{\mathrm{proj}}$
     $\global\def\bydef{\mathrm{def}}$
     $\global\def\const{\text{const}\,}$
     $\global\def\res{\text{res}\,}$
@@ -3146,7 +3147,7 @@
           \left\{
           \begin{aligned}
           \pd{v}{y} &= f - av - bw - cu, \\
-          \pd{w}{y} &= f - av - bw - cu, \\
+          \pd{w}{x} &= f - av - bw - cu, \\
           \pd{u}{y} &= w
           \end{aligned}
           \right.
@@ -3171,9 +3172,9 @@
           \[
           \left\{
           \begin{aligned}
-          v(x,y) &= \psi(x) + \int\limits_{g(x)}^y \left[f(x,\tau) - av - bw - cu \right] d\tau, \\
-          w(x,y) &= \varphi_1(x) + \int\limits_{h(y)}^x \left[f(\tau, y) - av - bw - cu \right] d\tau, \\
-          u(x,y) &= \varphi_0(x) + \int\limits_{g(x)}^y w d\tau.
+          v(x,y) &= \psi(x) + \int\limits_{g(x)}^y \left[f - av - bw - cu \right] dy, \\
+          w(x,y) &= \varphi_1(x) + \int\limits_{h(y)}^x \left[f - av - bw - cu \right] dx, \\
+          u(x,y) &= \varphi_0(x) + \int\limits_{g(x)}^y w dy.
           \end{aligned}
           \right.
           \]
@@ -3190,7 +3191,250 @@
 
     <h2 class="subtitle">БИЛЕТ 16</h2>
 
+    <li class="question">
+      <div class="name">
+        Доказательство существования решения задачи Коши для гиперболического уравнения
+        с двумя неизвестными переменными
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим задачу Коши
+        \[
+        \ppdv{u}{x}{y} + a(x,y) \pd{u}{x} + b(x,y) \pd{u}{y} + c(x,y)u = f(x,y),
+        \]
+        с условиями на кривой $y = g(x)$
+        \[
+        \at{u}{y = g(x)} = \varphi_0(x), \quad \at{\pd{u}{y}}{y = g(x)} = \varphi_1(x).
+        \]
+
+        Введением функций
+        \[
+        v = \pd{u}{x}, \quad w = \pd{u}{y}
+        \]
+        задачу Коши можно свести к системе интегральных уравнений
+        \[
+        \left\{
+        \begin{aligned}
+        v(x,y) &= \psi(x) + \int\limits_{g(x)}^y \left[f - av - bw - cu \right] dy, \\
+        w(x,y) &= \varphi_1(x) + \int\limits_{h(y)}^x \left[f - av - bw - cu \right] dx, \\
+        u(x,y) &= \varphi_0(x) + \int\limits_{g(x)}^y w dy.
+        \end{aligned}
+        \right.
+        \]
+
+        Таким образом, вопрос существования решения задачи Коши сводится к доказательству
+        существования непрерывного решения системы.
+        <p>
+          <b>Вопрос:</b> достаточно ли условия непрерывности решения системы для существования решения
+          задачи Коши?
+        </p>
+
+        <p>
+          Решение системы интегральных уравнений будем искать методом последовательных приближений:
+          пусть нулевое приближение задаётся как
+          \[
+          v_0 = \psi(x), \quad w_0 = \varphi_1(x), \quad u_0 = \varphi_0(x);
+          \]
+          $n$-ное приближение:
+          \[
+          \left\{
+          \begin{aligned}
+          v_n(x,y) &= \psi(x) + \int\limits_{g(x)}^y
+          \left[f - av_{n-1} - bw_{n-1} - cu_{n-1} \right] dy, \\
+          w_n(x,y) &= \varphi_1(x) + \int\limits_{h(y)}^x
+          \left[f - av_{n-1} - bw_{n-1} - cu_{n-1} \right] dx, \\
+          u_n(x,y) &= \varphi_0(x) + \int\limits_{g(x)}^y w_{n-1} dy.
+          \end{aligned}
+          \right.
+          \]
+        </p>
+
+        <p>
+          Если получится доказать равномерную сходимость последовательностей $\set{v_n, w_n, u_n}$
+          в криволинейном треугольнике $BCD$, то это повлечёт за собой непрерывность $v,w,u$.
+        </p>
+
+        <div class="images">
+          <img alt="дуга" src="images/cauchy-int.png" />
+        </div>
+
+        <p>
+          Имеем
+          \[
+          \left\{
+          \begin{aligned}
+          v_{n+1} - v_n &= - \int\limits_{g(x)}^y
+          \left[a(v_n - v_{n-1}) - b (w_n - w_{n-1}) - c (w_n - u_{n-1}) \right] dy, \\
+          w_{n+1} - w_n &= - \int\limits_{h(y)}^x
+          \left[a (w_n - v_{n-1}) - b (w_n - w_{n-1}) - c (w_n - u_{n-1}) \right] dx, \\
+          u_{n+1} - u_n &= \int\limits_{g(x)}^y (w_n - w_{n-1}) dy.
+          \end{aligned}
+          \right.
+          \]
+        </p>
+
+        <p>
+          Докажем, что
+          \[
+          \left\{
+          \begin{aligned}
+          \abs{v_{n+1} - v_n} &\leqslant K^{n-1} A \frac{(x + y - x_0 - y_0)^{n-1}}{(n-1)!}, \\
+          \abs{w_{n+1} - w_n} &\leqslant K^{n-1} A \frac{(x + y - x_0 - y_0)^{n-1}}{(n-1)!}, \\
+          \abs{u_{n+1} - u_n} &\leqslant K^{n-1} A \frac{(x + y - x_0 - y_0)^{n-1}}{(n-1)!},
+          \end{aligned}
+          \right.
+          \]
+          где
+          \[
+          M = \max_{\triangle BCD} \paren{\abs{a} + \abs{b} + \abs{c}},
+          \quad K = \max(1, M), \quad A = \const.
+          \]
+        </p>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <p>
+            При $n = 1$ очевидно выполняется, если выбрать $A$ достаточно большое, т.к.
+            из непрерывности функций $a,b,c,f$ и $\psi,\varphi_0,\varphi_1$ следует
+            их ограниченность в замкнутой области и существование конечных значений
+            интегралов от этих функций.
+          </p>
+
+          <p>
+            Индукционный переход: пусть оценки справедливы для $n$. Проверим при $n+1$:
+            так как $x_0 \leqslant x, \; y_0 \leqslant g(x) \leqslant y$, то
+            \[
+            \begin{aligned}
+            \abs{v_{n+1} - v_n}
+            &\leqslant \int\limits_{g(x)}^y (\abs{a} + \abs{b} + \abs{c}) K^{n-1} A
+            \frac{(x + y - x_0 - y_0)^{n-1}}{(n-1)!} dy \\
+            &\leqslant K^n A \int\limits_{g(x)}^y \frac{(x + y - x_0 - y_0)^{n-1}}{(n-1)!} dy \\
+            &= K^n A \left\{\frac{(x + y - x_0 - y_0)^n}{n!} - \frac{(x - x_0)^n}{n!}\right\} \\
+            &\leqslant K^n A \frac{(x + y - x_0 - y_0)^n}{n!}.
+            \end{aligned}
+            \]
+          </p>
+        </div>
+
+        <p>
+          Аналогично доказываются остальные оценки. Отсюда следует абсолютная и равномерная сходимость
+          рядов
+          \[
+          v_0 + \sum_{n=1}^\infty (v_n - v_{n-1}), \quad
+          w_0 + \sum_{n=1}^\infty (w_n - w_{n-1}), \quad
+          u_0 + \sum_{n=1}^\infty (u_n - u_{n-1}),
+          \]
+          поскольку члены этих рядов по абсолютной величине мажорируются членами
+          степенного равномерно сходящегося ряда
+          \[
+          A + A \sum_{n=1}^\infty K^{n-1} \frac{(x + y - x_0 - y_0)^{n-1}}{(n-1)!}
+          = A \left[ 1 + e^{K (x + y - x_0 - y_0)} \right].
+          \]
+          Следовательно, в треугольнике $BCD$ существуют предельные функции $v, w, u$ частичных
+          сумм этих рядов $v_n, w_n, u_n$, причём, в силу равномерной сходимости, из непрерывности
+          функций $v_n, w_n, u_n$ следует непрерывность $v, w, u$. Переходя в приближении
+          к пределу, получим, что $v,w,u$ удовлетворяют системе интегральных уравнений.
+        </p>
+
+        <p>
+          Таким образом, доказано существование решения системы интегральных уравнений,
+          которое находится методом последовательных приближений.
+        </p>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 17</h2>
+
+    <li class="question">
+      <div class="name">
+        Доказательство единственности решения задачи Коши для гиперболического уравнения
+        с двумя неизвестными переменными
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <p>
+          Рассмотрим задачу Коши
+          \[
+          \ppdv{u}{x}{y} + a(x,y) \pd{u}{x} + b(x,y) \pd{u}{y} + c(x,y)u = f(x,y),
+          \]
+          с условиями на кривой $y = g(x)$
+          \[
+          \at{u}{y = g(x)} = \varphi_0(x), \quad \at{\pd{u}{y}}{y = g(x)} = \varphi_1(x).
+          \]
+        </p>
+
+        <p>
+          Введением функций
+          \[
+          v = \pd{u}{x}, \quad w = \pd{u}{y}
+          \]
+          задачу Коши можно свести к системе интегральных уравнений
+          \[
+          \left\{
+          \begin{aligned}
+          v(x,y) &= \psi(x) + \int\limits_{g(x)}^y \left[f - av - bw - cu \right] dy, \\
+          w(x,y) &= \varphi_1(x) + \int\limits_{h(y)}^x \left[f - av - bw - cu \right] dx, \\
+          u(x,y) &= \varphi_0(x) + \int\limits_{g(x)}^y w dy.
+          \end{aligned}
+          \right.
+          \]
+        </p>
+
+        <div class="images">
+          <img alt="дуга" src="images/cauchy-int.png" />
+        </div>
+
+        <p>
+          Пусть существуют два различных непрерывных решения системы $v_1, w_1, u_1$ и $v_2, w_2, u_2$.
+          Обозначим
+          \[
+          V = v_1 - v_2, \quad W = w_1 - w_2, \quad U = u_1 - u_2.
+          \]
+          Тогда справедливо
+          \[
+          \left\{
+          \begin{aligned}
+          V &= - \int\limits_{g(x)}^y \left[ aV + bW + cU \right] dy, \\
+          W &= - \int\limits_{h(y)}^x \left[ aV + bW + cU \right] dx, \\
+          U &= \phantom{-} \int\limits_{g(x)}^y W dy.
+          \end{aligned}
+          \right.
+          \]
+        </p>
+
+        <p>
+          Так как $V,W,U$ &mdash; непрерывные и ограниченные в треугольнике $BCD$, то существует
+          $C$ такая, что
+          \[
+          \abs{V} \leqslant C, \quad
+          \abs{W} \leqslant C, \quad
+          \abs{U} \leqslant C.
+          \]
+        </p>
+
+        <p>
+          Тогда
+          \[
+          \abs{V}
+          \leqslant \int\limits_{g(x)}^y \left[ \abs{a} + \abs{b} + \abs{c} \right] B dy
+          \leqslant KB (y - y_0)
+          \leqslant KB \frac{(x + y - x_0 - y_0)}{1!}.
+          \]
+          Аналогично для $\abs{W}, \abs{U}$. Метод математической индукции даёт
+          \[
+          \abs{V}, \abs{W}, \abs{U} \leqslant K^n B \frac{(x + y - x_0 - y_0)^n}{n!}.
+          \]
+          Так как
+          \[
+          K^n B \frac{(x + y - x_0 - y_0)^n}{n!} \underset{n \to \infty}{\longrightarrow} 0,
+          \]
+          то $V \equiv W \equiv U \equiv 0$, а, следовательно
+          \[
+          v_1 \equiv v_2, \quad w_1 \equiv w_2 \quad u_1 \equiv u_2.
+          \]
+        </p>
+      </div>
+    </li>
 
     <li class="question">
       <div class="name">
@@ -3198,10 +3442,55 @@
       </div>
       <button class="toggle-button"></button>
       <div class="content">
-        Задача: найти решение уравнения
-        \[
-        \ppdv{u}{x}{y} + a(x,y) \pd{u}{x} + b(x,y) \pd{u}{y} + c(x,y)u = f(x,y),
-        \]
+        <p>
+          Задача: найти решение уравнения
+          \[
+          \ppdv{u}{x}{y} + a(x,y) \pd{u}{x} + b(x,y) \pd{u}{y} + c(x,y)u = f(x,y),
+          \]
+          принимающее заданные значения на характеристиках $x = x_0, y = y_0$:
+          \[
+          \begin{cases}
+          \at{u}{x=x_0} = \varphi_1(y), & y_0 \leqslant y \leqslant b, \\
+          \at{u}{y=y_0} = \varphi_2(x), & x_0 \leqslant x \leqslant a,
+          \end{cases}
+          \]
+          причём
+          \[
+          \varphi_1, \varphi_2 \in C^1, \qquad \varphi_1(y_0) = \varphi_2(x_0).
+          \]
+        </p>
+
+        <p>
+          Введём функции
+          \[
+          v = \pd{u}{x}, \qquad w = \pd{u}{y}.
+          \]
+          Тогда задача равносильна системе
+          \[
+          \left\{
+          \begin{aligned}
+          \pd{v}{y} &= f - av - bw - cu, \\
+          \pd{w}{y} &= f - av - bw - cu, \\
+          \pd{u}{y} &= w.
+          \end{aligned}
+          \right.
+          \]
+          В силу требуемых условий из этой системы следует
+          \[
+          \left\{
+          \begin{aligned}
+          v(x,y) &= \varphi_2'(x) + \int\limits_{y_0}^y \left[f(x,\tau) - av - bw - cu \right] d\tau, \\
+          w(x,y) &= \varphi_1'(y) + \int\limits_{x_0}^x \left[f(\tau, y) - av - bw - cu \right] d\tau, \\
+          u(x,y) &= \varphi_2(x) + \int\limits_{y_0}^y w(x,\tau) d\tau.
+          \end{aligned}
+          \right.
+          \]
+        </p>
+
+        <p>
+          Существование и единственность задачи Гурса доказываются путём доказательства существования
+          и единственности системы интегральных уравнений методом последовательных приближений.
+        </p>
       </div>
     </li>
 
@@ -3534,9 +3823,444 @@
       </div>
     </li>
 
+    <li class="question">
+      <div class="name">
+        Формула Римана
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Пусть $v = v(x, y, x_0, y_0)$ &mdash; функция Римана.
+        <div class="definition">
+          <i>Формула Римана</i>
+          \[
+          \begin{aligned}
+          u(x_0, y_0) &= \frac{1}{2}(uv)_P + \frac{1}{2} (uv)_Q \\
+          &- \frac{1}{2} \int\limits_l \left[
+          \paren{u \pd{v}{x} - v \pd{u}{x} - 2buv} dx +
+          \paren{v \pd{u}{y} - u \pd{v}{y} + 2auv} dy
+          \right] \\
+          &+ \iint\limits_\Omega vf \, dx \, dy.
+          \end{aligned}
+          \]
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 19</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: волновое уравнение
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим ДУЧП 2-го порядка:
+        \[
+        \pdv2{u}{t} - A_{\alpha \beta} (x,t) \ppdv{u}{x_\alpha}{x_\beta}
+        + A_\alpha(x,t) \pd{u}{x_\alpha} + A_0 (x,t) u = f(x,t),
+        \]
+        где $x \in \mathbb{R}^n, \; n = m + 1, \; \alpha,\beta = \overline{1,m}$.
+
+        <div class="definition">
+          Уравнение называется <i>волновым уравнением</i> если матрица $A$ положительно определена.
+        </div>
+
+        <div class="remark">
+          Функция $\omega(x,t) \equiv t$ не является решением уравнения характеристик
+          \[
+          \paren{\pd{\omega}{t}}^2 - A_{\alpha \beta} \pd{\omega}{x_\alpha} \pd{\omega}{x_\beta} = 0,
+          \]
+          поэтому плоскости $t = \const$ не являются характеристическими поверхностями уровня, а,
+          следовательно, на них можно задавать оба данных Коши.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: ортотропная среда
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Среда называется <i>ортотропной</i>, если существуют $m$ взаимно
+          перпендикулярные плоскости симметрии.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Постановка смешанной задачи для волнового уравнения
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        В плоскости $t = 0$ дана ограниченная область $\Omega$ с кусочно-гладкой
+        границей $\Gamma$.
+
+        <p>
+          Задача состоит в нахождении решения волнового уравнения
+          \[
+          \pdv2{u}{t} - \pd{}{x_\alpha} \paren{A_{\alpha \beta} \pd{u}{x_\beta}} = f(x,t)
+          \]
+          в области $Q = \Omega \times (0, \infty)$ с границей $\partial Q$ при начальных
+          \[
+          \at{u}{t=0} = \varphi_0(x), \qquad \at{\pd{u}{t}}{t=0} = \varphi_1(x)
+          \]
+          и краевых условиях.
+        </p>
+
+        <p>
+          Типы краевых условий:
+
+          \[
+          \begin{gathered}
+          \at{u}{S} = \psi(x,t), \quad S = \partial Q \setminus \Omega. \\
+          \at{\left[ A_{\alpha \beta} \pd{u}{x_\beta} \cos(n, x_\alpha) \right]}{S} = \chi(x,t),
+          \quad \alpha,\beta = \overline{1,m}. \\
+          \at{\left[ A_{\alpha \beta} \pd{u}{x_\beta} \cos(n, x_\alpha)
+          + \sigma(x,t) u
+          \right]}{S} = \omega(x,t),
+          \quad \alpha,\beta = \overline{1,m}.
+          \end{gathered}
+          \]
+
+          Общее условие для всех трёх типов:
+          \[
+          \at{\left[ \gamma_1(x,t) A_{\alpha \beta} \pd{u}{x_\beta} \cos(n, x_\alpha)
+          + \gamma_2(x,t) u \right]}{S} = g(x,t), \quad \alpha,\beta = \overline{1,m}.
+          \]
+        </p>
+
+        <div class="definition">
+          Задача нахождения решения уравнения при начальных условиях и одном из краевых
+          условий называют <i>начально-краевой</i> или <i>смешанной</i> задачей.
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 20</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: характеристический конус
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим волновое уравнение
+        \[
+        \pdv2{u}{t} - \Delta u = f(x,t).
+        \]
+        Задача состоит в нахождении решения, удовлетворяющего $\forall x \in \mathbb{R}^n$ и
+        начальным условиям
+        \[
+        \at{u}{t=0} = \varphi_0(x), \qquad \at{\pd{u}{t}}{t=0} = \varphi_1(x).
+        \]
+
+        <p>
+          Возьмём точку $(x_0, t_0)$ и рассмотрим поверхность
+          \[
+          S: \; t_0 - t = r, \quad \text{где} \quad r = \abs{x - x_0}.
+          \]
+          При $t \leqslant t_0$ поверхность $S$ &mdash; нижняя часть поверхности конуса с вершиной
+          в точке $(x_0, t_0)$ и осью, параллельной оси $Ot$.
+        </p>
+
+        <p>
+          Положим
+          \[
+          \omega(x,t) = t_0 - t - r.
+          \]
+          Тогда уравнение конуса можно переписать в виде
+          \[
+          \omega(x,t) = 0.
+          \]
+          Уравнение характеристик:
+          \[
+          \paren{\pd{\omega}{t}}^2 - \sum_{k=1}^m \paren{\pd{\omega}{x_k}}^2 = 0.
+          \]
+
+          В данном случае
+          \[
+          \pd{\omega}{t} = -1, \quad \pd{\omega}{x_k} = - \pd{r}{x_k} = - \frac{x_k - x_{0k}}{r},
+          \]
+          так как
+          \[
+          r^2 = \sum_{k=1}^m \paren{x_k - x_{0k}}^2.
+          \]
+          Здесь $x_{0k}$ &mdash; $k$-ая координата точки $x_0$.
+        </p>
+
+        <p>
+          Тогда
+
+          \[
+          \paren{\pd{\omega}{t}}^2 - \sum_{k=1}^m \paren{\pd{\omega}{x_k}}^2 =
+          1 - \frac{1}{r^2} \sum_{k=1}^m (x_k - x_{0k})^2 = 0,
+          \]
+          откуда следует, что $S$ &mdash; характеристическая поверхность волнового уравнения.
+        </p>
+
+        <p>
+          Рассмотрим нормаль $\vb{n}$ к этой поверхности. Из дифференциальной геометрии следует:
+          \[
+          \begin{gathered}
+          \vb{n} = -\frac{\nabla \omega}{\abs{\nabla \omega}}
+          = -\frac{\paren{\pd{\omega}{t}, \pd{\omega}{x_1}, \dots, \pd{\omega}{x_m}}}
+          {\abs{\nabla \omega}}, \\
+          \cos(n, t) = \dp{\vb{n}}{\vb{e}_t}
+          = - \dfrac{\displaystyle \pd{\omega}{t}}{\abs{\nabla \omega}}
+          = - \dfrac{\displaystyle \pd{\omega}{t}}{\sqrt{\displaystyle \paren{\pd{\omega}{t}}^2
+          + \sum_{k=1}^m \paren{\pd{\omega}{x_k}}^2}} = \frac{1}{\sqrt{2}}.
+          \end{gathered}
+          \]
+        </p>
+
+        <p>
+          Так как сумма направляющих косинусов равна $1$, можно записать
+          \[
+          \sum_{k=1}^m \cos^2(n, x_k) = 1 - \cos^2(n, t) = \frac{1}{2}.
+          \]
+        </p>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема о единственности решения задачи Коши
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          Пусть поставлены две задачи Коши:
+          \[
+          \begin{aligned}
+          \pdv2{u}{t} - \Delta u &= f(x,t), & \at{u}{t=0} &= \varphi_0(x),
+          & \at{\pd{u}{t}}{t=0} &= \varphi_1(x), \\
+          \pdv2{v}{t} - \Delta v &= f(x,t), & \at{v}{t=0} &= \psi_0(x),
+          & \at{\pd{v}{t}}{t=0} &= \psi_1(x).
+          \end{aligned}
+          \]
+
+          Обозначим область, ограниченную поверхностью конуса
+          \[
+          S: \; t_0 - t = r, \quad \text{где} \quad r = \abs{x - x_0},
+          \]
+          и плоскостью $t = 0$ через $D$.
+          Пусть в характеристическом конусе
+          \[
+          \overline{D}: \; \abs{x - x_0} \leqslant t_0 - t
+          \]
+          с вершиной в точке $(x_0, t_0)$ совпадают свободные члены: $f(x,t) \equiv g(x,t)$, а в шаре
+          \[
+          B: \; \abs{x - x_0} \leqslant t_0,
+          \]
+          который конус $D$ вырезает из пространства $t = 0$, совпадают функции
+          \[
+          \varphi_0(x) \equiv \psi_0(x), \qquad \varphi_1(x) \equiv \psi_1(x).
+          \]
+
+          Тогда если обе задачи имеют решения, непрерывные вместе со своими производными первых
+          двух порядков, то эти решения совпадают в $\overline{D}$ при $t \geqslant 0$.
+        </div>
+
+        <div class="images">
+          <img alt="конус" src="images/cone.png" />
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <p>
+            Пусть $u,v$ &mdash; решения соответствующих задач Коши. Рассмотрим функцию
+            \[
+            w(x,t) = u(x,t) - v(x,t);
+            \]
+            тогда в $\overline{D}$
+            \[
+            \begin{gathered}
+            \pdv2{w}{t} - \Delta w = 0, \\
+            \at{w}{t=0} = 0, \qquad \at{\pd{w}{t}}{t=0} = 0.
+            \end{gathered}
+            \]
+          </p>
+
+          <p>
+            Возьмём произвольную точку $(\widetilde{x}, \widetilde{t}) \in D$ и построим
+            новый характеристический конус
+            \[
+            \begin{aligned}
+            \widetilde{D}: &\; \abs{\widetilde{x} - x} \leqslant \tilde{t} - t, \\
+            \widetilde{B}: &\; \abs{\widetilde{x} - x} \leqslant \tilde{t},
+            \end{aligned}
+
+            \quad t \leqslant \tilde{t}.
+            \]
+
+            Очевидно, что $\widetilde{B} \subset B$, откуда следует, что в шаре $\widetilde{B}$
+            выполнены условия
+            \[
+            \at{w}{t=0} = 0, \qquad \at{\pd{w}{t}}{t=0} = 0.
+            \]
+
+            Умножим
+            \[
+            \pdv2{w}{t} - \Delta w = 0
+            \]
+            на ${\displaystyle \pd{w}{t}}$ и проинтегрируем по $\widetilde{D}$, приняв во внимание, что
+            \[
+            \begin{gathered}
+            \pd{w}{t} \paren{\pdv2{w}{t}} = \frac{1}{2} \pd{}{t} \paren{\pd{w}{t}}^2, \\
+            \pd{w}{t} \paren{\pdv2{w}{x_k}} = \pd{}{x_k} \paren{\pd{w}{t} \pd{w}{x_k}}
+            -\frac{1}{2} \pd{}{t} \paren{\pd{w}{x_k}}^2;
+            \end{gathered}
+            \]
+            получим (применяя формулу Гаусса-Остроградского):
+            \[
+            \begin{gathered}
+            \iiint\limits_{\widetilde{D}} \pd{w}{t} \paren{\pdv2{w}{t} - \Delta w} dx dt = \\
+            =
+            \iint\limits_{\widetilde{\Gamma}}
+            \left\{
+            \left[
+            \paren{\pd{w}{t}}^2 + \sum_{k=1}^m \paren{\pd{w}{x_k}}^2
+            \right] \cos(n,t)
+            - 2 \sum_{k=1}^m \pd{w}{t} \pd{w}{x_k} \cos(n, x_k)
+            \right\}
+            d \widetilde{\Gamma} = 0,
+            \end{gathered}
+            \]
+            где $d \widetilde{\Gamma}$ &mdash; элемент поверхности
+            \[
+            \widetilde{\Gamma} = \partial \widetilde{D} = \widetilde{S} \cup \widetilde{B}.
+            \]
+          </p>
+
+          <p>
+            Из того, что в шаре $\widetilde{B}$
+            \[
+            w \equiv 0, \quad \pd{w}{t} \equiv 0,
+            \]
+            дифференцированием первого тождества получаем, что в шаре $\widetilde{B}$
+            \[
+            \pd{w}{x_k} = 0, \quad k = \overline{1,m},
+            \]
+            поэтому остаётся только интеграл по боковой поверхности конуса $\widetilde{S}$:
+            \[
+            \iint\limits_{\widetilde{S}}
+            \left\{
+            \left[
+            \paren{\pd{w}{t}}^2 + \sum_{k=1}^m \paren{\pd{w}{x_k}}^2
+            \right] \cos(n,t)
+            - 2 \sum_{k=1}^m \pd{w}{t} \pd{w}{x_k} \cos(n, x_k)
+            \right\}
+            d \widetilde{S} = 0.
+            \]
+
+            Домножим его на ${\displaystyle \cos(n,t) = \frac{1}{\sqrt{2}}}$ и внесём под знак интеграла.
+            Учитывая равенство
+            \[
+            \sum_{k=1}^m \cos^2(n, x_k) =\frac{1}{2},
+            \]
+            получим
+            \[
+            \begin{gathered}
+            \iint\limits_{\widetilde{S}}
+            \left\{
+            \paren{\pd{w}{t}}^2 \cos^2(n,t) + \sum_{k=1}^m \paren{\pd{w}{x_k}}^2 \cos^2(n,t)
+            - 2 \sum_{k=1}^m \pd{w}{t} \pd{w}{x_k} \cos(n,t) \cos(n, x_k)
+            \right\}
+            d \widetilde{S} = 0. \\
+
+            \iint\limits_{\widetilde{S}}
+            \left\{
+            \paren{\pd{w}{t}}^2 \sum_{k=1}^m \cos^2(n, x_k)
+            + \sum_{k=1}^m \paren{\pd{w}{x_k}}^2 \cos^2(n,t)
+            - 2 \sum_{k=1}^m \pd{w}{t} \pd{w}{x_k} \cos(n,t) \cos(n, x_k)
+            \right\}
+            d \widetilde{S} = 0.
+            \end{gathered}
+            \]
+            
+            Сворачиваем в полный квадрат:
+            \[
+            \iint\limits_{\widetilde{S}}
+            \sum_{k=1}^m
+            \left[
+            \pd{w}{t} \cos(n,x_k) - \pd{w}{x_k} \cos(n,t)
+            \right]^2
+            d \widetilde{S} = 0.
+            \]
+
+            Значит, на $\widetilde{S}$ выполняются соотношения
+            \[
+            \pd{w}{t} \cos(n,x_k) - \pd{w}{x_k} \cos(n,t) \equiv 0, \quad k = \overline{1,m},
+            \]
+            откуда следует, что
+            \[
+            \frac{\displaystyle \pd{w}{t}}{\cos(n, t)} = \frac{\displaystyle \pd{w}{x_k}}{\cos(n, x_k)},
+            \]
+            откуда следует коллинеарность векторов $\nabla w$ и $\nabla \omega$, и, следовательно,
+            коллинеарность $\nabla w$ и $\vb{n}$, то есть $\nabla w$ перпендикулярен образующей косинуса:
+            \[
+            \nabla w \perp \tilde{l} \implies \pd{w}{\tilde{l}} = \proj_{\tilde{l}} \nabla w = 0.
+            \]
+            Это значит, что $w = \const$ вдоль любой направляющей $\tilde{l}$. В частности,
+            $w(\tilde{x}, \tilde{t}) = w(\tilde{x}, 0) = 0$ в шаре $\widetilde{B}$ по условию.
+          </p>
+
+          <p>
+            Из произвольности точки $(\tilde{x}, \tilde{t}) \in D$ следует, что
+            \[
+            w \equiv 0, \qquad \forall (x,t) \in D.
+            \]
+          </p>
+        </div>
+
+        <div class="remark">
+          Из теоремы о единственности решения задачи Коши вытекает, что значение решения
+          $u(x_0, t_0)$ определяется только значениями начальных функций в шаре
+          \[
+          \overline{B}: \; \abs{x - x_0} \leqslant t_0.
+          \]
+        </div>
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 21</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: область зависимости решения задачи Коши для волнового уравнения
+        $\square u = f(x,t), \; x \in \mathbb{R}^n$
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          <i>Областью зависимости</i> для точки $(x_0, t_0)$ называется то множество
+          точек плоскости $t = 0$, на котором достаточно знать значения начальных
+          функций $\varphi_0(x), \varphi_1(x)$ для определения $u(x_0, t_0)$.
+        </div>
+
+        Таким образом, за область зависимости можно взять шар $B: \; \abs{x - x_0} \leqslant t_0$.
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Явление распространения волн
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          <i>Областью зависимости</i> для точки $(x_0, t_0)$ называется то множество
+          точек плоскости $t = 0$, на котором достаточно знать значения начальных
+          функций $\varphi_0(x), \varphi_1(x)$ для определения $u(x_0, t_0)$.
+        </div>
+
+        Таким образом, за область зависимости можно взять шар $B: \; \abs{x - x_0} \leqslant t_0$.
+      </div>
+    </li>
+
     <h2 class="subtitle">БИЛЕТ 22</h2>
     <h2 class="subtitle">БИЛЕТ 23</h2>
     <h2 class="subtitle">БИЛЕТ 24</h2>
