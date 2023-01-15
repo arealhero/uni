@@ -1,172 +1,313 @@
+// FIXME: remove code duplication
+
 var randomIndex = 0;
 var randomQuestions = [];
 
+var scrollingSpeed = 200;
+
+function ScrollHalfPageDown()
+{
+  window.scrollBy({
+    top: 0.5 * window.innerHeight,
+    left: 0,
+  });
+}
+
+function ScrollHalfPageUp()
+{
+  window.scrollBy({
+    top: -0.5 * window.innerHeight,
+    left: 0,
+  });
+}
+
+function handleKeyDown(event) {
+  const { ctrlKey, key } = event;
+  switch (key) {
+    case 'd':
+      {
+        if (ctrlKey) {
+          ScrollHalfPageDown();
+          event.preventDefault();
+        }
+      }
+      break;
+    case 'u':
+      {
+        if (ctrlKey) {
+          ScrollHalfPageUp();
+          event.preventDefault();
+        }
+      }
+      break;
+    case 'j':
+      {
+        window.scrollBy({
+          top: 0.5 * scrollingSpeed,
+          left: 0,
+        });
+      }
+      break;
+    case 'k':
+      {
+        window.scrollBy({
+          top: -0.5 * scrollingSpeed,
+          left: 0,
+        });
+      }
+      break;
+    case 'g':
+      {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+        });
+      }
+      break;
+    case 'G':
+      {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          left: 0,
+        });
+      }
+      break;
+    default:
+      break;
+  }
+
+}
+
 function Shuffle(array) {
-    var copy = array.slice();
-    for (let i = copy.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        var tmp = copy[i];
-        copy[i] = copy[j];
-        copy[j] = tmp;
-    }
-    return copy;
+  var copy = array.slice();
+  for (let i = copy.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    var tmp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = tmp;
+  }
+  return copy;
 }
 
 function Show(content, button) {
-    button.textContent = "Скрыть ответ";
-    content.style.display = "block";
+  button.textContent = "Скрыть ответ";
+  content.style.display = "block";
 }
 
 function Hide(content, button) {
-    button.textContent = "Показать ответ";
-    content.style.display = "none";
+  button.textContent = "Показать ответ";
+  content.style.display = "none";
 }
 
 function ToggleContentVisibility() {
-    var button = this.querySelector(".toggle-button");
-    var content = this.querySelector(".content");
+  var button = this.querySelector(".toggle-button");
+  var content = this.querySelector(".content");
 
-    if (content.style.display === "none") {
-        Show(content, button);
-    } else {
-        Hide(content, button);
-    }
+  if (content.style.display === "none") {
+    Show(content, button);
+  } else {
+    Hide(content, button);
+  }
 }
 
 function HideProof(proof, button) {
-    button.textContent = "Показать доказательство";
-    proof.style.display = "none";
+  button.textContent = "Показать доказательство";
+  proof.style.display = "none";
 }
 
 function ShowProof(proof, button) {
-    button.textContent = "Скрыть доказательство";
-    proof.style.display = "block";
+  button.textContent = "Скрыть доказательство";
+  proof.style.display = "block";
+}
+
+function HideDerivation(derivation, button) {
+  button.textContent = "Показать вывод";
+  derivation.style.display = "none";
+}
+
+function ShowDerivation(derivation, button) {
+  button.textContent = "Скрыть вывод";
+  derivation.style.display = "block";
+  derivation.scrollIntoView();
+  ScrollHalfPageUp();
 }
 
 function ToggleProofVisibility() {
-    var button = this.querySelector(".proof-toggle");
-    var proof = this.querySelector(".proof");
+  var button = this.querySelector(".proof-toggle");
+  var proof = this.querySelector(".proof");
 
-    if (proof.style.display === "none") {
-        ShowProof(proof, button);
-    } else {
-        HideProof(proof, button);
-    }
+  if (proof.style.display === "none") {
+    ShowProof(proof, button);
+  } else {
+    HideProof(proof, button);
+  }
+}
+
+function ToggleDerivationVisibility() {
+  var button = this;
+  var derivation = this.nextElementSibling;
+
+  if (derivation.style.display === "none") {
+    ShowDerivation(derivation, button);
+  } else {
+    HideDerivation(derivation, button);
+  }
 }
 
 function HideProofs() {
-    var proofButtons = document.getElementsByClassName("proof-toggle");
-    for (var i = 0; i < proofButtons.length; ++i) {
-        var button = proofButtons[i];
-        var buttonParent = button.parentNode;
-        var proof = buttonParent.querySelector(".proof");
-        HideProof(proof, button);
-    }
+  var proofButtons = document.getElementsByClassName("proof-toggle");
+  for (var i = 0; i < proofButtons.length; ++i) {
+    var button = proofButtons[i];
+    var buttonParent = button.parentNode;
+    var proof = buttonParent.querySelector(".proof");
+    HideProof(proof, button);
+  }
 }
 function ShowProofs() {
-    var proofButtons = document.getElementsByClassName("proof-toggle");
-    for (var i = 0; i < proofButtons.length; ++i) {
-        var button = proofButtons[i];
-        var buttonParent = button.parentNode;
-        var proof = buttonParent.querySelector(".proof");
-        ShowProof(proof, button);
-    }
+  var proofButtons = document.getElementsByClassName("proof-toggle");
+  for (var i = 0; i < proofButtons.length; ++i) {
+    var button = proofButtons[i];
+    var buttonParent = button.parentNode;
+    var proof = buttonParent.querySelector(".proof");
+    ShowProof(proof, button);
+  }
+}
+
+function HideDerivations() {
+  var derivationButtons = document.getElementsByClassName("derivation-toggle");
+  for (var i = 0; i < derivationButtons.length; ++i) {
+    var button = derivationButtons[i];
+    var derivation = button.nextElementSibling;
+    HideDerivation(derivation, button);
+  }
 }
 
 function SetProofButtonsHandlers() {
-    var proofButtons = document.getElementsByClassName("proof-toggle");
-    for (var i = 0; i < proofButtons.length; ++i) {
-        var button = proofButtons[i];
-        var buttonParent = button.parentNode;
-        button.textContent = "Скрыть доказательство";
-        button.onclick = ToggleProofVisibility.bind(buttonParent);
-    }
+  var proofButtons = document.getElementsByClassName("proof-toggle");
+  for (var i = 0; i < proofButtons.length; ++i) {
+    var button = proofButtons[i];
+    var buttonParent = button.parentNode;
+    button.textContent = "Скрыть доказательство";
+    button.onclick = ToggleProofVisibility.bind(buttonParent);
+  }
+}
+
+function SetDerivationButtonsHandlers() {
+  var derivationButtons = document.getElementsByClassName("derivation-toggle");
+  for (var i = 0; i < derivationButtons.length; ++i) {
+    var button = derivationButtons[i];
+    button.textContent = "Показать вывод";
+    button.onclick = ToggleDerivationVisibility.bind(button);
+  }
+}
+
+function ShowSubtitles()
+{
+  var subtitles = document.getElementsByClassName("subtitle");
+  for (var i = 0; i < subtitles.length; ++i) {
+    subtitles[i].style.display = "block";
+  }
+}
+
+function HideSubtitles()
+{
+  var subtitles = document.getElementsByClassName("subtitle");
+  for (var i = 0; i < subtitles.length; ++i) {
+    subtitles[i].style.display = "none";
+  }
 }
 
 function HideQuestions() {
-    var questions = document.getElementsByClassName("question");
-    for (var i = 0; i < questions.length; ++i) {
-        var question = questions[i];
-        var button = question.querySelector(".toggle-button");
-        var content = question.querySelector(".content");
+  var questions = document.getElementsByClassName("question");
+  for (var i = 0; i < questions.length; ++i) {
+    var question = questions[i];
+    var button = question.querySelector(".toggle-button");
+    var content = question.querySelector(".content");
 
-        question.style.display = "none";
-        Hide(content, button);
-    }
+    question.style.display = "none";
+    Hide(content, button);
+  }
 
-    HideProofs();
+  HideProofs();
+  HideDerivations();
+  HideSubtitles();
 }
 
 function ShowQuestions() {
-    var questions = document.getElementsByClassName("question");
-    for (var i = 0; i < questions.length; ++i) {
-        var question = questions[i];
-        var button = question.querySelector(".toggle-button");
-        var content = question.querySelector(".content");
+  var questions = document.getElementsByClassName("question");
+  for (var i = 0; i < questions.length; ++i) {
+    var question = questions[i];
+    var button = question.querySelector(".toggle-button");
+    var content = question.querySelector(".content");
 
-        question.style.display = "block";
-        Show(content, button);
-    }
+    question.style.display = "block";
+    Show(content, button);
+  }
 
-    ShowProofs();
+  ShowProofs();
+  ShowSubtitles();
 }
 
 function ShowRandomQuestion() {
-    if (randomQuestions.length === 0) return;
+  if (randomQuestions.length === 0) return;
 
-    HideQuestions();
+  HideQuestions();
 
-    randomQuestions[randomIndex].style.display = "none";
+  randomQuestions[randomIndex].style.display = "none";
 
-    randomIndex += 1;
+  randomIndex += 1;
 
-    if (randomIndex == randomQuestions.length) {
-        randomQuestions = Shuffle(randomQuestions).slice();
-        randomIndex = 0;
-    }
+  if (randomIndex == randomQuestions.length) {
+    randomQuestions = Shuffle(randomQuestions).slice();
+    randomIndex = 0;
+  }
 
-    randomQuestions[randomIndex].style.display = "block";
+  randomQuestions[randomIndex].style.display = "block";
 }
 
 function HideAnswers() {
-    var questions = document.getElementsByClassName("question");
-    for (var i = 0; i < questions.length; ++i) {
-        var question = questions[i];
-        var button = question.querySelector(".toggle-button");
-        var content = question.querySelector(".content");
+  var questions = document.getElementsByClassName("question");
+  for (var i = 0; i < questions.length; ++i) {
+    var question = questions[i];
+    var button = question.querySelector(".toggle-button");
+    var content = question.querySelector(".content");
 
-        Hide(content, button);
-    }
+    Hide(content, button);
+  }
 }
 
 function ShowAnswers() {
-    var questions = document.getElementsByClassName("question");
-    for (var i = 0; i < questions.length; ++i) {
-        var question = questions[i];
-        var button = question.querySelector(".toggle-button");
-        var content = question.querySelector(".content");
+  var questions = document.getElementsByClassName("question");
+  for (var i = 0; i < questions.length; ++i) {
+    var question = questions[i];
+    var button = question.querySelector(".toggle-button");
+    var content = question.querySelector(".content");
 
-        Show(content, button);
-    }
+    Show(content, button);
+  }
 }
 
-window.onload = function() {
-    var questions = document.getElementsByClassName("question");
-    for (var i = 0; i < questions.length; ++i) {
-        var question = questions[i];
-        var button = question.querySelector(".toggle-button");
-        button.textContent = "Скрыть ответ";
-        button.onclick = ToggleContentVisibility.bind(question);
-    }
+window.onload = function () {
+  var questions = document.getElementsByClassName("question");
+  for (var i = 0; i < questions.length; ++i) {
+    var question = questions[i];
+    var button = question.querySelector(".toggle-button");
+    button.textContent = "Скрыть ответ";
+    button.onclick = ToggleContentVisibility.bind(question);
+  }
 
-    SetProofButtonsHandlers();
+  SetProofButtonsHandlers();
 
-    var nonEmptyQuestions = Array.from(questions).filter((question) => {
-        var name = question.querySelector(".name");
-        return name.textContent.trim() !== "";
-    });
+  SetDerivationButtonsHandlers();
+  HideDerivations();
 
-    randomQuestions = Shuffle(nonEmptyQuestions).slice();
+  var nonEmptyQuestions = Array.from(questions).filter((question) => {
+    var name = question.querySelector(".name");
+    return name.textContent.trim() !== "";
+  });
+
+  randomQuestions = Shuffle(nonEmptyQuestions).slice();
+  document.addEventListener('keydown', handleKeyDown);
 };
 
 

@@ -3,6 +3,8 @@
 Build/
 build/
 
+recordings/
+
 node_modules/
 
 # Emacs

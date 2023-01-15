@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Билеты &mdash; УМФ</title>
+
+  <link href="/assets/css/styles.css" rel="stylesheet">
+  <script type="text/javascript" async src="/assets/js/tickets.js"></script>
+
+  <link rel="stylesheet" href="/assets/katex/katex.min.css">
+  <script defer src="/assets/katex/katex.min.js"></script>
+  <script defer src="/assets/katex/auto-render.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        // customised options
+        // • auto-render specific keys, e.g.:
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        // • rendering keys, e.g.:
+        throwOnError: false
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1 id="title">Билеты &mdash; УМФ</h1>
+  <nav>
+    <a href="/">Домой</a>
+    <a href="/math-physics">УМФ</a>
+  </nav>
+
+  <div class="controls">
+    <button onclick="HideTickets()">Спрятать билеты</button>
+    <button onclick="ShowTickets()">Показать все билеты</button>
+    <button onclick="ShowRandomTicket()">Показать случайный билет</button>
+  </div>
+
+  <div style="display:none">
+    $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+
+    $\global\def\dv#1#2{\frac{d #1}{d #2}}$
+    $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
+    $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
+    $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+
+    $\global\def\paren#1{\left( #1 \right)}$
+
+    $\global\def\mbox#1{\text{#1}}$
+
+    $\global\def\div{\text{div}\,}$
+    $\global\def\grad{\text{grad}\,}$
+    $\global\def\rot{\text{rot}\,}$
+
+    $\global\def\vb#1{\textbf{#1}}$
+
+    $\global\def\const{\text{const}\,}$
+    $\global\def\res{\text{res}\,}$
+    $\global\def\Res{\text{Res}\,}$
+    $\global\def\Re{\text{Re}\,}$
+    $\global\def\Im{\text{Im}\,}$
+    $\global\def\ch{\text{ch}\,}$
+    $\global\def\sh{\text{sh}\,}$
+    $\global\def\argtg{\text{argtg}\,}$
+  </div>
+
+  <ol id="tickets">
+    <li class="ticket">
+      Вывод уравнения малых колебаний струны
+    </li>
+
+    <li class="ticket">
+      Вывод уравнения теплопроводности (распространения тепла)
+    </li>
+
+    <li class="ticket">
+      Классификация линейных дифференциальных уравнений в частных производных
+      2-го порядка. Примеры
+    </li>
+
+    <li class="ticket">
+      Краевые условия и краевые задачи (колебание струны конечной длины, задачи
+      Дирихле и Неймана для неоднородного уравнения Лапласа)
+    </li>
+
+    <li class="ticket">
+      Задача Коши для линейных уравнений 2-го порядка. Данные Коши,
+      поверхность Коши, вычисление первых производных на поверхности Коши
+    </li>
+
+    <li class="ticket">
+      Вопросы существования, единственности и корректности краевой задачи.
+      Примеры: задача Адамара, задача Дирихле для гиперболического
+      уравнения в квадрате
+    </li>
+
+    <li class="ticket">
+      Теорема о сохранении типа линейного уравнения в частных производных
+      при невырожденном преобразовании независимых переменных
+    </li>
+
+    <li class="ticket">
+      Уравнение характеристик, характеристическая поверхность. Инвариантность
+      характеристик при преобразовании независимых переменных
+    </li>
+
+    <li class="ticket">
+      Зависимость данных Коши на характеристической поверхности. Пример
+      уравнения теплопроводности
+    </li>
+
+    <li class="ticket">
+      Поверхность слабого разрыва. Фронт волны. Скорость движения фронта волны
+    </li>
+
+    <li class="ticket">
+      Приведение уравнений второго порядка к каноническому виду. Случай двух
+      переменных
+    </li>
+
+    <li class="ticket">
+      Канонический вид трёх типов уравнений в случае двух переменных. Пример
+      гиперболического уравнения
+    </li>
+
+    <li class="ticket">
+      Решение задачи Коши для неограниченной струны. Физическое истолкование
+      решения. Понятие обобщённого решения задачи Коши
+    </li>
+
+    <li class="ticket">
+      Решение краевой задачи о колебании ограниченной струны. Отражение волн
+      от концов струны
+    </li>
+
+    <li class="ticket">
+      Сведение задачи Коши для гиперболического уравнения с двумя неизвестными
+      переменными к системе интегральных уравнений
+    </li>
+
+    <li class="ticket">
+      Существование решения задачи Коши для гиперболического уравнения с двумя
+      независимыми переменными
+    </li>
+
+    <li class="ticket">
+      Единственность решения задачи Коши для гиперболического уравнения с двумя
+      независимыми переменными. Задача Гурса
+    </li>
+
+    <li class="ticket">
+      Метод Римана и формула Римана решения задачи Коши для неоднородного
+      гиперболического уравнения с двумя неизвестными переменными
+    </li>
+
+    <li class="ticket">
+      Волновое уравнение. Формулировка смешанной (начально-краевой) задачи
+    </li>
+
+    <li class="ticket">
+      Теорема единственности
+    </li>
+
+    <li class="ticket">
+      Область зависимости решения задачи Коши для волнового уравнения
+      $\square u = f(x,t), \; x \in \mathbb{R}_m$. Явление распространения волн
+    </li>
+
+    <li class="ticket">
+      Формула Пуассона решения задачи Коши для волнового уравнения
+    </li>
+
+    <li class="ticket">
+      Решение неоднородного волнового уравнения. Запаздывающий потенциал
+    </li>
+
+    <li class="ticket">
+      Решение волнового уравнения для точечного источника
+    </li>
+  </ol>
+</body>
+
+</html>

@@ -1,105 +1,368 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset=utf-8>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Робастная устойчивость - вопросы</title>
+    <title>Устойчивость и робастная устойчивость полиномов</title>
 
     <link href="/assets/css/styles.css" rel="stylesheet">
-    <script type="text/javascript" async src="/assets/js/questions.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css"
-    integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X"
-    crossorigin="anonymous">
+	  integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X"
+	  crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"
-           integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
-           crossorigin="anonymous"></script>
+	    integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
+	    crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"
-           integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-           crossorigin="anonymous"></script>
+	    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+	    crossorigin="anonymous"></script>
     <script>
      document.addEventListener("DOMContentLoaded", function() {
        renderMathInElement(document.body, {
-   // customised options
-   // • auto-render specific keys, e.g.:
-   delimiters: [
-     {left: '$$', right: '$$', display: true},
-     {left: '$', right: '$', display: false},
-     {left: '\\(', right: '\\)', display: false},
-     {left: '\\[', right: '\\]', display: true}
-   ],
-   // • rendering keys, e.g.:
-   throwOnError : false
+         // customised options
+         // • auto-render specific keys, e.g.:
+         delimiters: [
+           {left: '$$', right: '$$', display: true},
+           {left: '$', right: '$', display: false},
+           {left: '\\(', right: '\\)', display: false},
+           {left: '\\[', right: '\\]', display: true}
+         ],
+         // • rendering keys, e.g.:
+         throwOnError : false
        });
      });
     </script>
   </head>
   <body>
-    <h1 id="title">Робастная устойчивость &mdash; вопросы</h1>
+    <h1 id="title">Устойчивость и робастная устойчивость полиномов</h1>
     <nav>
       <a href="/">Домой</a>
-      <a href="/robust-stability">Робастная устойчивость</a>
+      <a href="/links">Ссылки</a>
+      <a href="/bib">Библиография</a>
     </nav>
 
-    <div class="controls">
-      <button onclick="HideQuestions()">Скрыть вопросы</button>
-      <button onclick="ShowQuestions()">Показать вопросы</button>
-      <button onclick="HideAnswers()">Скрыть ответы</button>
-      <button onclick="ShowAnswers()">Показать ответы</button>
-      <button onclick="HideProofs()">Скрыть доказательства</button>
-      <button onclick="ShowProofs()">Показать доказательства</button>
-      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
-    </div>
+    <table class="teachers">
+      <tr>
+	<td>Лектор и семинарист</td>
+	<td>
+	  <a href="http://old.apmath.spbu.ru/ru/staff/chashnikov/index.html" target="_blank">Чашников Михаил Викторович</a>
+	  <br/>
+	  Телефон:
+	  <a href="tel:89062405040">+7 (906) 240-50-40</a>
+	  <br/>
+	  Почта:
+	  <a href="mailto:mchashnikov@mail.ru">mchashnikov@mail.ru</a>
+	</td>
+      </tr>
+    </table>
 
-    <div style="display:none">
-      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+    <h2>Темы</h2>
 
-      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
-      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
-      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
-      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+    Исходный документ можно найти <a href="docs/topics.docx" target="_blank"><b>[docx]</b> тут</a>.
 
-      $\global\def\paren#1{\left( #1 \right)}$
+    <h3>
+      Устойчивость
+    </h3>
+    <ol>
+      <li>
+	Линейные стационарные системы
+	<ul>
+	  <li>
+	    Системы линейных стационарных дифференциальных
+	    уравнений:
+	  </li>
+	  <ul>
+	    <li>
+	      Характеристический полином
+	    </li>
 
-      $\global\def\mbox#1{\text{#1}}$
+	    <li>
+	      Устойчивость по Ляпунову
+	    </li>
 
-      $\global\def\div{\text{div}\,}$
-      $\global\def\grad{\text{grad}\,}$
-      $\global\def\rot{\text{rot}\,}$
+	    <li>
+	      Квадратичные функции Ляпунова
+	    </li>
 
-      $\global\def\vb#1{\textbf{#1}}$
+	    <li>
+	      Матричное уравнение Ляпунова
+	    </li>
 
-      $\global\def\const{\text{const}\,}$
-      $\global\def\res{\text{res}\,}$
-      $\global\def\Res{\text{Res}\,}$
-      $\global\def\Re{\text{Re}\,}$
-      $\global\def\Im{\text{Im}\,}$
-      $\global\def\ch{\text{ch}\,}$
-      $\global\def\sh{\text{sh}\,}$
-      $\global\def\argtg{\text{argtg}\,}$
-    </div>
+	    <li>
+	      Корневой критерий устойчивости
+	    </li>
+	  </ul>
 
-    <ol id="questions">
-      <li class="question">
-        <div class="name">
-          Пример
-        </div>
-        <button class="toggle-button"></button>
-        <div class="content">
-          Интеграл по контуру:
-          \[
-          \oint\limits_{\abs{z} = 1} f(z) dz = \const
-          \]
+	  <li>
+	    Системы линейных стационарных разностных уравнений:
+	  </li>
+	  <ul>
+	    <li>
+	      Характеристический полином
+	    </li>
 
-          Сумма всех натуральных чисел ($\mathbb{N}$):
-          \[
-          \sum_{i=1}^\infty i = -\frac{1}{12}
-          \]
-        </div>
+	    <li>
+	      Устойчивость
+	    </li>
+
+	    <li>
+	      Квадратичные функции Ляпунова
+	    </li>
+
+	    <li>
+	      Дискретное матричное уравнение Ляпунова
+	    </li>
+
+	    <li>
+	      Корневой критерий устойчивости
+	    </li>
+	  </ul>
+	</ul>
+      </li>
+
+      <li>
+	Общий анализ расположения корней полиномов
+	<ul>
+	  <li>
+	    Матрица результанта, определение, свойства
+	  </li>
+	  <li>
+	    Порождающая функция Эрмита
+	  </li>
+	  <li>
+	    Инварианты матрицы Эрмита
+	  </li>
+	  <li>
+	    Факторизация и разложение
+	  </li>
+	  <li>
+	    Форма Безу
+	  </li>
+	  <li>
+	    Матрица Безу и её инварианты
+	  </li>
+	  <li>
+	    Связь матриц Эрмита и Безу
+	  </li>
+	  <li>
+	    Рациональные функции и матрицы Ганкеля, инварианты матрицы Ганкеля
+	  </li>
+	  <li>
+	    Связь матриц Ганкеля и Безу
+	  </li>
+	</ul>
+      </li>
+
+      <li>
+	Проблема Рауса-Гурвица
+	<ul>
+	  <li>
+	    Полиномы Гурвица
+	  </li>
+	  <li>
+	    Свойство монотонного роста фазы
+	  </li>
+	  <li>
+	    Критерий Михайлова, теорема Эрмита-Билера, критерий Гурвица
+	  </li>
+	</ul>
+      </li>
+
+      <li>
+	Проблема Шура
+	<ul>
+	  <li>
+	    Полиномы Шура
+	  </li>
+	  <li>
+	    Геометрический критерий
+	  </li>
+	  <li>
+	    Связь полиномов Шура с полиномами Гурвица
+	  </li>
+	  <li>
+	    Дискретная версия теоремы Эрмита-Билера
+	  </li>
+	  <li>
+	    Порождающая функция Шура
+	  </li>
+	  <li>
+	    Матрица Шура
+	  </li>
+	  <li>
+	    Критерий Шура-Кона
+	  </li>
+	</ul>
+      </li>
+
+      <li>
+	\(\Gamma\)-устойчивые полиномы
+	<ul>
+	  <li>
+	    Алгебраические области
+	  </li>
+	  <li>
+	    \(\Gamma\)-устойчивые полиномы
+	  </li>
+	  <li>Обобщённое матричное уравнение Ляпунова</li>
+	  <li>
+	    Критерий \(\Gamma\)-устойчивости
+	  </li>
+	</ul>
+      </li>
+    </ol>
+
+    <h3>
+      Робастная устойчивость
+    </h3>
+    <ol start="6">
+      <li>
+	Аналитические свойства корней полиномов
+	<ul>
+	  <li>
+	    Непрерывность
+	  </li>
+	  <li>
+	    Дифференцируемость
+	  </li>
+	  <li>
+	    Теорема Лукаса
+	  </li>
+	</ul>
+      </li>
+      <li>
+	Семейства полиномов
+	<ul>
+	  <li>
+	    Способы задания семейств полиномов
+	  </li>
+	  <li>
+	    Параметрические семейства
+	  </li>
+	  <li>
+	    Полиэдр полиномов
+	  </li>
+	  <li>
+	    Геометрическая интерпретация
+	  </li>
+	  <li>
+	    Свойство одностепенности
+	  </li>
+	</ul>
+      </li>
+      <li>
+	Метод \(D\)-разбиений Неймарка
+	<ul>
+	  <li>
+	    Двухпараметрические семейства
+	  </li>
+	  <li>
+	    Критические кривые
+	  </li>
+	  <li>
+	    Области устойчивости
+	  </li>
+	  <li>
+	    Выпуклые направления
+	  </li>
+	  <li>
+	    Условие Ранцера
+	  </li>
+	</ul>
+      </li>
+      <li>
+	Принцип исключения нуля
+	<ul>
+	  <li>
+	    Область значений семейства
+	  </li>
+	  <li>
+	    Принцип исключения нуля
+	  </li>
+	  <li>
+	    Рёберная теорема
+	  </li>
+	  <li>
+	    Устойчивость интервального полинома
+	  </li>
+	</ul>
+      </li>
+      <li>
+	Радиус устойчивости
+	<ul>
+	  <li>
+	    Радиус устойчивости для полиномов
+	  </li>
+	  <li>
+	    Устойчивые матрицы
+	  </li>
+	  <li>
+	    Радиус устойчивости полиномов
+	  </li>
+	</ul>
+      </li>
+    </ol>
+
+    <h2>Список литературы</h2>
+    <ol>
+      <li>
+	Жабко А.П. и Харитонов В.Л. - Методы линейной алгебры в задачах управления
+      </li>
+      <li>
+	Крейн М.Г. и Неймарк М.А. - Метод симметрических и эрмитовых форм
+	в задаче отделения корней алгебраических уравнений
+
+	<ul>
+	  <li>
+	    Саму книгу не нашёл, зато есть
+	    <a href="docs/kalinina-disser.pdf" target="_blank">
+	      <b>[pdf]</b> докторская диссертация Калининой
+	    </a>.
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="docs/lyapunov.djvu" target="_blank">
+	  <b>[djvu]</b> Ляпунов А.М. - Общая задача об устойчивости движения
+	</a>
+      </li>
+      <li>
+	Неймарк Ю.И. - Устойчивость линеаризованных систем
+      </li>
+      <li>
+	<a href="docs/haritonov-stability.pdf" target="_blank">
+	  <b>[pdf]</b> Харитонов В.Л. - Об асимптотической устойчивости положения равновесия
+	  семейства систем линейных дифференциальных уравнений
+	</a>
+      </li>
+      <li>
+	<a href="docs/haritonov-polynomial.pdf" target="_blank">
+	  <b>[pdf]</b> Харитонов В.Л. - Распределение корней характеристического полинома
+	  автономной системы
+	</a>
+      </li>
+      <li>
+	<a href="docs/barmish.pdf" target="_blank">
+	  <b>[pdf]</b> Barmish B.R. - New Tools for Robustness of Linear Systems
+	</a>
+      </li>
+      <li>
+	Bartlett A.C., Hollot C.V. and Hung L. - Root location of an entire
+	polytope of polynomials: it suffies to check the edges
+      </li>
+      <li>
+	<a href="docs/bhattacharyya.pdf" target="_blank">
+	  <b>[pdf]</b> Bhattacharyya S.P., Chapellat H. and Keel L.H. - Robust Control - The Parametric Approach
+	</a>
+      </li>
+      <li>
+	Hinrichsen D. and Prichard A.J. - Real and complex stability radii: A survey, in Control of
+	Uncertain Systems
+      </li>
+      <li>
+	Rantzer A. - Stability conditions for polytope of polynomials
       </li>
     </ol>
   </body>
 </html>
-
-

@@ -1,105 +1,164 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset=utf-8>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Электродинамика - вопросы</title>
+    <title>Электродинамика</title>
 
     <link href="/assets/css/styles.css" rel="stylesheet">
-    <script type="text/javascript" async src="/assets/js/questions.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css"
-    integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X"
-    crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"
-           integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
-           crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"
-           integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-           crossorigin="anonymous"></script>
-    <script>
-     document.addEventListener("DOMContentLoaded", function() {
-       renderMathInElement(document.body, {
-   // customised options
-   // • auto-render specific keys, e.g.:
-   delimiters: [
-     {left: '$$', right: '$$', display: true},
-     {left: '$', right: '$', display: false},
-     {left: '\\(', right: '\\)', display: false},
-     {left: '\\[', right: '\\]', display: true}
-   ],
-   // • rendering keys, e.g.:
-   throwOnError : false
-       });
-     });
-    </script>
   </head>
   <body>
-    <h1 id="title">Электродинамика &mdash; вопросы</h1>
+    <h1 id="title">Электродинамика</h1>
     <nav>
       <a href="/">Домой</a>
-      <a href="/electrodynamics">Электродинамика</a>
+      <a href="/links">Ссылки</a>
+      <a href="/bib">Библиография</a>
     </nav>
 
-    <div class="controls">
-      <button onclick="HideQuestions()">Скрыть вопросы</button>
-      <button onclick="ShowQuestions()">Показать вопросы</button>
-      <button onclick="HideAnswers()">Скрыть ответы</button>
-      <button onclick="ShowAnswers()">Показать ответы</button>
-      <button onclick="HideProofs()">Скрыть доказательства</button>
-      <button onclick="ShowProofs()">Показать доказательства</button>
-      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
-    </div>
+    <table class="teachers">
+      <tr>
+	<td>Лектор</td>
+	<td>
+	  <a href="http://old.apmath.spbu.ru/ru/staff/edamenko/index.html" target="_blank">Едаменко Николай Семёнович</a>
+	</td>
+      </tr>
+      <tr>
+	<td>Семинарист</td>
+	<td>
+	  <a href="http://old.apmath.spbu.ru/ru/staff/vladimirova/index.html" target="_blank">Владимирова Людмила Васильевна</a>
+	</td>
+      </tr>
+    </table>
 
-    <div style="display:none">
-      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
-
-      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
-      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
-      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
-      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
-
-      $\global\def\paren#1{\left( #1 \right)}$
-
-      $\global\def\mbox#1{\text{#1}}$
-
-      $\global\def\div{\text{div}\,}$
-      $\global\def\grad{\text{grad}\,}$
-      $\global\def\rot{\text{rot}\,}$
-
-      $\global\def\vb#1{\textbf{#1}}$
-
-      $\global\def\const{\text{const}\,}$
-      $\global\def\res{\text{res}\,}$
-      $\global\def\Res{\text{Res}\,}$
-      $\global\def\Re{\text{Re}\,}$
-      $\global\def\Im{\text{Im}\,}$
-      $\global\def\ch{\text{ch}\,}$
-      $\global\def\sh{\text{sh}\,}$
-      $\global\def\argtg{\text{argtg}\,}$
-    </div>
-
-    <ol id="questions">
-      <li class="question">
-        <div class="name">
-          Пример
-        </div>
-        <button class="toggle-button"></button>
-        <div class="content">
-          Интеграл по контуру:
-          \[
-          \oint\limits_{\abs{z} = 1} f(z) dz = \const
-          \]
-
-          Сумма всех натуральных чисел ($\mathbb{N}$):
-          \[
-          \sum_{i=1}^\infty i = -\frac{1}{12}
-          \]
-        </div>
+    <h2>Темы для бесед</h2>
+    <ol>
+      <li>
+	Электрическое поле. Закон Кулона. Теорема Гаусса.
+      </li>
+      <li>
+	Потенциал электрического поля.
+      </li>
+      <li>
+	Распределение зарядов и потенциал. Совокупность точечных зарядов.
+	Дипольное взаимодействие.
+      </li>
+      <li>
+	Энергия взаимодействия зарядов.
+      </li>
+      <li>
+	Электрическое поле в материальной среде. Проводники и диэлектрики.
+      </li>
+      <li>
+	Электрическая индукция. Граничные условия.
+      </li>
+      <li>
+	Постоянный ток. Электродвижущая сила.
+      </li>
+      <li>
+	Магнитное взаимодействие токов. Магнитная индукция.
+      </li>
+      <li>
+	Векторный магнитный потенциал.
+      </li>
+      <li>
+	Разновидности токов. Ток смещения.
+      </li>
+      <li>
+	Напряженность магнитного поля.
+      </li>
+      <li>
+	Закон индукции Фарадея для неподвижной среды.
+      </li>
+      <li>
+	Уравнения Максвелла для покоящейся среды.
+      </li>
+      <li>
+	Закон Фарадея и уравнения Максвелла для движущихся сред.
+      </li>
+      <li>
+	Энергия электромагнитного поля. Вектор Пойнтинга.
+      </li>
+      <li>
+	Микросила Лоренца. Тензор натяжений. Импульс э-м. поля.
+      </li>
+      <li>
+	Волновые уравнения.
+      </li>
+      <li>
+	Принцип относительности. Преобразования Лоренца.
+      </li>
+      <li>
+	Сокращение длины. Замедление времени. Преобразование скорости.
+      </li>
+      <li>
+	4-вектор и другие тензоры. 4-скорость.
+      </li>
+      <li>
+	4-импульс. Сохранение энергии и импульса. 4-сила.
+      </li>
+      <li>
+	4-потенциал. Тензор эл-м. поля. Ковариантная форма ур. Максвела.
       </li>
     </ol>
+
+    <h2>Список литературы</h2>
+    <ul>
+      <li>
+	<a href="docs/philippenko.doc" target="_blank">
+	  <b>[doc]</b> Филиппенко В.И. - Элементы теории поля
+	</a>
+      </li>
+      <li>
+	Фейнмановские лекции по физике
+	<ol start="5">
+	  <li>
+	    <a href="docs/feynman-5.pdf" target="_blank">
+	      <b>[pdf]</b> Электричество и магнетизм
+	    </a>
+	  </li>
+	  <li>
+	    <a href="docs/feynman-6.pdf" target="_blank">
+	      <b>[pdf]</b> Электродинамика
+	    </a>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="docs/jackson.djvu" target="_blank">
+	  <b>[djvu]</b> Джексон Дж. - Классическая электродинамика
+	</a>
+      </li>
+      <li>
+	<a href="docs/purcell.pdf" target="_blank">
+	  <b>[pdf]</b> Парселл Э. - Электричество и магнетизм
+	</a>
+      </li>
+      <li>
+	<a href="docs/sharipov.pdf" target="_blank">
+	  <b>[pdf]</b> Шарипов Р.А. - Классическая электродинамика и теория относительности
+	</a>
+      </li>
+      <li>
+	<a href="docs/sivuhin.pdf" target="_blank">
+	  <b>[pdf]</b> Сивухин Д.В. - Общий курс физики. Том 3: Электричество
+	</a>
+      </li>
+      <li>
+	Батыгин В.В., Топтыгин И.Н. - Современная электродиника
+	<ol>
+	  <li>
+	    <a href="docs/toptygin.djvu" target="_blank">
+	      <b>[djvu]</b> Микроскопическая теория
+	    </a>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="docs/vlasov.djvu" target="_blank">
+	  <b>[djvu]</b> Власов А.А. - Макроскопическая электродинамика
+	</a>
+      </li>
+    </ul>
   </body>
 </html>
-
-

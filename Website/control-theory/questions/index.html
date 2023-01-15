@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Вопросы &mdash; Теория управления</title>
+
+    <link href="/assets/css/styles.css" rel="stylesheet">
+    <script type="text/javascript" async src="/assets/js/questions.js"></script>
+
+    <link rel="stylesheet" href="/assets/katex/katex.min.css">
+    <script defer src="/assets/katex/katex.min.js"></script>
+    <script defer src="/assets/katex/auto-render.min.js"></script>
+
+    <script>
+     document.addEventListener("DOMContentLoaded", function() {
+       renderMathInElement(document.body, {
+	 // customised options
+	 // • auto-render specific keys, e.g.:
+	 delimiters: [
+	   {left: '$$', right: '$$', display: true},
+	   {left: '$', right: '$', display: false},
+	   {left: '\\(', right: '\\)', display: false},
+	   {left: '\\[', right: '\\]', display: true}
+	 ],
+	 // • rendering keys, e.g.:
+	 throwOnError : false
+       });
+     });
+    </script>
+  </head>
+  <body>
+    <h1 id="title">Вопросы &mdash; Теория управления</h1>
+    <nav>
+      <a href="/">Домой</a>
+      <a href="/control-theory">Теория управления</a>
+    </nav>
+
+    <div class="controls">
+      <button onclick="HideQuestions()">Скрыть вопросы</button>
+      <button onclick="ShowQuestions()">Показать вопросы</button>
+      <button onclick="HideAnswers()">Скрыть ответы</button>
+      <button onclick="ShowAnswers()">Показать ответы</button>
+      <button onclick="HideProofs()">Скрыть доказательства</button>
+      <button onclick="ShowProofs()">Показать доказательства</button>
+      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
+    </div>
+
+    <div style="display:none">
+      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+
+      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
+      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
+      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
+      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+
+      $\global\def\paren#1{\left( #1 \right)}$
+
+      $\global\def\mbox#1{\text{#1}}$
+
+      $\global\def\div{\text{div}\,}$
+      $\global\def\grad{\text{grad}\,}$
+      $\global\def\rot{\text{rot}\,}$
+
+      $\global\def\vb#1{\textbf{#1}}$
+
+      $\global\def\const{\text{const}\,}$
+      $\global\def\res{\text{res}\,}$
+      $\global\def\Res{\text{Res}\,}$
+      $\global\def\Re{\text{Re}\,}$
+      $\global\def\Im{\text{Im}\,}$
+      $\global\def\ch{\text{ch}\,}$
+      $\global\def\sh{\text{sh}\,}$
+      $\global\def\argtg{\text{argtg}\,}$
+    </div>
+
+    <ol id="questions">
+      <li class="question">
+	<div class="name">
+	  Определение: допустимое управление
+	</div>
+	<button class="toggle-button"></button>
+	<div class="content">
+	  Рассмотрим линейную управляемую систему
+	  \[
+	  \dot{x} = P(t) x + Q(t) u + f(t),
+	  \]
+	  где $u(t) \in U$, $U$ &mdash; множество управления.
+
+	  <div class="definition">
+	    Говорят, что $u(t) \in U$ &mdash; допустимое управление,
+	    если
+	    <ol>
+	      <li>
+		оно задано на $[0;T]$
+	      </li>
+	      <li>
+		оно кусочно-непрерывно
+	      </li>
+	      <li>
+		$\int\limits_0^T u^T(\tau) u(\tau) d \tau < +\infty$
+	      </li>
+	    </ol>
+	  </div>
+	</div>
+      </li>
+
+      <li class="question">
+	<div class="name">
+	  Лемма о нахождении семейства допустимых управлений
+	</div>
+	<button class="toggle-button"></button>
+	<div class="content">
+	  <div class="lemma">
+	    Если допустимое управление $u(t)$ линейной системы
+	    \[
+	    \dot{x} = P(t) x + Q(t) u(t) + f(t)
+	    \]
+	    существует, то оно представимо в виде
+	    \[
+	    u(t) = B^T(t) C + V(t),
+	    \]
+	    где
+	    <ol>
+	      <li>
+		$Y(t)$ &mdash; нормированная в нуле фундаментальная матрица соответствующей
+		однородной системы
+	      </li>
+	      <li>
+		$B(t) = Y^-1(t) Q(t)$
+	      </li>
+	      <li>
+		$C$ &mdash; постоянный вектор, подлежащий определению
+	      </li>
+	      <li>
+		$V(t)$ &mdash; $r$-мерная векторная функция, удовлетворяющая
+		условию ортогональности:
+		\[
+		\int_0^T B(\tau) V(\tau) d\tau = 0.
+		\]
+	      </li>
+	    </ol>
+	  </div>
+
+	  <div class="proof">
+	    Пусть существует допустимое управление $u(t) \in U$. Рассмотрим $u_1(t) = u(t) - B^T(t) C$,
+	    для него выполнено условие ортогональности:
+	    \[
+	    \int_0^T B(\tau) u_1(\tau) d\tau = \int_0^T B(\tau) B^T(\tau) d\tau \cdot C.
+	    \]
+	  </div>
+	</div>
+      </li>
+    </ol>
+  </body>
+</html>
+
+

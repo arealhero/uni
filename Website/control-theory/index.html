@@ -1,105 +1,184 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset=utf-8>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Теория управления - вопросы</title>
+    <title>Теория управления</title>
 
     <link href="/assets/css/styles.css" rel="stylesheet">
-    <script type="text/javascript" async src="/assets/js/questions.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css"
-    integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X"
-    crossorigin="anonymous">
+	  integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X"
+	  crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"
-           integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
-           crossorigin="anonymous"></script>
+	    integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
+	    crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"
-           integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-           crossorigin="anonymous"></script>
+	    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+	    crossorigin="anonymous"></script>
     <script>
      document.addEventListener("DOMContentLoaded", function() {
        renderMathInElement(document.body, {
-   // customised options
-   // • auto-render specific keys, e.g.:
-   delimiters: [
-     {left: '$$', right: '$$', display: true},
-     {left: '$', right: '$', display: false},
-     {left: '\\(', right: '\\)', display: false},
-     {left: '\\[', right: '\\]', display: true}
-   ],
-   // • rendering keys, e.g.:
-   throwOnError : false
+         // customised options
+         // • auto-render specific keys, e.g.:
+         delimiters: [
+           {left: '$$', right: '$$', display: true},
+           {left: '$', right: '$', display: false},
+           {left: '\\(', right: '\\)', display: false},
+           {left: '\\[', right: '\\]', display: true}
+         ],
+         // • rendering keys, e.g.:
+         throwOnError : false
        });
      });
     </script>
   </head>
   <body>
-    <h1 id="title">Теория управления &mdash; вопросы</h1>
+    <h1 id="title">Теория управления</h1>
     <nav>
       <a href="/">Домой</a>
-      <a href="/control-theory">Теория управления</a>
+      <a href="/links">Ссылки</a>
+      <a href="/bib">Библиография</a>
     </nav>
 
-    <div class="controls">
-      <button onclick="HideQuestions()">Скрыть вопросы</button>
-      <button onclick="ShowQuestions()">Показать вопросы</button>
-      <button onclick="HideAnswers()">Скрыть ответы</button>
-      <button onclick="ShowAnswers()">Показать ответы</button>
-      <button onclick="HideProofs()">Скрыть доказательства</button>
-      <button onclick="ShowProofs()">Показать доказательства</button>
-      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
-    </div>
+    <table class="teachers">
+      <tr>
+	<td>Лектор</td>
+	<td>
+	  <a href="http://old.apmath.spbu.ru/ru/staff/smirnova/index.html" target="_blank">Смирнова Татьяна Евгеньевна</a>
+	</td>
+      </tr>
+      <tr>
+	<td>Семинарист</td>
+	<td>
+	  <a href="http://old.apmath.spbu.ru/ru/staff/fominykh/index.html" target="_blank">Фоминых Александр Владимирович</a>
+	  <br/>
+	  Почта:
+	  <a href="mailto:alexfomster@mail.ru">
+	    alexfomster@mail.ru
+	  </a>
+	</td>
+      </tr>
+    </table>
 
-    <div style="display:none">
-      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+    <h2>Список группы</h2>
+    <p>
+      Номер в списке соответствует варианту К/Р.
+    </p>
+    <ol>
+      <li>Шаршуков Владислав Алексеевич</li>
+      <li>Белоус Егор Дмитриевич</li>
+      <li>Муллаянов Тимур Олегович</li>
+      <li>Шашкин Илья Дмитриевич</li>
+      <li>Розенгард Александр Сергеевич</li>
+      <li>Беляева Александра Антоновна</li>
+      <li>Овсеенко Ксения Владимировна</li>
+      <li>Шмидт Ян Александрович</li>
+      <li>Халтобина Мария</li>
+      <li>Ермолов Евгений Валерьевич</li>
+      <li>Пашкова Дарья Андреевна</li>
+    </ol>
 
-      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
-      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
-      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
-      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+    <h2>Программы</h2>
 
-      $\global\def\paren#1{\left( #1 \right)}$
+    <ol start="0">
+      <li>
+	<i>Бонус.</i> Алгоритм нахождения фундаментальной матрицы для системы вида
+	\(\dot{x} = Px, \; t \in [0;T]\).
+	<br/>
+	<p>
+	  Ищем матрицу в виде
+	  \[
+	  Y(t) := e^{Pt} = \sum_{k=0}^{n-1} b_k(t) P^k;
+	  \]
+	  где \(b_k(t)\) &mdash; функции, удовлетворяющие системе
+	  \[
+	  \left\{
+	  \begin{aligned}
+	  e^{\lambda_j t} &\equiv b_0(t) + b_1(t)\lambda_j + \dots + b_{n-1}(t) \lambda_j^{n-1}, \\
+	  te^{\lambda_j t} &\equiv b_1(t) + 2 b_2(t)\lambda_j + \dots + (n-1) b_{n-1}(t) \lambda_j^{n-2}, \\
+	  &\;\;\vdots \\
+	  t^{k_j-1}e^{\lambda_j t} &\equiv (k_j-1)! \, b_{k_j-1}(t) + k_j! \, b_{k_j}(t)\lambda_j + \dots
+	  + \frac{(n-1)!}{(n-k_j)!} b_{n-1}(t) \lambda_j^{n-k_j}, \\
+	  \end{aligned}
+	  \right.
+	  \]
+	  где \(\lambda_j\) &mdash; собственные числа матрицы \(P\) алгебраической кратности \(k_j\).
+	</p>
+      </li>
+      <li>
+	Построение программного управления для системы вида \(\dot{x} = Px + Q(t)u + f(t), \; t \in [0;T]\)
+      </li>
+    </ol>
 
-      $\global\def\mbox#1{\text{#1}}$
+    <h2>Список литературы</h2>
+    <a href="docs/05-lectures.pdf" target="_blank">
+      <b>[pdf]</b> Конспект
+    </a>
 
-      $\global\def\div{\text{div}\,}$
-      $\global\def\grad{\text{grad}\,}$
-      $\global\def\rot{\text{rot}\,}$
+    <h3>Теория</h3>
+    <ul>
+      <li>
+	<a href="docs/zubov-lectures.pdf" target="_blank">
+	  <b>[pdf]</b> Зубов В.И. - Лекции по теории управления
+	</a>
+      </li>
+      <li>
+	Зубов В.И. - Математические методы исследования систем автоматического
+	регулирования
+	<ul>
+	  <li>
+	    <a href="docs/zubov-methods-ed1.pdf" target="_blank">
+	      <b>[pdf]</b> Первое издание
+	    </a>
+	  </li>
+	  <li>
+	    <a href="docs/zubov-methods-ed2.pdf" target="_blank">
+	      <b>[pdf]</b> Второе издание
+	    </a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="docs/lyapunov.djvu" target="_blank">
+	  <b>[djvu]</b> Ляпунов А.М. - Общая задача об устойчивости движения
+	</a>
+      </li>
+      <li>
+	Демидович - Лекции по математической ТУ
+	<ul>
+	  <li>
+	    <a href="docs/demidovich.pdf" target="_blank">
+	      <b>[pdf]</b> (без распознанного текста)
+	    </a>
+	  </li>
+	  <li>
+	    <a href="docs/demidovich.djvu" target="_blank">
+	      <b>[djvu]</b> (с распознанным текстом)
+	    </a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="docs/krasovskiy.djvu" target="_blank">
+	  <b>[djvu]</b> Красовский - Некоторые задачи теории устойчивости движения
+	</a>
+      </li>
+    </ul>
 
-      $\global\def\vb#1{\textbf{#1}}$
-
-      $\global\def\const{\text{const}\,}$
-      $\global\def\res{\text{res}\,}$
-      $\global\def\Res{\text{Res}\,}$
-      $\global\def\Re{\text{Re}\,}$
-      $\global\def\Im{\text{Im}\,}$
-      $\global\def\ch{\text{ch}\,}$
-      $\global\def\sh{\text{sh}\,}$
-      $\global\def\argtg{\text{argtg}\,}$
-    </div>
-
-    <ol id="questions">
-      <li class="question">
-        <div class="name">
-          Пример
-        </div>
-        <button class="toggle-button"></button>
-        <div class="content">
-          Интеграл по контуру:
-          \[
-          \oint\limits_{\abs{z} = 1} f(z) dz = \const
-          \]
-
-          Сумма всех натуральных чисел ($\mathbb{N}$):
-          \[
-          \sum_{i=1}^\infty i = -\frac{1}{12}
-          \]
-        </div>
+    <h3>Практика</h3>
+    <ol>
+      <li>
+	<a href="docs/tamasyan.pdf" target="_blank">
+	  <b>[pdf]</b> Тамасян Г.Ш. - Программные управления и наблюдаемость
+	</a>
+      </li>
+      <li>
+	<a href="docs/tamasyan-smirnov.pdf" target="_blank">
+	  <b>[pdf]</b> Смирнов Н.В., Смирнова Т.Е., Тамасян Г.Ш. - Стабилизация программных движений при полной и неполной обратной связи
+	</a>
       </li>
     </ol>
   </body>
 </html>
-
-

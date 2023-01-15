@@ -45,6 +45,17 @@
   font-weight: bold;
 }
 
+.given {
+  margin: 20px 0 20px 30px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.given::before {
+  content: 'Дано: ';
+  font-weight: bold;
+}
+
 .name {
   font-weight: bold;
 }
@@ -72,17 +83,17 @@
 }
 
 .definition::before {
-  content: 'Определение: ';
+  content: 'Определение. ';
   font-weight: bold;
 }
 
 .note::before {
-  content: 'Замечание: ';
+  content: 'Замечание. ';
   font-weight: bold;
 }
 
 .remark::before {
-  content: 'Замечание: ';
+  content: 'Замечание. ';
   font-weight: bold;
 }
 
@@ -106,6 +117,29 @@
   font-weight: bold;
 }
 
+.definition,
+.theorem,
+.lemma,
+.example,
+.remark,
+.reminder,
+.proof {
+    margin: 10px;
+    padding: 0 10px;
+    border-left: 1px solid black;
+}
+
+.reminder::before {
+    content: 'Напоминание. ';
+    font-weight: bold;
+}
+
+.derivation {
+    margin: 10px;
+    padding: 0 10px;
+    border-left: 3px solid blue;
+}
+
 .theorem::before {
   content: 'Теорема. ';
   font-weight: bold;
@@ -123,6 +157,48 @@
 
 .proof::after {
   content: ' \25A1';
+}
+
+.necessity,
+.sufficiency {
+    margin: 10px 0;
+}
+
+.necessity::before {
+  content: 'Необходимость. ';
+  font-style: italic;
+  color: blue;
+}
+
+.sufficiency::before {
+  content: 'Достаточность. ';
+  font-style: italic;
+  color: blue;
+}
+
+.necessity::after,
+.sufficiency::after {
+  content: ' \25A0';
+  color: blue;
+}
+
+button.derivation-toggle {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.derivation::before {
+  content: 'Вывод. ';
+  font-style: italic;
+}
+
+.derivation::after {
+  content: ' \25A1';
+}
+
+.example::before {
+  content: 'Пример. ';
+  font-weight: bold;
 }
 
 .problem {
@@ -143,8 +219,19 @@
   color: var(--blue-color);
 }
 
-.todo::after {
-  content: 'TODO';
+.repeat::after {
+    content: ' (повторение)';
+    color: var(--blue-color);
+}
+
+div.todo {
+    margin: 0 10px;
+    padding: 0 10px;
+    border-left: 3px solid var(--red-color);
+}
+
+.todo::before {
+  content: 'TODO: ';
   color: var(--red-color);
   font-weight: bold;
 }

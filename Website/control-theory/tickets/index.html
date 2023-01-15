@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Билеты &mdash; Теория управления</title>
+
+    <link href="/assets/css/styles.css" rel="stylesheet">
+    <script type="text/javascript" async src="/assets/js/tickets.js"></script>
+
+    <link rel="stylesheet" href="/assets/katex/katex.min.css">
+    <script defer src="/assets/katex/katex.min.js"></script>
+    <script defer src="/assets/katex/auto-render.min.js"></script>
+
+    <script>
+     document.addEventListener("DOMContentLoaded", function() {
+       renderMathInElement(document.body, {
+	 // customised options
+	 // • auto-render specific keys, e.g.:
+	 delimiters: [
+	   {left: '$$', right: '$$', display: true},
+	   {left: '$', right: '$', display: false},
+	   {left: '\\(', right: '\\)', display: false},
+	   {left: '\\[', right: '\\]', display: true}
+	 ],
+	 // • rendering keys, e.g.:
+	 throwOnError : false
+       });
+     });
+    </script>
+  </head>
+  <body>
+    <h1 id="title">Билеты &mdash; Теория управления</h1>
+    <nav>
+      <a href="/">Домой</a>
+      <a href="/control-theory">Теория управления</a>
+    </nav>
+
+    <div class="controls">
+      <button onclick="HideTickets()">Спрятать билеты</button>
+      <button onclick="ShowTickets()">Показать все билеты</button>
+      <button onclick="ShowRandomTicket()">Показать случайный билет</button>
+    </div>
+
+    <div style="display:none">
+      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+
+      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
+      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
+      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
+      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+
+      $\global\def\paren#1{\left( #1 \right)}$
+
+      $\global\def\mbox#1{\text{#1}}$
+
+      $\global\def\div{\text{div}\,}$
+      $\global\def\grad{\text{grad}\,}$
+      $\global\def\rot{\text{rot}\,}$
+
+      $\global\def\vb#1{\textbf{#1}}$
+
+      $\global\def\const{\text{const}\,}$
+      $\global\def\res{\text{res}\,}$
+      $\global\def\Res{\text{Res}\,}$
+      $\global\def\Re{\text{Re}\,}$
+      $\global\def\Im{\text{Im}\,}$
+      $\global\def\ch{\text{ch}\,}$
+      $\global\def\sh{\text{sh}\,}$
+      $\global\def\argtg{\text{argtg}\,}$
+    </div>
+
+    <ol id="tickets">
+      <h4 class="subtitle">ПРОГРАММНЫЕ УПРАВЛЕНИЯ В ЛИНЕЙНЫХ СИСТЕМАХ</h4>
+
+      <li class="ticket">
+	Программные управления в линейных системах. Лемма о представлении
+	семейства допустимых управлений
+      </li>
+
+      <li class="ticket">
+	Управляемость пары точек и критерии полной управляемости
+	линейной системы
+      </li>
+
+      <li class="ticket">
+	Простейшая задача оптимального управления. Область управляемости
+	и область достижимости. Выпуклость множеств
+      </li>
+
+      <li class="ticket">
+	Достаточное условие полной управляемости
+      </li>
+
+      <li class="ticket">
+	Критерий Калмана полной управляемости
+      </li>
+
+      <li class="ticket">
+	Уточнённый критерий Калмана
+      </li>
+
+      <li class="ticket">
+	Декомпозиция линейной управляемой системы. Следствие
+      </li>
+
+      <li class="ticket">
+	Критерий Хаутуса полной управляемости
+      </li>
+
+      <li class="ticket">
+	Матричная норма
+      </li>
+
+      <li class="ticket">
+	Матричная экспонента
+      </li>
+
+      <li class="ticket">
+	Оценка нормы матричной экспоненты
+      </li>
+
+      <li class="ticket">
+	Устойчивость линейных систем. Основные определения
+      </li>
+
+      <li class="ticket">
+	Устойчивость линейных стационарных систем. Теорема
+      </li>
+
+      <li class="ticket">
+	Управляемость устойчивых линейных стационарных систем. Грамиан
+	управляемости
+      </li>
+
+      <li class="ticket">
+	Общая граничная задача. Лемма. Критерий разрешимости ОГЗ
+      </li>
+
+      <li class="ticket">
+	Построение программных управлений в линейных разностных системах. Лемма
+	о представлении семейства допустимых управлений
+      </li>
+
+      <li class="ticket">
+	Управляемость пары точек и полная управляемость линейных разностных
+	систем
+      </li>
+
+      <li class="ticket">
+	Управляемость стационарных разностных систем. Критерий Хаутуса
+      </li>
+
+      <li class="ticket">
+	Управляемость устойчивых стационарных разностных систем. Грамиан
+	управляемости
+      </li>
+
+      <h4 class="subtitle">НАБЛЮДАЕМОСТЬ ЛИНЕЙНЫХ СИСТЕМ</h4>
+
+      <li class="ticket">
+	Задача наблюдения в линейных системах. Критерии полной наблюдаемости
+      </li>
+
+      <li class="ticket">
+	Принцип двойственности
+      </li>
+
+      <li class="ticket">
+	Достаточное условие полной наблюдаемости
+      </li>
+
+      <li class="ticket">
+	Задача дискретной наблюдаемости
+      </li>
+
+      <li class="ticket">
+	Критерии Калмана и Хаутуса полной наблюдаемости
+      </li>
+
+      <li class="ticket">
+	Декомпозиция линейной наблюдаемой системы. Следствие
+      </li>
+
+      <li class="ticket">
+	Наблюдаемость устойчивых линейных стационарных систем. Интегральный
+	критерий линейной независимости. Грамиан наблюдаемости
+      </li>
+
+      <li class="ticket">
+	Задача наблюдения в линейных разностных системах
+      </li>
+
+      <li class="ticket">
+	Наблюдаемость стационарных разностных систем. Критерий Хаутуса
+      </li>
+
+      <li class="ticket">
+	Наблюдаемость устойчивых стационарных разностных систем. Грамиан
+	наблюдаемости
+      </li>
+
+      <h4 class="subtitle">СТАБИЛИЗАЦИЯ ПРОГРАММНЫХ ДВИЖЕНИЙ</h4>
+
+      <li class="ticket">
+	Общая постановка задачи стабилизации движения. Система в отклонениях
+      </li>
+
+      <li class="ticket">
+	Стабилизация линейных стационарных систем в случае полной обратной
+	связи. Метод неопределённых коэффициентов. Понятие времени переходного
+	процесса
+      </li>
+
+      <li class="ticket">
+	Лемма о количестве неуправляемых собственных чисел
+      </li>
+
+      <li class="ticket">
+	Лемма об управлении спектром линейной системы с матрицей Фробениуса
+      </li>
+
+      <li class="ticket">
+	Лемма об управлении спектром управляемой подсистемы общего вида
+      </li>
+
+      <li class="ticket">
+	Теорема об условиях существования стабилизирующего управления
+      </li>
+
+      <li class="ticket">
+	Общий алгоритм решения задачи стабилизации
+      </li>
+
+      <li class="ticket">
+	Стабилизация нелинейных систем по линейному приближению
+      </li>
+
+      <h4 class="subtitle">ОПТИМАЛЬНАЯ СТАБИЛИЗАЦИЯ</h4>
+
+      <li class="ticket">
+	Постановка задачи оптимальной стабилизации. Лемма. Теорема об условиях
+	существования оптимального стабилизирующего управления (без док-ва)
+      </li>
+
+      <li class="ticket">
+	Метод последовательных приближений Зубова построения оптимального
+	стабилизирующего управления. Свойства последовательности приближений.
+	Леммы 1-3
+      </li>
+
+      <li class="ticket">
+	Теорема о сходимости последовательности приближений
+      </li>
+    </ol>
+  </body>
+</html>
+
+

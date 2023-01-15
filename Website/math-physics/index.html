@@ -1,105 +1,148 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset=utf-8>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>УМФ - вопросы</title>
+    <title>Уравнения мат. физики</title>
 
     <link href="/assets/css/styles.css" rel="stylesheet">
-    <script type="text/javascript" async src="/assets/js/questions.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css"
-    integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X"
-    crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"
-           integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
-           crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"
-           integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-           crossorigin="anonymous"></script>
-    <script>
-     document.addEventListener("DOMContentLoaded", function() {
-       renderMathInElement(document.body, {
-   // customised options
-   // • auto-render specific keys, e.g.:
-   delimiters: [
-     {left: '$$', right: '$$', display: true},
-     {left: '$', right: '$', display: false},
-     {left: '\\(', right: '\\)', display: false},
-     {left: '\\[', right: '\\]', display: true}
-   ],
-   // • rendering keys, e.g.:
-   throwOnError : false
-       });
-     });
-    </script>
   </head>
   <body>
-    <h1 id="title">УМФ &mdash; вопросы</h1>
+    <h1 id="title">Уравнения мат. физики</h1>
     <nav>
       <a href="/">Домой</a>
-      <a href="/math-physics">УМФ</a>
+      <a href="/links">Ссылки</a>
+      <a href="/bib">Библиография</a>
     </nav>
 
-    <div class="controls">
-      <button onclick="HideQuestions()">Скрыть вопросы</button>
-      <button onclick="ShowQuestions()">Показать вопросы</button>
-      <button onclick="HideAnswers()">Скрыть ответы</button>
-      <button onclick="ShowAnswers()">Показать ответы</button>
-      <button onclick="HideProofs()">Скрыть доказательства</button>
-      <button onclick="ShowProofs()">Показать доказательства</button>
-      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
-    </div>
+    <table class="teachers">
+      <tr>
+        <td>Лектор</td>
+        <td>
+          <a href="http://old.apmath.spbu.ru/ru/staff/grekov/index.html" target="_blank">Греков Михаил Александрович</a>
+          <br/>
+          Почта:
+          <a href="mailto:magrekov@mail.ru">magrekov@mail.ru</a>,
+          <br/><span style="visibility: hidden">Почта:</span>
+          <a href="mailto:m.grekov@spbu.ru">m.grekov@spbu.ru</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Семинарист</td>
+        <td>
+          <a href="http://old.apmath.spbu.ru/ru/staff/kolpak/index.html" target="_blank">Колпак Евгений Петрович</a>
+        </td>
+      </tr>
+    </table>
 
-    <div style="display:none">
-      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+    <h2>Экзамен</h2>
+    <ul>
+      <li>
+        <a href="tickets">
+          Список билетов
+        </a>
+      </li>
 
-      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
-      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
-      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
-      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+      <li>
+        <a href="questions">
+          Список вопросов
+        </a>
+      </li>
+    </ul>
 
-      $\global\def\paren#1{\left( #1 \right)}$
+    <h2>Список группы</h2>
+    <ol>
+      <li>Шмидт Ян</li>
+      <li>Беляева Александра</li>
+      <li>Розенгард Александр</li>
+      <li>Халтобина Мария</li>
+      <li>Шаршуков Владислав</li>
+      <li>Белоус Егор</li>
+      <li>Овсеенко Ксения</li>
+      <li>Шашкин Илья</li>
+      <li>Игумнов Максим</li>
+      <li>Муллаянов Тимур</li>
+      <li>Пашкова Дарья</li>
+    </ol>
 
-      $\global\def\mbox#1{\text{#1}}$
+    <h2>Список литературы</h2>
+    <a href="docs/05-conspectus.pdf" target="_blank">
+      <b>[pdf]</b> Конспект
+    </a>
 
-      $\global\def\div{\text{div}\,}$
-      $\global\def\grad{\text{grad}\,}$
-      $\global\def\rot{\text{rot}\,}$
+    <h3>Учебники и учебные пособия</h3>
+    <ol>
+      <li>
+        Арсенин В.Я. - Методы математической физики и специальные функции
+      </li>
+      <li class="marked">
+        <a href="docs/bitzadze.djvu" target="_blank">
+          <b>[djvu]</b> Бицадзе А.В. - Уравнения математической физики
+        </a>
+      </li>
+      <li class="marked">
+        <a href="docs/vladimirov.djvu" target="_blank">
+          <b>[djvu]</b> Владимиров В.С. - Уравнения математической физики
+        </a>
+      </li>
+      <li>
+        Владимиров В.С., Жаринов В.В. - Уравнения математической физики
+      </li>
+      <li>
+        Годунов С.К. - Уравнения математической физики
+      </li>
+      <li>
+        Забрейко П.П. и др. - Интегральные уравнения, справочное издание
+      </li>
+      <li class="marked">
+        <a href="docs/koshlyakov.djvu" target="_blank">
+          <b>[djvu]</b> Кошляков Н.С., Глинер Э.Б., Смирнов М.М. - Уравнения в частных производных математической физики
+        </a>
+      </li>
+      <li>
+        Курант Р., Гильберт Д. - Методы математической физики
+      </li>
+      <li class="marked">
+        <a href="docs/mikhlin-lectures.djvu" target="_blank">
+          <b>[djvu]</b> Михлин С.Г. - Лекции по линейным интегральным уравнениям
+        </a>
+      </li>
+      <li>
+        Михлин С.Г. - Курс математической физики
+      </li>
+      <li>
+        Михлин С.Г. - Линейные уравнения в частных производных
+      </li>
+      <li>
+        <a href="docs/petrovskiy.djvu" target="_blank">
+          <b>[djvu]</b> Петровский И.Г. - Лекции об уравнениях с частными производными
+        </a>
+      </li>
+      <li class="marked">
+        Смирнов В.И. - Курс высшей математики, Т.2, Т.5
+      </li>
+      <li class="marked">
+        <a href="docs/tikhonov.pdf" target="_blank">
+          <b>[pdf]</b> Тихонов А.Н., Самарский А.А. - Уравнения математической физики
+        </a>
+      </li>
+    </ol>
 
-      $\global\def\vb#1{\textbf{#1}}$
-
-      $\global\def\const{\text{const}\,}$
-      $\global\def\res{\text{res}\,}$
-      $\global\def\Res{\text{Res}\,}$
-      $\global\def\Re{\text{Re}\,}$
-      $\global\def\Im{\text{Im}\,}$
-      $\global\def\ch{\text{ch}\,}$
-      $\global\def\sh{\text{sh}\,}$
-      $\global\def\argtg{\text{argtg}\,}$
-    </div>
-
-    <ol id="questions">
-      <li class="question">
-        <div class="name">
-          Пример
-        </div>
-        <button class="toggle-button"></button>
-        <div class="content">
-          Интеграл по контуру:
-          \[
-          \oint\limits_{\abs{z} = 1} f(z) dz = \const
-          \]
-
-          Сумма всех натуральных чисел ($\mathbb{N}$):
-          \[
-          \sum_{i=1}^\infty i = -\frac{1}{12}
-          \]
-        </div>
+    <h3>Задачники</h3>
+    <ol>
+      <li>
+        Будак Б.М., Самарский А.А., Тихонов А.Н. - Сборник задач по математической физике
+      </li>
+      <li>
+        Смирнов М.М. - Задачи по уравнениям математической физики
+      </li>
+      <li>
+        Владимиров В.С. - Сборник задач по уравнениям математической физики
+      </li>
+      <li>
+        Кабрец С.А., Колпак Е.П. - Учебное пособие по решению задач математической физики
       </li>
     </ol>
   </body>
 </html>
-
-
