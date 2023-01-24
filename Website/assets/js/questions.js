@@ -3,80 +3,6 @@
 var randomIndex = 0;
 var randomQuestions = [];
 
-var scrollingSpeed = 200;
-
-function ScrollHalfPageDown()
-{
-  window.scrollBy({
-    top: 0.5 * window.innerHeight,
-    left: 0,
-  });
-}
-
-function ScrollHalfPageUp()
-{
-  window.scrollBy({
-    top: -0.5 * window.innerHeight,
-    left: 0,
-  });
-}
-
-function handleKeyDown(event) {
-  const { ctrlKey, key } = event;
-  switch (key) {
-    case 'd':
-      {
-        if (ctrlKey) {
-          ScrollHalfPageDown();
-          event.preventDefault();
-        }
-      }
-      break;
-    case 'u':
-      {
-        if (ctrlKey) {
-          ScrollHalfPageUp();
-          event.preventDefault();
-        }
-      }
-      break;
-    case 'j':
-      {
-        window.scrollBy({
-          top: 0.5 * scrollingSpeed,
-          left: 0,
-        });
-      }
-      break;
-    case 'k':
-      {
-        window.scrollBy({
-          top: -0.5 * scrollingSpeed,
-          left: 0,
-        });
-      }
-      break;
-    case 'g':
-      {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-        });
-      }
-      break;
-    case 'G':
-      {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          left: 0,
-        });
-      }
-      break;
-    default:
-      break;
-  }
-
-}
 
 function Shuffle(array) {
   var copy = array.slice();
@@ -287,7 +213,7 @@ function ShowAnswers() {
   }
 }
 
-window.onload = function () {
+function setup() {
   var questions = document.getElementsByClassName("question");
   for (var i = 0; i < questions.length; ++i) {
     var question = questions[i];
@@ -307,8 +233,13 @@ window.onload = function () {
   });
 
   randomQuestions = Shuffle(nonEmptyQuestions).slice();
-  document.addEventListener('keydown', handleKeyDown);
 };
 
-
-
+if (window.addEventListener) // W3C standard
+{
+  window.addEventListener('load', setup, false); // NB **not** 'onload'
+} 
+else if (window.attachEvent) // Microsoft
+{
+  window.attachEvent('onload', setup);
+}

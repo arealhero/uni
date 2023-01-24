@@ -26,7 +26,7 @@
 .defs {
   margin: 20px 0 20px 30px;
   padding-bottom: 5px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--text-color);
 }
 
 .defs::before {
@@ -37,7 +37,7 @@
 .assumptions {
   margin: 20px 0 20px 30px;
   padding-bottom: 5px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--text-color);
 }
 
 .assumptions::before {
@@ -48,7 +48,7 @@
 .given {
   margin: 20px 0 20px 30px;
   padding-bottom: 5px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--text-color);
 }
 
 .given::before {
@@ -112,6 +112,11 @@
   font-weight: bold;
 }
 
+.proposition::before {
+  content: 'Утверждение. ';
+  font-weight: bold;
+}
+
 .corollary::before {
   content: 'Следствие. ';
   font-weight: bold;
@@ -122,11 +127,12 @@
 .lemma,
 .example,
 .remark,
+.solution,
 .reminder,
 .proof {
     margin: 10px;
     padding: 0 10px;
-    border-left: 1px solid black;
+    border-left: 1px solid var(--text-color);
 }
 
 .reminder::before {
@@ -134,10 +140,11 @@
     font-weight: bold;
 }
 
+.idea,
 .derivation {
     margin: 10px;
     padding: 0 10px;
-    border-left: 3px solid blue;
+    border-left: 3px solid var(--blue-color);
 }
 
 .theorem::before {
@@ -159,6 +166,11 @@
   content: ' \25A1';
 }
 
+.idea::before {
+  content: 'Основная идея. ';
+  color: var(--blue-color);
+}
+
 .necessity,
 .sufficiency {
     margin: 10px 0;
@@ -167,19 +179,19 @@
 .necessity::before {
   content: 'Необходимость. ';
   font-style: italic;
-  color: blue;
+  color: var(--blue-color);
 }
 
 .sufficiency::before {
   content: 'Достаточность. ';
   font-style: italic;
-  color: blue;
+  color: var(--blue-color);
 }
 
 .necessity::after,
 .sufficiency::after {
   content: ' \25A0';
-  color: blue;
+  color: var(--blue-color);
 }
 
 button.derivation-toggle {

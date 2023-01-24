@@ -1,159 +1,4397 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset=utf-8>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Вопросы &mdash; Теория управления</title>
+<head>
+  <meta charset=utf-8>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="/assets/css/styles.css" rel="stylesheet">
-    <script type="text/javascript" async src="/assets/js/questions.js"></script>
+  <title>Вопросы &mdash; Теория управления</title>
 
-    <link rel="stylesheet" href="/assets/katex/katex.min.css">
-    <script defer src="/assets/katex/katex.min.js"></script>
-    <script defer src="/assets/katex/auto-render.min.js"></script>
+  <link href="/assets/css/styles.css" rel="stylesheet">
+  <script async src="/assets/js/questions.js"></script>
+  <script async src="/assets/js/controls.js"></script>
 
-    <script>
-     document.addEventListener("DOMContentLoaded", function() {
-       renderMathInElement(document.body, {
-	 // customised options
-	 // • auto-render specific keys, e.g.:
-	 delimiters: [
-	   {left: '$$', right: '$$', display: true},
-	   {left: '$', right: '$', display: false},
-	   {left: '\\(', right: '\\)', display: false},
-	   {left: '\\[', right: '\\]', display: true}
-	 ],
-	 // • rendering keys, e.g.:
-	 throwOnError : false
-       });
-     });
-    </script>
-  </head>
-  <body>
-    <h1 id="title">Вопросы &mdash; Теория управления</h1>
-    <nav>
-      <a href="/">Домой</a>
-      <a href="/control-theory">Теория управления</a>
-    </nav>
+  <link rel="stylesheet" href="/assets/katex/katex.min.css">
+  <script defer src="/assets/katex/katex.min.js"></script>
+  <script defer src="/assets/katex/auto-render.min.js"></script>
 
-    <div class="controls">
-      <button onclick="HideQuestions()">Скрыть вопросы</button>
-      <button onclick="ShowQuestions()">Показать вопросы</button>
-      <button onclick="HideAnswers()">Скрыть ответы</button>
-      <button onclick="ShowAnswers()">Показать ответы</button>
-      <button onclick="HideProofs()">Скрыть доказательства</button>
-      <button onclick="ShowProofs()">Показать доказательства</button>
-      <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
-    </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        // customised options
+        // • auto-render specific keys, e.g.:
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        // • rendering keys, e.g.:
+        throwOnError: false
+      });
+    });
+  </script>
+</head>
 
-    <div style="display:none">
-      $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+<body>
+  <h1 id="title">Вопросы &mdash; Теория управления</h1>
+  <nav>
+    <a href="/">Домой</a>
+    <a href="/control-theory">Теория управления</a>
+  </nav>
 
-      $\global\def\dv#1#2{\frac{d #1}{d #2}}$
-      $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
-      $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
-      $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
+  <div class="controls">
+    <button onclick="HideQuestions()">Скрыть вопросы</button>
+    <button onclick="ShowQuestions()">Показать вопросы</button>
+    <button onclick="HideAnswers()">Скрыть ответы</button>
+    <button onclick="ShowAnswers()">Показать ответы</button>
+    <button onclick="HideProofs()">Скрыть доказательства</button>
+    <button onclick="ShowProofs()">Показать доказательства</button>
+    <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
+  </div>
 
-      $\global\def\paren#1{\left( #1 \right)}$
+  <div style="display:none">
+    $\global\def\at#1#2{\left. #1 \right\rvert_{#2}}$
+    $\global\def\abs#1{\left\lvert #1 \right\rvert}$
+    $\global\def\norm#1{\left\lVert #1 \right\rVert}$
 
-      $\global\def\mbox#1{\text{#1}}$
+    $\global\def\dp#1#2{#1 \cdot #2\,}$
+    $\global\def\vp#1#2{#1 \times #2\,}$
 
-      $\global\def\div{\text{div}\,}$
-      $\global\def\grad{\text{grad}\,}$
-      $\global\def\rot{\text{rot}\,}$
+    $\global\def\dv#1#2{\frac{d #1}{d #2}}$
+    $\global\def\pd#1#2{\frac{\partial #1}{\partial #2}}$
+    $\global\def\pdv2#1#2{\frac{\partial^2 #1}{\partial #2^2}}$
+    $\global\def\ppdv#1#2#3{\frac{\partial^2 #1}{\partial #2 \partial #3}}$
 
-      $\global\def\vb#1{\textbf{#1}}$
+    $\global\def\paren#1{\left( #1 \right)}$
 
-      $\global\def\const{\text{const}\,}$
-      $\global\def\res{\text{res}\,}$
-      $\global\def\Res{\text{Res}\,}$
-      $\global\def\Re{\text{Re}\,}$
-      $\global\def\Im{\text{Im}\,}$
-      $\global\def\ch{\text{ch}\,}$
-      $\global\def\sh{\text{sh}\,}$
-      $\global\def\argtg{\text{argtg}\,}$
-    </div>
+    $\global\def\mbox#1{\text{#1}}$
 
-    <ol id="questions">
-      <li class="question">
-	<div class="name">
-	  Определение: допустимое управление
-	</div>
-	<button class="toggle-button"></button>
-	<div class="content">
-	  Рассмотрим линейную управляемую систему
-	  \[
-	  \dot{x} = P(t) x + Q(t) u + f(t),
-	  \]
-	  где $u(t) \in U$, $U$ &mdash; множество управления.
+    $\global\def\div{\text{div}\,}$
+    $\global\def\dsum{\displaystyle\sum\,}$
+    $\global\def\grad{\text{grad}\,}$
+    $\global\def\rot{\text{rot}\,}$
 
-	  <div class="definition">
-	    Говорят, что $u(t) \in U$ &mdash; допустимое управление,
-	    если
-	    <ol>
-	      <li>
-		оно задано на $[0;T]$
-	      </li>
-	      <li>
-		оно кусочно-непрерывно
-	      </li>
-	      <li>
-		$\int\limits_0^T u^T(\tau) u(\tau) d \tau < +\infty$
-	      </li>
-	    </ol>
-	  </div>
-	</div>
-      </li>
+    $\global\def\bydef#1{\overset{\mathrm{def}}{#1}}$
+    $\global\def\vb#1{\textbf{#1}}$
 
-      <li class="question">
-	<div class="name">
-	  Лемма о нахождении семейства допустимых управлений
-	</div>
-	<button class="toggle-button"></button>
-	<div class="content">
-	  <div class="lemma">
-	    Если допустимое управление $u(t)$ линейной системы
-	    \[
-	    \dot{x} = P(t) x + Q(t) u(t) + f(t)
-	    \]
-	    существует, то оно представимо в виде
-	    \[
-	    u(t) = B^T(t) C + V(t),
-	    \]
-	    где
-	    <ol>
-	      <li>
-		$Y(t)$ &mdash; нормированная в нуле фундаментальная матрица соответствующей
-		однородной системы
-	      </li>
-	      <li>
-		$B(t) = Y^-1(t) Q(t)$
-	      </li>
-	      <li>
-		$C$ &mdash; постоянный вектор, подлежащий определению
-	      </li>
-	      <li>
-		$V(t)$ &mdash; $r$-мерная векторная функция, удовлетворяющая
-		условию ортогональности:
-		\[
-		\int_0^T B(\tau) V(\tau) d\tau = 0.
-		\]
-	      </li>
-	    </ol>
-	  </div>
+    $\global\def\rddots{\cdot^{\displaystyle \cdot^{\displaystyle \cdot}}}$
 
-	  <div class="proof">
-	    Пусть существует допустимое управление $u(t) \in U$. Рассмотрим $u_1(t) = u(t) - B^T(t) C$,
-	    для него выполнено условие ортогональности:
-	    \[
-	    \int_0^T B(\tau) u_1(\tau) d\tau = \int_0^T B(\tau) B^T(\tau) d\tau \cdot C.
-	    \]
-	  </div>
-	</div>
-      </li>
-    </ol>
-  </body>
+    $\global\def\op#1{\mathrm{#1}\,}$
+
+    $\global\def\diag{\mathrm{diag}\,}$
+    $\global\def\rank{\mathrm{rank}\,}$
+    $\global\def\Sp{\,\mathrm{Sp}\,}$
+    $\global\def\proj{\mathrm{proj}}$
+    $\global\def\grad{\,\mathrm{grad}\,}$
+    $\global\def\const{\text{const}\,}$
+    $\global\def\res{\text{res}\,}$
+    $\global\def\Res{\text{Res}\,}$
+    $\global\def\Lin{\,\text{Lin}\,}$
+    $\global\def\Re{\text{Re}\,}$
+    $\global\def\Im{\text{Im}\,}$
+    $\global\def\ch{\text{ch}\,}$
+    $\global\def\sh{\text{sh}\,}$
+    $\global\def\tg{\mathrm{tg}\,}$
+    $\global\def\argtg{\text{argtg}\,}$
+  </div>
+
+  <ol id="questions">
+    <h2 class="subtitle">БИЛЕТ 1</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: управление
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим замкнутую и ограниченную область $U \subset \mathbb{R}^r$.
+
+        <div class="definition">
+          Функция
+          \[
+          u : [t_0; t_1] \to U
+          \]
+          называется <i>управлением</i>, а $U$ &mdash; <i>множеством управления</i>.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        В чём заключается прямая задача динамики?
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="answer">
+          Прямая задача: решить задачу Коши
+          \[
+          \begin{aligned}
+          \dot{x}(t) &= F(t, x, u) \\
+          x(t_0) &= x_0
+          \end{aligned}
+          \]
+          и найти такое управление $u = u(t, x)$, чтобы система имела желаемый характер.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        В чём заключается обратная задача динамики?
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="answer">
+          Обратная задача: замкнуть систему
+          \[
+          \begin{aligned}
+          \dot{x}(t) &= F(t, x, u) \\
+          x(t_0) &= x_0
+          \end{aligned}
+          \]
+          известным управлением $u = \widetilde{u}(t, x)$ и найти её решение.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: фазовый вектор объекта
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          <i>Фазовым вектором</i> объекта называется всякий вектор $x(t)$, обладающий
+          следующими свойствами:
+          <ol>
+            <li>
+              Компоненты $x_i(t)$ характеризуют состояние объекта в момент времени $t$;
+            </li>
+
+            <li>
+              Каждое начальное состояние $x(t_0) = x^0$ единственным образом
+              определяет значения $x(t) = x(t, t_0, x^0)$ для всех рассматриваемых моментов
+              времени $t$.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: допустимое управление
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Функцию $u(t) \in U$ называют допустимым управлением,
+          если она
+          <ol>
+            <li>
+              задана на $[0;T]$;
+            </li>
+
+            <li>
+              кусочно-непрерывна;
+            </li>
+
+            <li>
+              её интенсивность ограничена:
+              \[
+              \chi[u] = \int\limits_0^T u^*(\tau) u(\tau) d \tau \lt \infty.
+              \]
+            </li>
+          </ol>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Формулировка общей задачи об управлении с введённым ограничением
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Требуется найти допустимое управление $u(t)$, переводящее систему
+        \[
+        \dot{x}(t) = F(t, x, u),
+        \]
+        из состояния $x(0) = x^0$ в состояние $x(T) = x^1$, и при этом
+        интенсивность управления $\chi[u]$ была бы ограничена.
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: программное управление
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Допустимое управление $u(t)$ называется <i>программным</i>, если
+          оно переводит систему
+          \[
+          \dot{x}(t) = F(t, x, u),
+          \]
+          из состояния $x(0) = x^0$ в состояние $x(T) = x^1$.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Общее решение неоднородной линейной системы ОДУ в форме Коши
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную систему ОДУ:
+        \[
+        \dot{x} = P(t) x + Q(t) u(t) + f(t).
+        \]
+        Пусть $Y$ &mdash; фундаментальная матрица соответствующей однородной системы,
+        нормированная в нуле. Тогда можно записать
+        <i>общее решение неоднородной системы в форме Коши</i>:
+        \[
+        x(t, 0, x_0) = Y(t) \left(
+        x_0 + \int\limits_0^t Y^{-1}(\tau) \left[Q(\tau) u(\tau) + f(\tau)\right] d\tau
+        \right).
+        \]
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Постановка задачи о нахождении программного управления для линейной системы ОДУ
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную систему ОДУ:
+        \[
+        \dot{x} = P(t) x + Q(t) u(t) + f(t).
+        \]
+        <div class="problem">
+          Требуется найти управление $u(t) \in U$, переводящее систему из состояния $x(0) = x_0$
+          в состояние $x(T) = x_1$.
+        </div>
+
+        <div class="solution">
+          Рассмотрим общее решение исходной системы в форме Коши:
+          \[
+          x(t, 0, x_0) = Y(t) \left(
+          x_0 + \int\limits_0^t Y^{-1}(\tau) \left[Q(\tau) u(\tau) + f(\tau)\right] d\tau
+          \right).
+          \]
+          Если $u(t)$ &mdash; программное, то
+          \[
+          x(T, 0, x_0) = x_1,
+          \]
+          то есть поиск программного решения
+          сводится к поиску решения, удовлетворяющего этому равенству.
+
+          <p>
+            Найдём из него, что
+            \[
+            x_1 = Y(T) \paren{x_0 + \int\limits_0^T Y^{-1}(\tau) Q(\tau) u(\tau) d\tau
+            + \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau}.
+            \]
+            Обозначим $B(t) := Y^{-1}(t) Q(t)$ и домножим уравнение слева на $Y^{-1}(T)$:
+            \[
+            \int\limits_0^T B(\tau) u(\tau) d\tau = Y^{-1}(T) x_1 - x_0
+            - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau.
+            \]
+            Правая часть &mdash; некоторая константа, которую можно обозначить как $\eta$,
+            тогда
+            \[
+            \int\limits_0^T B(\tau) u(\tau) d\tau = \eta,
+            \]
+            то есть если $u(t)$ удовлетворяет этому интегральному уравнению, то оно программное.
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема: интегральный критерий линейной независимости функций
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Пусть на отрезке $[0; T]$ заданы $m$ вектор-функций $x^1(t), \dots, x^m(t)$ размерности $r$.
+        Рассмотрим матрицу
+        \[
+        B(t) = \left(
+        \begin{array}{c}
+        x^1(t) \\
+        \vdots \\
+        x^m(t)
+        \end{array}
+        \right), \qquad \dim B(t) = m \times r.
+        \]
+
+        <div class="theorem">
+          Функции $x^1(t), \dots, x^m(t)$ линейно независимы на $[0; T]$ тогда и только тогда,
+          когда интегральная матрица
+          \[
+          A = \int\limits_0^T B(t) B^*(t) dt
+          \]
+          положительно определена.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Необходимость и достаточность доказываются от противного,
+            пользуясь тем фактом, что
+            \[
+            C^T A C = \int\limits_0^T \norm{C^T B(\tau)} d\tau.
+            \]
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Лемма о нахождении семейства допустимых управлений
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="lemma">
+          Если допустимое управление $u(t)$ линейной системы
+          \[
+          \dot{x} = P(t) x + Q(t) u(t) + f(t)
+          \]
+          существует, то оно представимо в виде
+          \[
+          u(t) = B^T(t) C + V(t), \qquad B(t) := Y^{-1}(t) Q(t),
+          \]
+          где
+          <ul>
+            <li>
+              $Y(t)$ &mdash; нормированная в нуле фундаментальная матрица соответствующей
+              однородной системы
+            </li>
+
+            <li>
+              $C$ &mdash; постоянный вектор, подлежащий определению
+            </li>
+
+            <li>
+              $V(t)$ &mdash; $r$-мерная векторная функция, удовлетворяющая
+              условию ортогональности:
+              \[
+              \int_0^T B(\tau) V(\tau) d\tau = 0.
+              \]
+            </li>
+          </ul>
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Подставим $u(t)$ в уравнение ортогональности, докажем
+            совместность системы от противного ($\rank A \lt \rank (A, \eta)$),
+            воспользовавшись теоремой Фредгольма:
+            \[
+            A x = b \text{ совместна} \iff \exists \gamma \neq 0:
+            \gamma^T a = 0, \; \text{ но } \; \gamma^T b \neq 0.
+            \]
+          </div>
+
+          Пусть существует допустимое управление $u(t) \in U$. Тогда утверждение леммы справедливо,
+          если
+          \[
+          \int_0^T B(\tau) \left[u(\tau) - B^T(\tau) C \right] d\tau = 0.
+          \]
+          Перепишем это равенство в виде
+          \[
+          \int_0^T B(\tau) u(\tau) d\tau = \int_0^T B(\tau) B^T(\tau) d\tau \cdot C;
+          \]
+          рассмотрим его как СЛАУ относительно неизвестного вектора $C$:
+          \[
+          AC = b,
+          \]
+          где
+          \[
+          A := \int_0^T B(\tau) B^T(\tau) d\tau, \quad b := \int_0^T B(\tau) u(\tau) d\tau.
+          \]
+
+          <p>
+            Из
+            <a href="https://ru.wikipedia.org/wiki/Теорема_Кронекера_—_Капелли" target="_blank">
+              теоремы Кронекера-Капелли
+            </a> известно, что система совместна тогда и только тогда, когда $\rank A = \rank (A, b)$.
+          </p>
+
+          <p>
+            Предположим, что система несовместна, то есть $\rank A \lt \rank (A, b)$. Тогда
+            по теореме Фредгольма найдётся вектор $\gamma \neq 0$, ортогональный всем столбцам матрицы
+            $A$, но не ортогональный вектору $b$, то есть
+            \[
+            \gamma^T A = 0, \quad \gamma^T b \neq 0.
+            \]
+            Отсюда следует, что
+            \[
+            \begin{aligned}
+            0 &= \gamma^T A \gamma \\
+            &= \gamma^T \int_0^T B(\tau) B^T(\tau) d\tau \cdot \gamma \\
+            &= \int_0^T \gamma^T B(\tau) B^T(\tau) \gamma d\tau \\
+            &= \int_0^T \norm{\gamma^T B(\tau)}^2 d\tau = 0,
+            \end{aligned}
+            \]
+            то есть $\gamma^T B(t) \equiv 0$. Но тогда
+            \[
+            \gamma^T b = \gamma^T \int_0^T B(\tau) u(\tau) d\tau
+            = \int_0^T \overbrace{\gamma^T B(\tau)}^{\equiv 0} u(\tau) d\tau = 0,
+            \]
+            что противоречит выбору $\gamma$. Значит, $\rank A = \rank (A,b)$, то есть система совместна.
+          </p>
+
+          <p>
+            Решая эту систему, находим вектор $C$, при котором разность $u(t) - B^T(t) C$ удовлетворяет
+            условию
+            \[
+            \int_0^T B(\tau) \left[u(\tau) - B^T(\tau) C \right] d\tau = 0.
+            \]
+            Введя обозначение $v(t) := u(t) - B^T(t) C$, получаем, что
+            \[
+            u(t) = B^T(t) C + v(t).
+            \]
+          </p>
+        </div>
+
+        <div class="remark">
+          В случае поиска программного управления $u(t)$, переводящего систему из $x(0) = x_0$ в
+          $x(T) = x_1$, коэффициент
+          \[
+          b = \int\limits_0^T B(\tau) u(\tau) d\tau = \eta,
+          \]
+          где
+          \[
+          \eta \bydef = Y^{-1}(T) x_1 - x_0 - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau,
+          \]
+          поэтому СЛАУ для нахождения $C$ запишется в виде
+          \[
+          AC = \eta.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 2</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: управляемая пара точек
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим систему
+        \[
+        \dot{x} = P(t) x + Q(t) u + f(t).
+        \]
+        Поставим задачу о нахождении программного управления $u(t)$,
+        переводящего систему из состояния $x(0) = x_0$ в состояние $x(T) = x_1$.
+
+        <div class="definition">
+          Пара состояний $(x_0, x_1)$ называется <i>управляемой</i> на $[0; T]$, если
+          существует программное управление вида
+          \[
+          u(t) = B^T(t) C + V(t), \quad \text{причём} \quad \int_0^T B(\tau) V(\tau) d\tau = 0.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема об управляемости пары точек
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим систему
+        \[
+        \dot{x} = P(t) x + Q(t) u + f(t).
+        \]
+        <div class="theorem">
+          Пара точек $(x_0, x_1)$ управляема на $[0; T]$ тогда и только тогда, когда
+          \[
+          \rank A = \rank (A, \eta),
+          \]
+          где
+          <ul>
+            <li>
+              ${\displaystyle A := \int_0^T B(\tau) B^T(\tau) d\tau}$,
+            </li>
+
+            <li>
+              ${\displaystyle B := Y^{-1}(t) Q(t)}$.
+            </li>
+
+            <li>
+              ${\displaystyle \eta := Y^{-1}(T) x_1 - x_0 - \int_0^T Y^{-1}(\tau) f(\tau) d\tau}$.
+            </li>
+          </ul>
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Проверяется подстановкой в
+            \[
+            \int\limits_0^T B(\tau) u(\tau) d\tau = \eta,
+            \]
+            используя теорему Кронекера-Капелли.
+          </div>
+
+          <div class="necessity">
+            Пусть пара $(x_0, x_1)$ &mdash; управляема, то есть существует программное управление
+            $u(t)$. Из леммы о представлении семейства допустимых управлений следует, что оно
+            представимо в виде
+            \[
+            u(t) = B^T(t) C + V(t), \quad \text{причём} \quad \int_0^T B(\tau) V(\tau) d\tau = 0,
+            \]
+            и удовлетворяет уравнению
+            \[
+            \int\limits_0^T B(\tau) u(\tau) d\tau = \eta,
+            \]
+            следовательно, $C$ является решением СЛАУ
+            \[
+            AC = \eta,
+            \]
+            то есть эта СЛАУ совместна, поэтому по теореме Кронекера-Капелли
+            \[
+            \rank A = \rank (A, \eta).
+            \]
+          </div>
+
+          <div class="sufficiency">
+            Пусть $\rank A = \rank (A, \eta)$, тогда по теореме Кронекера-Капелли СЛАУ
+            \[
+            AC = \eta
+            \]
+            совместна, следовательно, существует $\overline{C}$ &mdash; решение этой СЛАУ.
+            Тогда по лемме о представлении семейства допустимых управлений управление
+            \[
+            u(t) = B^T(t) \overline{C} + V(t), \quad \text{причём} \quad
+            \int_0^T B(\tau) V(\tau) d\tau = 0,
+            \]
+            удовлетворяет уравнению
+            \[
+            \int\limits_0^T B(\tau) u(\tau) d\tau = \eta,
+            \]
+            то есть является программным для пары точек $(x_0, x_1)$.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: полностью управляемая линейная система
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Систему
+          \[
+          \dot{x} = P(t) x + Q(t) u + f(t)
+          \]
+          называют <i>полностью управляемой на $[0; T]$</i>, если любая пара точек
+          $(x_0, x_1)$ управляема.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема о полной управляемости линейной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          Система
+          \[
+          \dot{x} = P(t) x + Q(t) u + f(t)
+          \]
+          полностью управляема на $[0; T]$ тогда и только тогда, когда
+          \[
+          \rank A = n, \quad (\text{или} \; \det A \neq 0),
+          \]
+          где
+          <ul>
+            <li>
+              ${\displaystyle A := \int\limits_0^T B(\tau) B^T(\tau) d\tau}$;
+            </li>
+
+            <li>
+              ${\displaystyle B := Y^{-1}(t) Q(t)}$.
+            </li>
+          </ul>
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Проверяется подстановкой в $AC = \eta$.
+          </div>
+
+          <div class="necessity">
+            Пусть система полностью управляема, тогда $\eta$ может принимать любые значения
+            в силу произвольности пары $(x_0, x_1)$, следовательно, система
+            \[
+            AC = \eta
+            \]
+            совместна для любого $\eta$. Отсюда следует невырожденность матрицы $A$.
+          </div>
+
+          <div class="sufficiency">
+            Пусть матрица $A$ невырождена, тогда для любого вектора $\eta = \eta(x_0, x_1)$ можно найти
+            \[
+            \widetilde{C} = A^{-1} \eta,
+            \]
+            то есть для любой пары точек $(x_0, x_1)$ можно построить программное управление
+            \[
+            u(t) = B(t) \widetilde{C} + V(t),
+            \]
+            следовательно, система является полностью управляемой на $[0; T]$.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Свойства матрицы ${\displaystyle A = \int\limits_0^T B(\tau) B^T(\tau) d\tau}$
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <ol>
+          <li>
+            <p>
+              $A$ симметрична: $A^T = A$.
+            </p>
+
+            <button class="derivation-toggle"></button>
+            <div class="derivation">
+              \[
+              A^T = \paren{\int\limits_0^T B B^T d\tau}^T = \int\limits_0^T B B^T d\tau = A.
+              \]
+            </div>
+          </li>
+
+          <li>
+            <p>
+              Квадратичная форма с матрицей $A$ знакоположительна: $C^TAC \geqslant 0$ для любого $C$.
+            </p>
+
+            <button class="derivation-toggle"></button>
+            <div class="derivation">
+              \[
+              C^TAC \bydef = C^T \int\limits_0^T B B^T d\tau \cdot C
+              = \int\limits_0^T C^T B B^T C d\tau
+              = \int\limits_0^T \norm{C^T B}^2 d\tau \geqslant 0.
+              \]
+            </div>
+          </li>
+
+          <li>
+            Все собственные числа матрицы $A$ вещественны и неотрицательны: $\lambda_i \geqslant 0$.
+
+            <button class="derivation-toggle"></button>
+            <div class="derivation">
+              <p>
+                Из симметричности матрицы $A$ следует, что $\lambda_i \in \mathbb{R}$.
+              </p>
+
+              <p>
+                В канонической форме коэффициенты квадратической формы &mdash; собственные числа,
+                поэтому из свойства 2 следует, что $\lambda_i \geqslant 0$.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            Если матрица $A$ невырождена, то $\lambda_i \gt 0$.
+          </li>
+        </ol>
+
+        <div class="lemma">
+          $\det A \neq 0$ тогда и только тогда, когда строки матрицы $B(t)$ линейно независимы на $[0; T]$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Необходимость и достаточность доказываются от противного, учитывая тот факт,
+            что
+            \[
+            C^T A C = \int\limits_0^T \norm{C^T B}^2 d\tau.
+            \]
+          </div>
+        </div>
+
+        <div class="lemma">
+          Строки матрицы $B(t)$ линейно независимы тогда и только тогда, когда существуют
+          \[
+          0 \leqslant t_1 \leqslant t_2 \leqslant \cdots \leqslant t_m \leqslant T, \quad m \leqslant n
+          \]
+          такие, что
+          \[
+          \rank \left[ B(t_1), B(t_2), \dots, B(t_m) \right] = n.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 3</h2>
+
+    <li class="question">
+      <div class="name">
+        Простейшая задача оптимального управления
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим полностью управляемую линейную систему
+        \[
+        \dot{x} = P(t) x + Q(t) u + f(t).
+        \]
+        Для сравнения движений системы и соответствующих программных управлений введём
+        <i>критерий оценки качества управления</i> в виде функционала
+        \[
+        J[u(t)] := \int\limits_0^T u^T(\tau) u(\tau) d\tau,
+        \]
+        который назовём <i>интенсивностью управления</i>.
+
+        <div class="problem">
+          Найти программное управление $u(t)$, минимизирующее функционал $J[u(t)]$.
+        </div>
+
+        <div class="solution">
+          В семестве программных управлений
+          \[
+          u(t) = B^T(t) C + V(t), \quad \text{причём} \quad \int_0^T B(\tau) V(\tau) d\tau = 0,
+          \]
+          будем искать $u^*(t)$ такое, что $\min J[u(t)] = J[u^*(t)]$. Подставим:
+          \[
+          \begin{aligned}
+          J[u(t)] &= \int\limits_0^T \paren{C^T B(\tau) + V^T(\tau)}
+          \paren{B^T(\tau) C + V(\tau)} d\tau \\
+          &= \phantom{+} \int\limits_0^T C^T \overbrace{B(\tau) B^T(\tau)}^{=A} C d\tau
+          + \cancel{\int\limits_0^T C^T B(\tau) V(\tau) d\tau} \\
+          &\phantom{=} + \cancel{\int\limits_0^T V^T(\tau) B^T(\tau) d\tau}
+          + \int\limits_0^T V^T(\tau) V(\tau) d\tau \\
+          &= C^T A C
+          + \underbrace{\int\limits_0^T V^T(\tau) V(\tau) d\tau}_{\displaystyle \geqslant 0}.
+          \end{aligned}
+          \]
+
+          Первое слагаемое не зависит от управления, а из свойств матрицы $A$ известно, что
+          для любого $C$
+          \[
+          C^T A C \geqslant 0,
+          \]
+          поэтому
+          \[
+          \min J[u(t)] = C^T A C,
+          \]
+          то есть в случае $V(t) \equiv 0$, следовательно, $u(t) = B^T(t) C$ &mdash; оптимальное
+          по отношению к функционалу $J$ управление.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: область управляемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим полностью управляемую линейную однородную систему
+        \[
+        \dot{x} = P(t) x + Q(t) u, \qquad f(t) \equiv 0.
+        \]
+        Введём ограничение на интенсивность управления:
+        \[
+        \int\limits_0^T u^T(\tau) u(\tau) d\tau \leqslant \mu, \quad \text{где} \quad \mu \gt 0.
+        \]
+
+        <div class="definition">
+          <i>Областью управляемости $\mathcal{A}$</i> называют множество точек $x_0$, из которых
+          можно попасть в начало координат при помощи управления с ограниченной интенсивностью.
+        </div>
+
+        <div class="problem">
+          Построить область управляемости.
+        </div>
+
+        <div class="solution">
+          Пусть $x_0 \in \mathcal{A}$. Система полностью управляема, поэтому можно построить
+          программное управление для точек $(x_0, \vb{0})$ в виде
+          \[
+          u(t) = B^T(t) C.
+          \]
+
+          <div class="remark">
+            Если $V(t) \not\equiv 0$, то значение функционала станет больше, следовательно, мы не
+            учтём некоторые точки из области управляемости.
+          </div>
+
+          Так как $x_1 = \vb{0}$, то
+          \[
+          \eta = \cancel{Y^{-1}(T) \underbrace{x_1}_{=0}} - x_0 - \cancel{\int\limits_0^T Y^{-1}(\tau)
+          \underbrace{f(\tau)}_{\equiv 0} d\tau} = - x_0.
+          \]
+          Из теоремы о полной управляемости линейной системы следует невырожденность матрицы $A$,
+          поэтому $C = A^{-1} \eta$, а управление запишется в виде
+          \[
+          u(t) = B^T(t) C = B^T(t) A^{-1} \eta = - B^T(t) A^{-1} x_0.
+          \]
+          Подставим его в уравнение интенсивности:
+          \[
+          \begin{aligned}
+          \int\limits_0^T u^T(\tau) u(\tau) d\tau
+          &= \int\limits_0^T x_0^T (A^{-1})^T \overbrace{B(\tau) B^T(\tau)}^{=A} A^{-1} x_0 d\tau \\
+          &= x_0^T (A^{-1})^T A A^{-1} x_0 \\
+          &= x_0^T (A^{-1})^T x_0 \\
+          &= x_0^T (A^T)^{-1} x_0 \\
+          &= x_0^T A^{-1} x_0 \leqslant \mu.
+          \end{aligned}
+          \]
+
+          <div class="remark">
+            Свойство обратной матрицы: $(A^{-1})^T = (A^T)^{-1}$.
+          </div>
+
+          Таким образом, область управляемости $\mathcal{A}$ имеет следующий вид:
+          \[
+          \mathcal{A}: \set{x_0 | x_0^T A^{-1} x_0 \leqslant \mu},
+          \]
+          то есть $\mathcal{A}$ &mdash; эллипс с центром в начале координат.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: область достижимости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим полностью управляемую линейную однородную систему
+        \[
+        \dot{x} = P(t) x + Q(t) u, \qquad f(t) \equiv 0.
+        \]
+        Введём ограничение на интенсивность управления:
+        \[
+        \int\limits_0^T u^T(\tau) u(\tau) d\tau \leqslant \mu, \quad \text{где} \quad \mu \gt 0.
+        \]
+
+        <div class="definition">
+          <i>Областью достижимости $\mathcal{D}$</i> называется множество точек $x_1$, в которые
+          можно попасть из начала координат при помощи программного управления $u(t)$ ограниченной
+          интенсивности.
+        </div>
+
+        <div class="problem">
+          Построить область достижимости.
+        </div>
+
+        <div class="solution">
+          Построение проводится аналогично области управляемости.
+        </div>
+
+        <div class="remark">
+          Задачу о построении программного управления, переводящего систему из $x_0 = 0$ в $x_1 \neq 0$
+          заменой $y = x - x_1$ можно свести к задачу о переводе системы из $y_0 = -x_1$ в $y_1 = 0$.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод свойства выпуклости множества достижимости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную систему
+        \[
+        \dot{x} = P(t) x + Q(t) u + f(t).
+        \]
+        Введём ограничение на интенсивность управления:
+        \[
+        \int\limits_0^T u^T(\tau) u(\tau) d\tau \leqslant \mu, \quad \text{где} \quad \mu \gt 0.
+        \]
+
+        <div class="theorem">
+          Область достижимости $\mathcal{D}$ выпукла:
+          \[
+          \forall x_1, x_2 \in \mathcal{D} \quad \alpha x_2 + (1 - \alpha) x_1 \in \mathcal{D},
+          \quad \alpha \in [0; 1].
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Проверяется подстановкой: элемент области достижимости должен быть 1) программным
+            управлением 2) ограниченной интенсивности. Из двух элементов надо собрать условия для
+            нового.
+          </div>
+
+          <p>
+            Так как $x_1, x_2 \in \mathcal{D}$, то существуют программные управления $u_1(t), u_2(t)$
+            ограниченной интенсивности, переводящие начало координат в $x_1$ и $x_2$ соответственно.
+          </p>
+
+          <p>
+            $u_1, u_2$ &mdash; программные управления, поэтому
+            \[
+            \begin{aligned}
+            \int\limits_0^T B(\tau) u_1(\tau) d\tau &= \eta(0, x_1)
+            = Y^{-1}(T) x_1 - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau \\
+            \int\limits_0^T B(\tau) u_2(\tau) d\tau &= \eta(0, x_2)
+            = Y^{-1}(T) x_2 - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau \\
+            \end{aligned}
+            \]
+
+            Умножим первое уравнение на $(1 - \alpha)$, второе &mdash; на $\alpha$ и сложим их:
+            \[
+            \begin{aligned}
+            \int\limits_0^T B(\tau)
+            \underbrace{\left[ \alpha u_2(\tau) + (1 - \alpha) u_1(\tau) \right]}_{\doteq u_3(\tau)} d\tau
+            &=
+            (1-\alpha) \left[Y^{-1}(T) x_1 - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau \right] \\
+            &\phantom{= (1} + \alpha \phantom{)} \left[Y^{-1}(T) x_2
+            - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau \right] \\
+            \int\limits_0^T B(\tau) u_3(\tau) d\tau
+            &= Y^{-1}(T) \left[\alpha x_2 + (1 - \alpha) x_1\right]
+            - \int\limits_0^T Y^{-1}(\tau) f(\tau) d\tau.
+            \end{aligned}
+            \]
+            Таким образом, управление $u_3(t)$ переводит систему из начала координат в точку
+            $\alpha x_2 + (1 - \alpha) x_1$.
+          </p>
+
+          <p>
+            Проверим интенсивность управления $u_3(t)$ на ограниченность:
+            \[
+            \begin{aligned}
+            \int\limits_0^T u_3^T(\tau) u_3(\tau) d\tau &= \int\limits_0^T
+            \left[ \alpha u_2^T(\tau) + (1 - \alpha) u_1^T(\tau) \right]
+            \left[ \alpha u_2(\tau) + (1 - \alpha) u_1(\tau) \right] d\tau \\
+            &= \alpha^2 \int\limits_0^T u_2^T(\tau) u_2(\tau) d\tau
+            + (1 - \alpha)^2 \int\limits_0^T u_1^T(\tau) u_1(\tau) d\tau \\
+            &\phantom{=} + \, \alpha(1 - \alpha) \left[
+            \int\limits_0^t u_2^T(\tau) u_1(\tau) d\tau + \int\limits_0^t u_1^T(\tau) u_2(\tau) d\tau
+            \right] \\
+            &= \alpha^2 \underbrace{\int\limits_0^T u_2^T(\tau) u_2(\tau) d\tau}_{\leqslant\, \mu}
+            + (1 - \alpha)^2 \underbrace{\int\limits_0^T u_1^T(\tau) u_1(\tau) d\tau}_{\leqslant\, \mu} \\
+            &\phantom{=} + \, 2\alpha(1 - \alpha) \int\limits_0^t u_1^T(\tau) u_2(\tau) d\tau \\
+            &\leqslant \alpha^2 \mu + (1 - \alpha)^2 \mu
+            + 2\alpha(1 - \alpha) \int\limits_0^t u_1^T(\tau) u_2(\tau) d\tau.
+            \end{aligned}
+            \]
+          </p>
+
+          <p>
+            Введём скалярное произведение:
+            \[
+            (u_i, u_j) \bydef = \int\limits_0^T u_i^T(\tau) u_j(\tau) d\tau
+            \]
+            и порождённую им норму
+            \[
+            \norm{u} \bydef = \sqrt{(u, u)} =
+            \sqrt{\int\limits_0^T u_i^T(\tau) u_j(\tau) d\tau}.
+            \]
+
+            Из
+            <a href="https://ru.wikipedia.org/wiki/Неравенство_Коши_—_Буняковского" target="_blank">
+              неравенства Коши-Буняковского
+            </a>
+            следует, что
+            \[
+            \abs{(u_i, u_j)} \leqslant \norm{u_i} \cdot \norm{u_j}
+            = \sqrt{\int\limits_0^T u_1^T(\tau) u_1(\tau) d\tau}
+            \cdot \sqrt{\int\limits_0^T u_2^T(\tau) u_2(\tau) d\tau}
+            \leqslant \sqrt{\mu} \cdot \sqrt{\mu} = \mu,
+            \]
+            поэтому
+            \[
+            \begin{aligned}
+            \int\limits_0^T u_3^T(\tau) u_3(\tau) d\tau
+            &\leqslant \alpha^2 \mu + (1 - \alpha)^2 \mu
+            + 2\alpha(1 - \alpha) \int\limits_0^t u_1^T(\tau) u_2(\tau) d\tau \\
+            &\leqslant \alpha^2 \mu + (1 - \alpha)^2 \mu
+            + 2\alpha(1 - \alpha) \mu \\
+            &= \mu \paren{\alpha^2 + 2 \alpha (1 - \alpha) + (1 - \alpha)^2} \\
+            &= \mu \paren{\cancel \alpha + (1 - \cancel \alpha)}^2 \\
+            &= \mu.
+            \end{aligned}
+            \]
+          </p>
+
+          <p>
+            Значит, $u_3 \in \mathcal{D}$, то есть область достижимости выпукла.
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 4</h2>
+
+    <li class="question">
+      <div class="name">
+        Теорема: достаточное условие полной управляемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную систему
+        \[
+        \dot{x} = P(t) x + Q(t) u + f(t).
+        \]
+
+        Составим вспомогательные матрицы:
+        \[
+        \begin{aligned}
+        S_0(t) &\bydef = Q(t) \\
+        S_1(t) &= \dot{S}_0(t) - P(t) S_0(t) \\
+        &\phantom{=} \dots \\
+        S_{n-1}(t) &= \dot{S}_{n-2}(t) - P(t) S_{n-2}(t).
+        \end{aligned}
+        \]
+        Из них составим матрицу $S(t) = \left[ S_0(t), \dots, S_{n-1}(t) \right]$.
+
+        <div class="theorem">
+          Система полностью управляема на $[0; T]$, если
+          \[
+          \exists \tau \in [0;T]: \qquad \rank S(\tau) = n.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            От противного: собираем условие тождественности нулю каждого из блоков матрицы $S$,
+            получаем противоречие.
+          </div>
+
+          <p>
+            От противного: предположим, что
+            \[
+            \exists \tau \in [0;T]: \qquad \rank S(\tau) = n,
+            \]
+            но система не является полностью управляемой.
+          </p>
+
+          <p>
+            Тогда из теоремы о полной управляемости системы следует, что $\det A = 0$,
+            что влечёт за собой линейную зависимость строк матрицы $B(t)$ (см. свойства матрицы $A$):
+            \[
+            \exists C \neq \vb{0}: \quad C^T B(t) \equiv 0.
+            \]
+            По определению $B(t) = Y^{-1}(t) Q(t) = Y^{-1}(t) S_0(t)$, поэтому
+            \[
+            C^T Y^{-1}(t) S_0(t) \equiv 0.
+            \]
+          </p>
+
+          <p>
+            Рассмотрим теперь уравнение
+            \[
+            C^T \dot{B}(t) \equiv 0; \quad \dot{B}(t) = \dot{Y}^{-1}(t) Q(t) + Y^{-1} \dot{Q}(t).
+            \]
+            Найдём выражение для $\dot Y^{-1}(t)$: продифференцируем уравнение
+            \[
+            Y^{-1}(t) Y(t) = E,
+            \]
+            получим
+            \[
+            \dot Y^{-1}(t) Y(t) + Y^{-1}(t) \dot Y(t) = 0.
+            \]
+            Фундаментальная матрица удовлетворяет однородной линейной системе: $\dot Y(t) = P(t) Y(t)$,
+            поэтому
+            \[
+            \dot Y^{-1}(t) Y(t) + Y^{-1}(t) P(t) Y(t) = 0.
+            \]
+            Домножим справа на $Y^{-1}(t)$:
+            \[
+            \dot Y^{-1}(t) = - Y^{-1}(t) P(t).
+            \]
+            Тогда
+            \[
+            \begin{aligned}
+            \dot{B}(t)
+            &= \phantom - \dot{Y}^{-1}(t) Q(t) + Y^{-1} \dot{Q}(t) \\
+            &= - Y^{-1}(t) P(t) S_0(t) + Y^{-1} \dot S_0(t) \\
+            &= \phantom - Y^{-1}(t) \left[\dot S_0(t) - P(t) S_0(t) \right] \\
+            &= \phantom - Y^{-1}(t) S_1(t),
+            \end{aligned}
+            \]
+            откуда
+            \[
+            C^T \dot B(t) = C^T Y^{-1}(t) S_1(t) \equiv 0.
+            \]
+          </p>
+
+          <p>
+            Аналогичными рассуждениями приходим к выводу, что
+            \[
+            C^T Y^{-1}(t) S_k(t) \equiv 0, \quad k = \overline{0, n-1},
+            \]
+            поэтому
+            \[
+            C^T Y^{-1}(t) S(t) \equiv 0.
+            \]
+          </p>
+
+          <p>
+            Рассмотрим последнее тождество в точке $\tau \in [0; T]$:
+            \[
+            C^T Y^{-1}(\tau) S(\tau) \equiv 0.
+            \]
+            Введя обозначение
+            \[
+            \gamma^T := C^T Y^{-1}(\tau) \not\equiv 0,
+            \]
+            получим
+            \[
+            \gamma^T S(\tau) \equiv 0, \implies \rank S \lt n,
+            \]
+            но $\rank S = n$ &mdash; пришли к противоречию.
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 5</h2>
+
+    <li class="question">
+      <div class="name">
+        Критерий Калмана полной управляемости линейной стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную стационарную систему
+        \[
+        \dot{x} = P x + Q u + f(t).
+        \]
+        Составим вспомогательные матрицы:
+        \[
+        \begin{aligned}
+        S_0(t) &= Q(t) &&= Q \\
+        S_1(t) &= \dot{S}_0(t) - P(t) S_0(t) &&= -PQ \\
+        &\phantom{=} \dots \\
+        S_{n-1}(t) &= \dot{S}_{n-2}(t) - P(t) S_{n-2}(t) &&= (-1)^{n-1} P^{n-1} Q.
+        \end{aligned}
+        \]
+        Из них составим <i>матрицу Калмана</i>
+        \[
+        S = \left[ Q, -PQ, P^2 Q, \dots, (-1)^{n-1} P^{n-1} Q \right]
+        \cong \left[ Q, PQ, P^2 Q, \dots, P^{n-1} Q \right].
+        \]
+        <div class="remark">
+          Нам интересен только ранг матрицы $S$, поэтому опускаем знаки.
+        </div>
+
+        <div class="theorem">
+          (критерий Калмана).
+          Линейная стационарная система полностью управляема на $[0; T]$ тогда и только тогда,
+          когда $\rank S = n$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            От противного: предполагая, что $\rank S \lt n$, раскладываем матрицу $B(t)$ в ряд,
+            пользуясь тем, что фундаментальная матрица стационарной системы представляется как $e^{Pt}$, и
+            показываем, что в этом случае строки матрицы $B(t)$ ЛНЗ.
+          </div>
+
+          <div class="sufficiency">
+            Следует из достаточного условия управляемости линейной системы.
+          </div>
+
+          <div class="necessity">
+            Пусть система полностью управляема. Предположим, что $\rank S \lt n$, то есть
+            \[
+            \exists C \neq 0: \quad C^T S = 0,
+            \]
+            тогда
+            \[
+            C^T Q = 0, \quad C^T PQ = 0, \dots, \quad C^T P^{n-1}Q = 0.
+            \]
+
+            <p>
+              Система полностью управляема, поэтому $\det A \neq 0$, следовательно, строки $B(t)$
+              линейно независимы (см. свойства матрицы $A$).
+            </p>
+
+            <p>
+              В силу стационарности системы $Y(t) = e^{-Pt}$, поэтому
+              \[
+              C^T B(t) = C^T Y^{-1}(t) Q = C^T e^{-Pt} Q
+              = \sum_{k=1}^\infty \frac{(-t)^k C^T P^k Q}{k!}.
+              \]
+            </p>
+
+            <p>
+              Рассмотрим матрицу $P^n$ с характеристическим многочленом
+              \[
+              \lambda^n + \alpha_1 \lambda^{n-1} + \dots + \alpha_n = 0.
+              \]
+              По
+              <a href="https://ru.wikipedia.org/wiki/Теорема_Гамильтона_—_Кэли" target="_blank">
+                теореме Гамильтона-Кэли
+              </a>
+              \[
+              P^n + \alpha_1 P^{n-1} + \dots + \alpha_n = 0,
+              \]
+              или
+              \[
+              P^n = - \alpha_1 P^{n-1} - \alpha_2 P^{n-2} - \dots - \alpha_n.
+              \]
+            </p>
+
+            <p>
+              Тогда
+              \[
+              \begin{aligned}
+              C^T P^n Q
+              &= C^T \paren{- \alpha_1 P^{n-1} - \alpha_2 P^{n-2} - \dots - \alpha_n} Q \\
+              &= -\alpha_1 \underbrace{C^T P^{n-1} Q}_{=0}
+              -\alpha_2 \underbrace{C^T P^{n-2} Q}_{=0} - \dots
+              -\alpha_n \underbrace{C^T Q}_{=0} = 0.
+              \end{aligned}
+              \]
+            </p>
+
+            Аналогично $C^T P^k Q = 0$ для любого $k \in \mathbb{N}$, поэтому
+            \[
+            C^T B(t) = \sum_{k=1}^\infty \frac{(-t)^k C^T P^k Q}{k!} = 0,
+            \]
+            откуда следует линейная зависимость строк $B(t)$ &mdash; противоречие.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 6</h2>
+
+    <li class="question">
+      <div class="name">
+        Уточнённый критерий Калмана полной управляемости линейной стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную стационарную систему
+        \[
+        \dot{x} = Px + Qu + f(t),
+        \]
+        построим матрицу Калмана $S = \left[ Q, PQ, P^2 Q, \dots, P^{n-1} Q \right]$.
+
+        <div class="lemma">
+          Если
+          \[
+          \rank \left[ Q, PQ, \dots, P^{k-1} Q \right] = \rank \left[ Q, PQ, \dots, P^{k-1} Q, P^k Q\right],
+          \]
+          то дальнейшее добавление блоков $P^{k+i} Q$, где $i \in \mathbb{N}$, не увеличит ранга матрицы.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Пользуясь теоремой Кронекера-Капелли, показываем, что все дальнейшие блоки
+            можно представить как линейную комбинацию уже имеющихся.
+          </div>
+
+          Введём обозначение:
+          \[
+          P^k Q =: (q_1, \dots, q_r), \quad \text{где} \quad q_k - \text{столбцы}.
+          \]
+
+          Тогда из теоремы Кронекера-Капелли следует, что
+          \[
+          q_s = Q \alpha_0^{(s)} + PQ \alpha_1^{(s)} + \cdots + P^{k-1} Q \alpha_{k-1}^{(s)}
+          \quad \forall s = \overline{1, r}.
+          \]
+
+          Так как $P^{k+1} Q = P \cdot P^k Q$, то
+          \[
+          P q_s = P Q \alpha_0^{(s)} + P^2 Q \alpha_1^{(s)} + \cdots + P^k Q \alpha_{k-1}^{(s)}
+          \quad \forall s = \overline{1, r},
+          \]
+          откуда, по теореме Кронекера-Капелли,
+          \[
+          \begin{aligned}
+          \rank \left[ Q, PQ, \dots, P^{k-1} Q \right]
+          &= \rank \left[ Q, PQ, \dots, P^{k-1} Q, P^k Q\right] \\
+          &= \rank \left[ Q, PQ, \dots, P^k Q, P^{k+1} Q\right].
+          \end{aligned}
+          \]
+
+          Аналогичные рассуждения можно привести для всех $i \geqslant 2$.
+        </div>
+
+        <div class="theorem">
+          <i>(Уточнённый критерий Калмана)</i>
+          Линейная стационарная система полностью управляема тогда и только тогда, когда
+          \[
+          \rank \left[ Q, PQ, \dots, P^{n-l} Q \right] = n, \quad \text{где} \quad l = \rank Q.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            <ul>
+              <li>
+                Необходимость: пользуемся предыдущей леммой &mdash; показываем, что рано или поздно
+                сможем получить нужный ранг, иначе противоречие.
+              </li>
+
+              <li>
+                Достаточность: если ранг уже равен $n$, то он полный, и дальше нет смысла добавлять
+                блоки.
+              </li>
+            </ul>
+          </div>
+
+          <div class="necessity">
+            Пусть система полностью управляема, тогда по критерию Калмана
+            \[
+            \rank S = n.
+            \]
+
+            По условию $\rank Q = l \lt n$. Добавим блок &mdash; рассмотрим $\rank [Q, PQ]$. Если
+            \[
+            \rank Q = \rank [Q, PQ] = l,
+            \]
+            то по предыдущей лемме дальнейшее добавление блоков его не увеличит, поэтому
+            \[
+            \rank Q = \rank S = l \lt n,
+            \]
+            что противоречит условию полной управляемости системы. Таким образом,
+            \[
+            \rank Q \lt \rank [Q, PQ] \leqslant n.
+            \]
+
+            <div class="remark">
+              При добавлении блоков $P^k Q$ справа количество строк блочной матрицы не увеличивается,
+              значит, её ранг не может превосходить $n$.
+            </div>
+
+            <p>
+              Ранг увеличился минимум на единицу, поэтому
+              \[
+              \rank [Q, PQ] = l + m, \quad m \in \mathbb{N}.
+              \]
+              Если $l + m = n$, то есть $\rank [Q, PQ] = n$, то он полный, поэтому добавление блоков
+              его не изменит:
+              \[
+              \rank [Q, PQ] = \rank S = n,
+              \]
+              откуда следует полная управляемость.
+            </p>
+
+            Предположим, он увеличился на единицу:
+            \[
+            \rank [Q, PQ] = l + 1 \lt n
+            \]
+            Проводя аналогичные рассуждения, через $n - l$ шагов гарантированно получим, что
+            \[
+            \rank [Q, PQ, \dots, P^{n-l} Q] = n.
+            \]
+          </div>
+
+          <div class="sufficiency">
+            Пусть $\rank \left[ Q, PQ, \dots, P^{n-l} Q \right] = n$. Он
+            <a href="https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D0%BD%D0%B3_%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D1%8B#%D0%A1%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F"
+              target="_blank">
+              полный</a>, поэтому добавление блоков
+            его не изменит:
+            \[
+            \rank \left[ Q, PQ, \dots, P^{n-l} Q \right] = \rank S = n,
+            \]
+            значит, по критерию Калмана система полностью управляема.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 7</h2>
+
+    <li class="question">
+      <div class="name">
+        Декомпозиция линейной управляемой системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную стационарную систему
+        \[
+        \dot{x} = Px + Qu + f(t).
+        \]
+        Пусть она не полностью управляема, то есть $\rank S = m \lt n$.
+
+        <div class="lemma">
+          Линейная оболочка $\Lin S$ &mdash;
+          <a href="https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D0%B2%D0%B0%D1%80%D0%B8%D0%B0%D0%BD%D1%82%D0%BD%D0%BE%D0%B5_%D0%BF%D0%BE%D0%B4%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%BE"
+            target="_blank">
+            инвариантное подпространство</a>
+          относительно умножения на матрицу $P$ слева:
+          \[
+          \forall l \in \Lin S: \quad P\, l \in \Lin S.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Пользуясь теоремой Гамильтона-Кэли, показываем, что $P^n q_i$ можно представить
+            как линейную комбинацию элементов линейной оболочки.
+          </div>
+
+          Обозначим столбцы матрицы $Q = (q_1, \dots, q_r)$. Тогда
+          \[
+          \Lin S
+          = \left\lang Q, PQ, \dots, P^{n-1} Q \right\rang
+          = \left\lang
+          \underbrace{q_1, \dots, q_r}_{Q},
+          \underbrace{P q_1, \dots, P q_r}_{P Q},
+          \dots,
+          \underbrace{P^{n-1} q_1, \dots, P^{n-1} q_r}_{P^{n-1} Q}
+          \right\rang.
+          \]
+
+          По построению видно, что для всех $k = \overline{0, n-2}$
+          \[
+          P^k q_i \in \Lin S \implies P^{k+1} q_i \in \Lin S, \quad i = \overline{1,r}.
+          \]
+
+          Значит, остаётся проверить случай $k = n-1$. Рассмотрим
+          \[
+          P^{n-1} q_i \in \Lin S, \quad i \in \overline{1, r}.
+          \]
+
+          Запишем характеристический полином матрицы $P^n$:
+          \[
+          \lambda^n + \alpha_1 \lambda^{n-1} + \cdots + \alpha_{n-1} \lambda + \alpha_n = 0.
+          \]
+
+          Из
+          <a href="https://ru.wikipedia.org/wiki/Теорема_Гамильтона_—_Кэли" target="_blank">
+            теореме Гамильтона-Кэли</a>
+          следует, что
+          \[
+          P^n = -\alpha_1 P^{n-1} - \alpha_2 P^{n-2} - \cdots - \alpha_n E.
+          \]
+
+          Домножим справа на $q_i$:
+          \[
+          P^n q_i = -\alpha_1 P^{n-1} q_i - \alpha_2 P^{n-2} q_i - \cdots - \alpha_n q_i.
+          \]
+          Значит, $P^n q_i$ является линейной комбинацией векторов $q_i, P q_i, \dots, P^{n-1} q_i$,
+          откуда
+          \[
+          P \cdot P^{n-1} q_i = P^n q_i \in \Lin S.
+          \]
+        </div>
+
+        <hr />
+
+        <div class="theorem">
+          Если $\rank S = m \lt n$, то существует неособое преобразование переменных $x$, приводящее
+          к декомпозиции системы
+          \[
+          \dot{x} = Px + Qu + f(t)
+          \]
+          на <i>управляемую</i> и <i>неуправляемую</i> части.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Дополняем базис линейной оболочки до базиса всего пространства, собираем
+            из него матрицу $T$ и показываем, что после преобразования $x = T y$
+            действительно произошла декомпозиция.
+          </div>
+
+          <p>
+            Рассмотрим линейную оболочку $\Lin S$. В неё входит $m$ линейно независимых векторов,
+            обозначим их как $s_1, \dots, s_m$. Дополним этот набор до базиса $\mathbb{E}^n$ векторами
+            $\widetilde{s}_{m+1}, \dots, \widetilde{s}_n$. Обозначим
+            \[
+            T := \left[ s_1, \dots, s_m, \widetilde{s}_{m+1}, \dots, \widetilde{s}_n \right]
+            \]
+            и проведём замену переменных $x = Ty$, тогда
+            \[
+            T \dot{y} = P T y + Q u + f(t),
+            \]
+            матрица $T$ невырождена, поэтому домножим на $T^{-1}$ слева:
+            \[
+            \dot{y} = T^{-1} P T y + T^{-1} Q u + T^{-1} f(t).
+            \]
+
+            Введя обозначения
+            \[
+            \widetilde{P} := T^{-1} P T, \quad \widetilde{Q} := T^{-1} Q,
+            \quad \widetilde{f}(t) := T^{-1} f(t),
+            \]
+            перепишем стационарную систему:
+            \[
+            \dot{y} = \widetilde{P} y + \widetilde{Q} u + \tilde{f}(t).
+            \]
+          </p>
+
+          <p>
+            Выясним структуру матриц $\widetilde{P}$ и $\widetilde{Q}$.
+          </p>
+
+          <p>
+            Начнём с $\widetilde{P} = T^{-1} P T$. Обозначим её столбцы как
+            $\widetilde{P} = \paren{\tilde{p}_1, \dots, \tilde{p}_m, \tilde{p}_{m+1}, \dots, \tilde{p}_n}$.
+          </p>
+
+          <p>
+            Рассмотрим уравнение $T \widetilde{P} = P T$ по столбцам:
+          </p>
+
+          <ul>
+            <li>
+              $T \tilde{p}_1 = P s_1$. Так как $s_1 \in \Lin S$, по лемме $P s_1 \in \Lin S$, поэтому
+              $T \tilde{p}_1$ представим в виде линейной комбинации векторов $(s_1, \dots, s_m)$.
+            </li>
+
+            <li>
+              Аналогично для $\tilde{p}_2, \dots, \tilde{p}_m$.
+            </li>
+
+            <li>
+              Рассмотрим $T \tilde{p}_{m+1} = P \tilde{s}_{m+1}$. Так как $\tilde{s}_{m+1} \not\in \Lin S$ и
+              $P \tilde{s}_{m+1} \not\in \Lin S$, вектор $\tilde{p}_{m+1}$ раскладывается по столбцам $T$.
+            </li>
+
+            <li>
+              Аналогично для $\tilde{p}_{m+2}, \dots, \tilde{p}_n$.
+            </li>
+          </ul>
+
+          <p>
+            Значит,
+            \[
+            \widetilde{P} = \paren{
+            \begin{array}{ccc|ccc}
+            \tilde{p}_{1,1} & \dots & \tilde{p}_{1,m} & \tilde{p}_{1,m+1} & \dots & \tilde{p}_{1,n} \\
+            \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+            \tilde{p}_{m,1} & \dots & \tilde{p}_{m,m} & \tilde{p}_{m,m+1} & \dots & \tilde{p}_{m,n} \\
+            \hline
+            0 & \dots & 0 & \tilde{p}_{m+1,m+1} & \dots & \tilde{p}_{m+1,n} \\
+            \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+            0 & \dots & 0 & \tilde{p}_{n,m+1} & \dots & \tilde{p}_{n,n}
+            \end{array}
+            }
+            =
+            \paren{
+            \begin{array}{cc}
+            P_{11} & P_{12} \\
+            0_{(n-m) \times (n-m)} & P_{22}
+            \end{array}
+            }.
+            \]
+          </p>
+
+          <p>
+            Выясним теперь структуру матрицы $\widetilde{Q} = \paren{\tilde{q}_1, \dots, \tilde{q}_r}$.
+            Рассмотрим уравнение $T \widetilde{Q} = Q$ по столбцам:
+          </p>
+
+          <ul>
+            <li>
+              $T \tilde{q}_1 = q_1$. Так как $q_1 \in \Lin S$, вектор $\tilde{q}_1$ представим
+              в виде линейной комбинации векторов $(s_1, \dots, s_m)$.
+            </li>
+
+            <li>
+              Аналогично для $\tilde{q}_2, \dots, \tilde{q}_r$.
+            </li>
+          </ul>
+
+          <p>
+            Таким образом,
+            \[
+            \widetilde{Q} = \paren{
+            \begin{array}{ccc}
+            \tilde{q}_{1,1} & \dots & \tilde{q}_{1, r} \\
+            \vdots & \ddots & \vdots \\
+            \tilde{q}_{m,1} & \dots & \tilde{q}_{m, r} \\
+            0 & \dots & 0 \\
+            \vdots & \ddots & \vdots \\
+            0 & \dots & 0
+            \end{array}
+            }
+            =
+            \paren{
+            \begin{array}{c}
+            Q_1 \\
+            0_{(n-m) \times (n-m)}
+            \end{array}
+            }.
+            \]
+          </p>
+
+          <p>
+            Обозначив
+            \[
+            y =: \paren{
+            \begin{array}{c}
+            y_1 \\
+            y_2
+            \end{array}
+            } \quad
+            \tilde{f} =: \paren{
+            \begin{array}{c}
+            f_1(t) \\
+            f_2(t)
+            \end{array}
+            },
+            \]
+            систему можно переписать в виде
+            \[
+            \left\{
+            \begin{aligned}
+            \dot{y}_1 &= P_{11} y_1 + Q_1 u && + P_{12} y_2 + f_1(t), \\
+            \dot{y}_2 &= && \phantom{+} P_{22} y_2 + f_2(t).
+            \end{aligned}
+            \right.
+            \]
+            Видно, что в первой системе управление есть, а во второй &mdash; нет.
+          </p>
+        </div>
+
+        <div class="corollary">
+          Для управляемой подсистемы справедливо равенство
+          \[
+          \rank [Q_1, P_{11} Q_1, \dots, P_{11}^{m-1} Q_1] = m.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Собираем $T$, она невырождена, поэтому $\rank S = \rank T^{-1}S$, но у последнего
+            члены после $P_{11}^{m-1} Q_1$ линейно зависимы.
+          </div>
+
+          <p>
+            Случай $m = n$ тривиален: неуправляемая подсистема отсутствует, и равенство следует из
+            критерия Калмана.
+          </p>
+
+          <p>
+            Пусть $\rank S = m \lt n$, то есть система не полностью управляема. Рассмотрим
+            \[
+            T := \left[ s_1, \dots, s_m, \widetilde{s}_{m+1}, \dots, \widetilde{s}_n \right]
+            \]
+            и найдём структуру матрицы $T^{-1} S$:
+          </p>
+
+          <ul>
+            <li>
+              $T^{-1} Q =: \widetilde{Q}$;
+            </li>
+
+            <li>
+              $T^{-1} PQ = T^{-1} P T \cdot T^{-1} Q =: \widetilde{P} \widetilde{Q}$;
+            </li>
+
+            <li>
+              $T^{-1} P^2 Q = T^{-1} P T \cdot T^{-1} P Q = \widetilde{P} \cdot \widetilde{P} \widetilde{Q}
+              = \widetilde{P}^2 \widetilde{Q}$;
+            </li>
+
+            <li>
+              Дальше аналогично.
+            </li>
+          </ul>
+
+          Получается, что
+          \[
+          T^{-1} S = \paren{
+          \begin{array}{ccccc}
+          Q_1 & P_{11} Q_1 & P_{11}^2 Q_1 & \dots & P_{11}^{n-1} Q_1 \\
+          0 & 0 & 0 & \dots & 0
+          \end{array}
+          },
+          \]
+          поэтому
+          \[
+          \begin{aligned}
+          \rank S = \rank T^{-1} S &= \rank \left[ Q_1, P_{11} Q_1, \dots, P_{11}^{m-1} Q_1,
+          \underbrace{P_{11}^m Q_1, \dots, P_{11}^{n-1} Q_1}_{\text{линейно зависимы}} \right] \\
+          &= \rank \left[ Q_1, P_{11} Q_1, \dots, P_{11}^{m-1} Q_1 \right]
+          \end{aligned}
+          \]
+
+          <div class="remark">
+            Линейную зависимость можно показать, подставляя по теореме Гамильтона-Кэли матрицу $P_{11}^m$
+            в характеристический многочлен и получая линейную комбинацию, а потом по лемме о том,
+            что добавление блоков не увеличивает ранг.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 8</h2>
+
+    <li class="question">
+      <div class="name">
+        Критерий Хаутуса полной управляемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную стационарную систему
+        \[
+        \dot{x} = Px + Qu + f(t).
+        \]
+
+        <div class="theorem">
+          <i>
+            (Критерий управляемости Хаутуса)
+          </i>
+          Система полностью управляема тогда и только тогда, когда
+          \[
+          \rank(sE - P, Q) = n \quad \forall s \in \mathbb{C}.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Обе ветки доказательства доказываются от противного:
+            <ul>
+              <li>
+                Для необходимости собирается факт, что $\rank S \lt n$
+              </li>
+
+              <li>
+                Для достаточности показывается, что
+                $\rank (\lambda E - P, Q) = \rank (\lambda E - \widetilde{P}, \widetilde{Q})$,
+                но у последнего строки ЛЗ.
+              </li>
+            </ul>
+          </div>
+
+          <div class="remark">
+            Если $s$ не является собственным числом матрицы $P$, то равенство выполняется,
+            поэтому будем рассматривать только случай $s = \lambda$, где $\lambda = \lambda(P)$.
+          </div>
+
+          <div class="necessity">
+            Если система полностью управляема, то из критерия Калмана следует, что
+            \[
+            \rank S = n.
+            \]
+
+            <p>
+              Предположим, что существует собственное число $\lambda_0$ такое, что
+              \[
+              \rank \paren{\lambda_0 E - P, Q} \lt n,
+              \]
+              значит, строки матрицы $\paren{\lambda_0 E - P, Q}$ линейно зависимы:
+              \[
+              \exists C \neq 0: \quad C^T \paren{\lambda_0 E - P, Q} = 0,
+              \implies
+              \left\{
+              \begin{aligned}
+              C^T Q &= 0 \\
+              C^T P &= \lambda_0 C^T.
+              \end{aligned}
+              \right.
+              \]
+
+              Отсюда следует, что
+              \[
+              \begin{aligned}
+              &C^T \cdot P Q &&= \lambda_0 C^T Q &&= 0 \\
+              &C^T \cdot P^2 Q &&= \lambda_0 C^T P Q &&= 0 \\
+              & &&\dots \\
+              &C^T \cdot P^{n-1} Q &&= \lambda_0 C^T P^{n-2} Q &&= 0,
+              \end{aligned}
+              \]
+              поэтому
+              \[
+              C^T \left[ Q, PQ, \dots, P^{n-1} Q \right] = 0,
+              \]
+              значит, строки матрицы Калмана $S$ линейно зависимы: $\rank S \lt n$, что противоречит
+              условию.
+            </p>
+          </div>
+
+          <div class="sufficiency">
+            Пусть $\rank (\lambda E - P, Q) = n$.
+
+            <p>
+              Предположим, что система не полностью управляема, то есть $\rank S = m \lt n$. Тогда
+              существует несобственное преобразование переменных $x = T y$, приводящее к декомпозиции
+              системы на управляемую и неуправляемую подсистемы.
+            </p>
+
+            <p>
+              Выясним, чему равен $\rank (\lambda E - \widetilde{P}, \widetilde{Q})$:
+              \[
+              (\lambda E - \widetilde{P}, \widetilde{Q}) = (\lambda T^{-1} T - T^{-1} P T, T^{-1} Q)
+              = T^{-1} (\lambda T - P T, Q) = T^{-1} \left[(\lambda E - P) T, Q\right].
+              \]
+              Матрица $T$ невырождена, поэтому $\rank (\lambda E - P, Q)
+              = \rank (\lambda E - \widetilde{P}, \widetilde{Q}) = n$. Из этого факта можно сделать вывод,
+              что строки матрицы $(\lambda E - \widetilde{P}, \widetilde{Q})$ линейно независимы.
+            </p>
+
+            <p>
+              Рассмотрим
+              \[
+              \paren{\lambda E - \widetilde{P}, \widetilde{Q}} = \paren{
+              \begin{array}{ccc}
+              \lambda E - P_{11} & P_{12} & Q_1 \\
+              0 & \lambda E - P_{22} & 0 \\
+              \end{array}
+              }.
+              \]
+              Выберем $\lambda$ так, чтобы оно было собственным числом матрицы $\lambda E - P_{22}$.
+              В этом случае
+              \[
+              \rank (\lambda E - P_{22}) \lt n - m,
+              \]
+              поэтому
+              \[
+              \rank (\lambda E - P, Q) = \rank (\lambda E - \widetilde{P}, \widetilde{Q}) \lt n
+              \]
+              &mdash; противоречие.
+            </p>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 9</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: векторная норма
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          $\norm{\cdot}$ &mdash; <i>векторная норма</i>, если:
+          <ol>
+            <li>
+              $\norm{x} \geqslant 0; \quad \norm{x} = 0 \iff x = 0$.
+            </li>
+
+            <li>
+              $\forall \alpha \in \mathbb{C} \quad \norm{\alpha x} = \abs{\alpha} \norm{x}$.
+            </li>
+
+            <li>
+              $\norm{x + y} \leqslant \norm{x} + \norm{y}$.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Примеры векторной нормы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <ul>
+          <li>
+            Манхэттенская норма:
+            \[
+            \norm{x}_1 = \sum_i \abs{x_i}
+            \]
+          </li>
+
+          <li>
+            Евклидова норма:
+            \[
+            \norm{x}_2 = \sqrt{\sum_{i=1}^n \abs{x_i}^2}
+            \]
+          </li>
+
+          <li>
+            Норма Чебышева:
+            \[
+            \norm{x}_\infty = \max\limits_i \abs{x_i}
+            \]
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: матричная норма
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          $\norm{\cdot}$ &mdash; <i>матричная норма</i>, если:
+          <ol>
+            <li>
+              $\norm{A} \geqslant 0; \quad \norm{A} = 0 \iff A = 0$.
+            </li>
+
+            <li>
+              $\forall \alpha \in \mathbb{C} \quad \norm{\alpha A} = \abs{\alpha} \norm{A}$.
+            </li>
+
+            <li>
+              $\norm{A + B} \leqslant \norm{A} + \norm{B}$.
+            </li>
+
+            <li>
+              $\norm{AB} \leqslant \norm{A} \norm{B}$.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: подчинённая матричная норма
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Матричная норма $\norm{A}$ называется <i>подчинённой</i> векторной норме $\norm{x}$, если
+          \[
+          \norm{A} = \max\limits_{\norm{x} = 1} \norm{A x}.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: согласованная матричная норма
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Матричная норма $\norm{A}_{ab}$ называется <i>согласованной</i> с векторными нормами
+          $\norm{x}_a$ и $\norm{x}_b$, если
+          \[
+          \norm{A x}_a \leqslant \norm{A}_{ab} \cdot \norm{x}_b
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Примеры матричной нормы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Порождённые нормы: $\norm{A}_p = \sup\limits_{\norm{x}_p = 1} \norm{A x}_p$:
+        <ul>
+          <li>
+            $p = 1$:
+            \[
+            \norm{A}_1 = \max\limits_j \paren{\sum_i \abs{a_{ij}}}
+            \]
+          </li>
+
+          <li>
+            Если $p = 2$ и $A$ &mdash; квадратная, то подчинённая норма называется <i>спектральной</i>:
+            \[
+            \norm{A}_2 = \sqrt{\sum_{i,j=1}^n \abs{a_{ij}}^2}
+            \]
+
+            <div class="proposition">
+              $\norm{A} = \sqrt{\max\limits_k \lambda_k}$, где $\lambda_k$ &mdash;
+              собственые числа матрицы $A^T A$.
+            </div>
+
+            <button class="derivation-toggle"></button>
+            <div class="derivation">
+              Норма $\norm{\cdot}$ &mdash; порождённая, поэтому
+              \[
+              \norm{A} \bydef = \max\limits_{\norm{x} = 1} \paren{\sqrt{x^T A^T A x}}.
+              \]
+              Возведём в квадрат:
+              \[
+              \norm{A}^2 = \max\limits_{\norm{x} = 1} \paren{x^T A^T A x}.
+              \]
+
+              Упорядочим собственные числа матрицы $A^T A$:
+              \[
+              \lambda_1 \geqslant \lambda_2 \geqslant \dots \geqslant \lambda_n.
+              \]
+
+              Проведём ортонормированную замену: $x = P y$, тогда
+              \[
+              \begin{aligned}
+              \norm{A}^2 &= \max\limits_{\norm{x} = 1} \paren{x^T A^T A x} \\
+              &= \max\limits_{\norm{y} = 1}
+              \paren{y^T \underbrace{P^T A^T A P}_{\text{диагонализация}} y} \\
+              &= \max\limits_{\norm{y} = 1} \paren{\sum_{k=1}^n \lambda_k y_k^2}.
+              \end{aligned}
+              \]
+
+              Так как $\norm{y} = 1$, то
+              \[
+              \norm{y} \bydef = \sqrt{\sum_{k=1}^n y_k} = 1, \implies y_1^2 = 1 - \sum_{k=2}^n y_k^2.
+              \]
+              Домножив на $\lambda_1$, получим
+              \[
+              \lambda_1 y_1^2 = \lambda_1 - \sum_{k=2}^n \lambda_1 y_k^2.
+              \]
+
+              Тогда
+              \[
+              \begin{aligned}
+              \norm{A}^2 &= \max\limits_{\norm{y} = 1} \paren{\sum_{k=1}^n \lambda_k y_k^2} \\
+              &= \max\limits_{\norm{y} = 1} \paren{\lambda_1 y_1^2 + \sum_{k=2}^n \lambda_k y_k^2} \\
+              &= \max\limits_{\norm{y} = 1}
+              \paren{\lambda_1 - \sum_{k=2}^n \lambda_1 y_k^2 + \sum_{k=2}^n \lambda_k y_k^2} \\
+              &= \max\limits_{\norm{y} = 1}
+              \paren{\lambda_1 + \sum_{k=2}^n \underbrace{(\lambda_k - \lambda_1)}_{\leqslant 0} y_k^2} \\
+              &= \lambda_1.
+              \end{aligned}
+              \]
+
+              Таким образом, $\norm{A} = \sqrt{\lambda_1}$.
+            </div>
+
+            <div class="corollary">
+              Если $A = \diag \paren{A_1, \dots, A_m}$ то $\norm{A} = \max\limits_k \norm{A_k}$.
+            </div>
+          </li>
+
+          <li>
+            ${\displaystyle \norm{A}_\infty = \max\limits_i \paren{\sum_j \abs{a_{ij}}}}$
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 10</h2>
+
+    <li class="question">
+      <div class="name">
+        Матричная экспонента
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную стационарную систему
+        \[
+        \dot{x} = P x + Q u + f(t).
+        \]
+        Фундаментальная матрица соответствующей однородной системы может быть представлена в виде
+        \[
+        Y(t) = e^{Pt} \bydef = \sum_{k=0}^\infty \frac{P^k t^k}{k!}.
+        \]
+
+        <p>
+          Предположим, что $J$ &mdash; жорданова нормальная форма матрицы $P$. Тогда
+          \[
+          J = \diag (J_1, \dots, J_m).
+          \]
+          Каждую жорданову клетку можно представить в виде
+          \[
+          J_k = \paren{
+          \begin{array}{ccccc}
+          \lambda_k & 1 & 0 & \dots & 0 & 0 \\
+          0 & \lambda_k & 1 & \dots & 0 & 0 \\
+          0 & 0 & \lambda_k & \dots & 0 & 0 \\
+          \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+          0 & 0 & 0 & \dots & \lambda_k & 1 \\
+          0 & 0 & 0 & \dots & 0 & \lambda_k
+          \end{array}
+          }_{n_k \times n_k}
+          =
+          \lambda_k E + \paren{
+          \begin{array}{ccccc}
+          0 & 1 & 0 & \dots & 0 & 0 \\
+          0 & 0 & 1 & \dots & 0 & 0 \\
+          0 & 0 & 0 & \dots & 0 & 0 \\
+          \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+          0 & 0 & 0 & \dots & 0 & 1 \\
+          0 & 0 & 0 & \dots & 0 & 0
+          \end{array}
+          }_{n_k \times n_k}
+          =
+          \lambda_k E + I_k,
+          \]
+          где $n_k$ &mdash; кратность соответствующего
+          собственного числа, а $I_k$ называют матрицей сдвига. Она
+          <a href="https://ru.wikipedia.org/wiki/Нильпотентная_матрица" target="_blank">
+            нильпотентна</a>:
+          \[
+          I_k^{n_k} = 0,
+          \]
+          поэтому
+          \[
+          e^{J_k t} = e^{\lambda_k E t} e^{I_k t}
+          = e^{\lambda_k t} \sum_{m=0}^{n_k - 1} \frac{t^m I_k^m}{m!}.
+          \]
+        </p>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Свойства матричной экспоненты
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <ol>
+          <li>
+            Фундаментальная матрица $Y(t) = C e^{Pt}$, нормированная в нуле ($Y(0) = E$),
+            называется <i>матрицантом</i>.
+          </li>
+
+          <li>
+            Если матрицы $A, B$ коммутируют:
+            \[
+            \left[A, B\right] = AB - BA = 0,
+            \]
+            то
+            \[
+            e^{(A + B) t} = e^{A t} e^{B t} = e^{B t} e^{A t}.
+            \]
+          </li>
+
+          <li>
+            ${\displaystyle \det e^{Pt} = e^{t \Sp P}}$, где $\Sp P$ &mdash;
+            <a href="https://ru.wikipedia.org/wiki/След_матрицы" target="_blank">след матрицы</a>.
+          </li>
+
+          <li>
+            Справедливо неравенство:
+            \[
+            \norm{e^{Pt}} \leqslant e^{\abs{t} \norm{P}}.
+            \]
+
+            <button class="derivation-toggle"></button>
+            <div class="derivation">
+              \[
+              \norm{e^{Pt}} \bydef = \norm{\sum_{k=0}^\infty \frac{P^k t^k}{k!}}
+              \leqslant \sum_{k=0}^\infty \frac{1}{k!} \paren{\abs{t} \norm{P}}^k = e^{\abs{t} \norm{P}}.
+              \]
+            </div>
+          </li>
+
+          <li>
+            Если $P = S J S^{-1}$, где $S$ &mdash; невырожденная матрица, то
+            \[
+            e^{Pt} = S e^{J t} S^{-1}.
+            \]
+          </li>
+        </ol>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 11</h2>
+
+    <li class="question">
+      <div class="name">
+        Лемма об оценке матричной нормы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="remark">
+          Считаем, что $t \geqslant 0$.
+        </div>
+
+        <div class="lemma">
+          Рассмотрим жорданову клетку $J$, пусть соответствующее собственное число имеет вид
+          $\lambda = \alpha + i \beta$, и кратность $n$, тогда
+          \[
+          \forall \varepsilon \gt 0 \quad \exists C = C(\varepsilon) \gt 0: \qquad
+          \norm{e^{J t}} \leqslant C e^{(\alpha + \varepsilon) t}.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Жорданова клетка раскладывается в ряд, умножается на $e^\varepsilon \cdot e^{-\varepsilon}$,
+            после чего показывается ограниченность нужного множителя.
+          </div>
+
+          \[
+          \norm{e^{J t}} = \abs{e^{\lambda t}} \norm{\sum_{k=0}^{n - 1} \frac{t^k I^k}{k!}}
+          \leqslant e^{\alpha t} \sum_{k=0}^{n-1} \frac{t^k}{k!} \norm{I}^k
+          = e^{\alpha t} e^{\varepsilon t} \cdot e^{-\varepsilon t} \sum_{k=0}^{n-1} \frac{t^k}{k!}
+          \]
+
+          Множитель ${\displaystyle e^{-\varepsilon t} \sum_{k=0}^{n-1} \frac{t^k}{k!}}$ ограничен
+          при $\varepsilon \gt 0$ и $t \geqslant 0$, то есть
+          \[
+          \forall \varepsilon \gt 0 \quad \exists C = C(\varepsilon) \gt 0: \qquad
+          e^{-\varepsilon t} \sum_{k=0}^{n-1} \frac{t^k}{k!} \leqslant C,
+          \]
+          поэтому
+          \[
+          \forall \varepsilon \gt 0 \quad \exists C = C(\varepsilon) \gt 0: \qquad
+          \norm{e^{J t}} \leqslant C e^{(\alpha + \varepsilon) t}.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема: оценка нормы матричной экспоненты
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          Обозначим собственные числа матрицы $P$ как $\lambda_k = \alpha_k + i \beta_k$.
+          Положим
+          \[
+          \alpha := \max\limits_{k} \alpha_k,
+          \]
+          тогда
+          \[
+          \forall \varepsilon \gt 0 \quad \exists \gamma = \gamma(\varepsilon) \gt 0: \qquad
+          \norm{e^{P t}} \leqslant \gamma e^{(\alpha + \varepsilon) t}.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Матрица преобразуется в ЖНФ, после чего используется тот факт, что
+            норма диагональной матрицы равна максимуму норм диагональных элементов, а дальше
+            идёт оценка этого максимального элемента.
+          </div>
+
+          Пусть $S$ &mdash; невырожденная матрица такая, что $P = S J S^{-1}$, тогда
+          \[
+          e^{Pt} = S e^{J t} S^{-1}, \implies
+          \norm{e^{Pt}} \leqslant \norm{S} \cdot \norm{e^{J t}} \cdot \norm{S^{-1}}.
+          \]
+          Так как $e^{Jt} = \diag \paren{e^{J_1 t}, \dots, e^{J_m t}}$, то
+          \[
+          \norm{e^{Jt}} = \max\limits_k \norm{e^{J_k t}}.
+          \]
+
+          Из леммы об оценке матричной нормы известно, что для всех $k = \overline{1, m}$
+          \[
+          \forall \varepsilon \gt 0 \quad \exists C_k = C_k(\varepsilon) \gt 0: \qquad
+          \norm{e^{J_k t}} \leqslant C_k e^{(\alpha_k + \varepsilon) t}.
+          \]
+          Положим
+          \[
+          \alpha := \max\limits_{k} \alpha_k, \quad \text{соответственно} \quad
+          C(\varepsilon) := \max\limits_{k} C_k(\varepsilon) \quad \forall \varepsilon \gt 0,
+          \]
+          тогда
+          \[
+          \forall \varepsilon \gt 0 \quad \exists C = C(\varepsilon) \gt 0: \qquad
+          \norm{e^{Jt}} \leqslant C e^{(\alpha + \varepsilon) t}.
+          \]
+
+          Обозначив $\gamma = \norm{S} \cdot \norm{S^{-1}} \cdot C$, получим
+          \[
+          \forall \varepsilon \gt 0 \quad \exists \gamma = \gamma(\varepsilon) \gt 0: \qquad
+          \norm{e^{Pt}} \leqslant \gamma e^{(\alpha + \varepsilon) t}.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 12</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: экспоненциальная устойчивость однородной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Говорят, что однородная система
+          \[
+          \dot{x} = P(t) x
+          \]
+          <i>экспоненциально устойчива</i>, если существуют
+          $\alpha_1, \alpha_2, \beta_1, \beta_2 \gt 0$ такие, что для любых начальных данных $t_0, x_0$
+          \[
+          \alpha_1 \norm{x_0} e^{-\beta_1 (t - t_0)} \leqslant x(t; t_0, x_0) \leqslant
+          \alpha_2 \norm{x_0} e^{-\beta_2 (t - t_0)} \quad \forall t \geqslant t_0.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Свойства фундаментальной матрицы (асимптотически) устойчивой однородной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим однородную систему
+        \[
+        \dot{x} = P(t) x
+        \]
+        с фундаментальной матрицей $Y(t)$.
+        <ul>
+          <li>
+            Если система устойчива, то $Y(t)$ ограничена.
+          </li>
+
+          <li>
+            Если система асимптотически устойчива, то
+            <ol>
+              <li>
+                $Y(t)$ ограничена;
+              </li>
+
+              <li>
+                ${\displaystyle \norm{Y(t)} \underset{t \to \infty}{\longrightarrow} 0}$.
+              </li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 13</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: экспоненциальная устойчивость однородной стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Однородная стационарная система
+          \[
+          \dot{x} = P x
+          \]
+          называется <i>экспоненциально устойчивой</i>, если
+          \[
+          \exists \gamma \geqslant 1, \sigma \gt 0: \quad \norm{x(t, x_0)}
+          \leqslant \gamma e^{-\sigma t} \norm{x_0}.
+          \]
+        </div>
+      
+        <div class="remark">
+          Для стационарной системы экспоненциальная устойчивость влечёт за собой
+          асимптотическую устойчивость.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема об экспоненциальной устойчивости линейной стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="remark">
+          Считаем, что $t_0 := 0$.
+        </div>
+
+        <div class="theorem">
+          Система
+          \[
+          \dot{x} = P x
+          \]
+          экспоненциально устойчива тогда и только тогда, когда $\Re (\lambda_i(P)) \lt 0$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Пользуясь теоремой об оценке нормы матричной экспоненты, прямой проверкой доказываются
+            обе ветки доказательства.
+          </div>
+
+          <div class="necessity">
+            Пусть система экспоненциально устойчива. Рассмотрим собственное число матрицы $P$:
+            \[
+            \lambda_0 = \alpha_0 + i \beta_0.
+            \]
+            Ему соответствует частное решение системы:
+            \[
+            x(t, x_0) = e^{\lambda_0 t} x_0,
+            \]
+            тогда
+            \[
+            \norm{x(t, x_0)} = \norm{e^{\lambda_0 t} x_0} \leqslant \abs{e^{\lambda_0 t}} \norm{x_0}
+            = e^{\alpha_0 t} \norm{x_0} \leqslant \gamma e^{-\sigma t} \norm{x_0},
+            \]
+            откуда следует, что $\alpha_0 \leqslant -\sigma$, а $\sigma \gt 0$, поэтому
+            \[
+            \Re (\lambda_0) \lt 0.
+            \]
+            В силу произвольности $\lambda_0$ подобные рассуждения справедливы для всех собственных
+            чисел матрицы $P$.
+          </div>
+
+          <div class="sufficiency">
+            Пусть все собственные числа матрицы $P$ лежат в левой полуплоскости, т.е.
+            \[
+            \Re (\lambda_i(P)) \lt 0.
+            \]
+            Выпишем общее решение исходной системы в общем виде:
+            \[
+            x(t, x_0) = Y(t) Y^{-1}(0) x_0.
+            \]
+            Будем рассматривать нормированную в нуле фундаментальную матрицу, то есть $Y(0) = E$,
+            тогда
+            \[
+            x(t, x_0) = Y(t) x_0 = e^{Pt} x_0.
+            \]
+            Оценим норму (используя лемму об оценке нормы матричной экспоненты):
+            \[
+            \forall \varepsilon \gt 0 \quad \exists \gamma \gt 0: \qquad
+            \norm{x(t, x_0)} \leqslant \norm{e^{Pt}} \cdot \norm{x_0}
+            \leqslant \gamma e^{(\alpha + \varepsilon) t} \norm{x_0},
+            \]
+            где $\alpha := \max\limits_k \Re(\lambda_k)$. Взяв $\varepsilon$ таким образом, чтобы
+            $\alpha + \varepsilon \lt 0$, положим
+            \[
+            \begin{aligned}
+            \sigma &:= - (\alpha + \varepsilon) \gt 0, \\
+            \gamma &:= \max(1, \gamma(\varepsilon)),
+            \end{aligned}
+            \]
+            тогда
+            \[
+            \norm{x(t, x_0)} \leqslant \gamma e^{-\sigma t} \norm{x_0}.
+            \]
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 14</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: грамиан управляемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим стационарную систему
+        \[
+        \dot{x} = P x + Q u + f(t).
+        \]
+        Пусть она асимптотически устойчива, тогда
+        <ul>
+          <li>
+            $Y(t)$ ограничена;
+          </li>
+
+          <li>
+            $\norm{Y(t)} \underset{t \to \infty}{\longrightarrow} 0$.
+          </li>
+        </ul>
+
+        Оценим норму фундаментальной матрицы:
+        \[
+        \norm{x(t, x_0)} \leqslant \norm{Y(t)} \cdot \norm{x_0} \leqslant \gamma e^{-\sigma t} \norm{x_0},
+        \]
+        откуда
+        \[
+        \norm{Y(t)} \leqslant \gamma e^{-\sigma t}.
+        \]
+
+        <div class="definition">
+          Матрица
+          \[
+          U = \int\limits_0^\infty Y(\tau) Q Q^T Y^T(\tau) d\tau
+          \]
+          называется <i>грамианом управляемости</i>.
+        </div>
+
+        <div class="remark">
+          Грамиан управляемости существует только для асимптотически устойчивых стационарных систем.
+        </div>
+
+        <div class="proposition">
+          Грамиан управляемости сходится.
+        </div>
+
+        <button class="derivation-toggle"></button>
+        <div class="derivation">
+          \[
+          \begin{aligned}
+          \norm{U}
+          &\leqslant \int\limits_0^\infty \norm{Y(\tau)} \norm{Q} \norm{Q^T} \norm{Y^T(\tau)} d\tau \\
+          &\leqslant \int\limits_0^\infty \underbrace{\gamma^2 \norm{Q} \norm{Q^T}}_{=C}
+          e^{-2 \sigma \tau} d\tau \\
+          &= C \int\limits_0^\infty e^{-2 \sigma \tau} d\tau \\
+          &= \left.\frac{c e^{-2\sigma t}}{-2\sigma}\right|_0^{\cancel \infty} \\
+          &= \frac{c}{2\sigma}.
+          \end{aligned}
+          \]
+          Удалось ограничить $U$, следовательно, он сходится.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Свойства грамиана управляемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим
+        \[
+        U = \int\limits_0^\infty Y(\tau) Q Q^T Y^T(\tau) d\tau
+        \]
+
+        Свойства:
+        <ol>
+          <li>
+            $U = U^T$;
+          </li>
+
+          <li>
+            $C^T U C \geqslant 0$;
+          </li>
+
+          <li>
+            $\lambda_j(U) \geqslant 0$;
+          </li>
+
+          <li>
+            Если $\det U \neq 0$, то $C^T U C \gt 0$, то есть $\lambda_j(U) \gt 0$.
+          </li>
+        </ol>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема о полной управляемости асимптотически устойчивой линейной стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим асимптотически устойчивую систему
+        \[
+        \dot{x} = P x + Q u + f(t)
+        \]
+        с грамианом управляемости
+        \[
+        U = \int\limits_0^\infty Y(\tau) Q Q^T Y^T(\tau) d\tau.
+        \]
+
+        <div class="theorem">
+          Система полностью управляема на $[0; T]$ тогда и только тогда, когда $\det U \neq 0$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Доказывается от противного, пользуясь тем фактом, что
+            \[
+            C^T U C = \int\limits_0^\infty \norm{C^T Y(t) Q}^2 d\tau.
+            \]
+          </div>
+
+          <div class="necessity">
+            <p>
+              От противного: пусть система полностью управляема на $[0; T]$, но $\det U = 0$. Тогда
+              $\rank U \lt n$, откуда следует линейная зависимость столбцов $U$:
+              \[
+              \exists C \neq 0: \quad U C = 0, \implies C^T U C
+              = \int\limits_0^\infty \norm{C^T Y(\tau) Q}^2 d\tau = 0.
+              \]
+              Значит, $C^T Y(t) Q \equiv 0$ на $[0; T]$. В силу стационарности системы $Y(t) = e^{Pt}$,
+              поэтому $C^T P^k Q$ для всех $k \geqslant 0$.
+            </p>
+
+            <p>
+              Но в этом случае следует, что $C^T \left[ Q, PQ, \dots, P^{n-1}Q \right] = 0$, то есть
+              $\rank S \lt n$ &mdash; противоречие.
+            </p>
+          </div>
+
+          <div class="sufficiency">
+            От противного: пусть $\det U \neq 0$, но система не полностью управляема. Тогда
+            $\rank S \lt 0$, откуда следует линейная зависимость строк $S$:
+            \[
+            \exists C \neq 0: \quad C^T Q = 0, C^T P^{n-1}Q = 0.
+            \]
+            Из теоремы Гамильтона-Кэли следует, что $C^T P^k Q = 0$ для всех $k \geqslant 0$, поэтому
+            \[
+            C^T U C = \int\limits_0^\infty C^T Y(\tau) Q Q^T Y^T(\tau) C d\tau.
+            = \int\limits_0^\infty \norm{C^T Y(t) Q}^2 d\tau = 0,
+            \]
+            что противоречит условию $\det U \neq 0$.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Алгоритм нахождения грамиана управляемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим асимптотически устойчивую систему
+        \[
+        \dot{x} = P x + Q u + f(t)
+        \]
+        с грамианом управляемости
+        \[
+        U = \int\limits_0^\infty Y(\tau) Q Q^T Y^T(\tau) d\tau.
+        \]
+
+        <div class="lemma">
+          Грамиан управляемости удовлетворяет матричному уравнению Ляпунова:
+          \[
+          UP^T + PU + Q Q^T = 0.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Проверяется подстановкой.
+          </div>
+
+          Проверим непосредственной подстановкой:
+          \[
+          \begin{aligned}
+          0 &= \paren{
+          \int\limits_0^\infty Y(\tau) Q Q^T Y^T(\tau) d\tau
+          } P^T + P \paren{
+          \int\limits_0^\infty Y(\tau) Q Q^T Y^T(\tau) d\tau
+          }
+          + Q Q^T \\
+          &= 
+          \int\limits_0^\infty P e^{P \tau} Q Q^T e^{P^T \tau} d\tau
+          +
+          \int\limits_0^\infty e^{P \tau} Q Q^T e^{P^T \tau} P^T d\tau
+          + Q Q^T \\
+          &=
+          \int\limits_0^\infty \dv{}{\tau} \paren{e^{P \tau} Q Q^T e^{P^T \tau}} d\tau + Q Q^T \\
+          &= \left.e^{P \tau} Q Q^T e^{P^T \tau} \right|_0^{\cancel\infty} + Q Q^T \\
+          &= - Q Q^T + Q Q^T \\
+          &= 0.
+          \end{aligned}
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Зачем нужен грамиан управляемости?
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Грамиан управляемости позволяет проверить асимптотически устойчивую стационарную систему
+        \[
+        \dot{x} = P x + Q u + f(t)
+        \]
+        на полную управляемость без вычисления фундаментальной матрицы.
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 15</h2>
+
+    <li class="question">
+      <div class="name">
+        Постановка общей граничной задачи
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Обобщаем построение программного управления.
+
+        <p>
+          Расмотрим систему
+          \[
+          \dot{x} = P(t) x + Q(t) u + f(t),
+          \]
+          пусть $P(t), Q(t), f(t) \in C([0;T])$.
+        </p>
+
+        <p>
+          Пусть отрезок $[0; T]$ разбит точками $0 \lt t_1 \lt \dots \lt t_m \leqslant T$ на
+          $m$ частей, и пусть заданы $m$ постоянных матриц $G_1, \dots G_m$ размерности $N \times n$.
+        </p>
+
+        <div class="definition">
+          Уравнение, связывающее промежуточные состояния системы
+          \[
+          \sum_{k=1}^m G_k x(t_k) = h
+          \]
+          называется <i>общим граничным условием</i>.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Лемма о представлении семейства допустимых управлений для ОГЗ
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим общее решение задачи Коши:
+        \[
+        x(t) = Y(t) \paren{x_0 + \int\limits_0^t \left[ Q(\tau) u(\tau) + f(\tau) \right] d\tau},
+        \]
+        Подставим его в общее граничное условие
+        \[
+        \sum_{k=1}^m G_k x(t_k) = h,
+        \]
+        получим интегральное уравнение.
+
+        <p>
+          Основная загвоздка: не совпадают пределы интегрирования. Решить можно, добавив под каждый
+          интеграл функцию
+          \[
+          \varphi_k(t) =
+          \begin{cases}
+          1, & t \in [0; t_k] \\
+          0, & t \in (t_k; T].
+          \end{cases}
+          \]
+          Тогда общее граничное условие примет вид
+          \[
+          \int\limits_0^T B_1(\tau) u(\tau) d\tau = \eta.
+          \]
+        </p>
+
+        <div class="lemma">
+          Если существует допустимое управление, решающее ОГЗ, то оно
+          может быть представлено в виде
+          \[
+          u(t) = B_1^T(t) C + V(t),
+          \]
+          причём выполняется условие ортогональности:
+          \[
+          \int\limits_0^T B_1(\tau) V(\tau) d\tau = 0.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Подставим $u(t)$ в уравнение ортогональности, докажем
+            совместность системы от противного ($\rank A \lt \rank (A, \eta)$),
+            воспользовавшись теоремой Фредгольма:
+            \[
+            A x = b \text{ совместна} \iff \exists \gamma \neq 0:
+            \gamma^T a = 0, \; \text{ но } \; \gamma^T b \neq 0.
+            \]
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Критерий разрешимости ОГЗ
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          ОГЗ разрешима тогда и только тогда, когда $\rank A = \rank (A, \eta)$.
+        </div>
+
+        <div class="theorem">
+          ОГЗ разрешима для любого $\eta$ тогда и только тогда, когда $\rank A = n$.
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 16</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: линейная разностная система
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Лемма о представлении семейства допустимых управлений линейной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 17</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: управляемость пары точек линейной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Критерий управляемости пары точек линейной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 18</h2>
+
+    <li class="question">
+      <div class="name">
+        Критерий Хаутуса полной управляемости линейной стационарной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 19</h2>
+
+    <li class="question">
+      <div class="name">
+        Критерий асимптотической устойчивости линейной стационарной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Система
+          \[
+          x(k+1) = P x(k)
+          \]
+          <i>асимптотически устойчива</i> тогда и только тогда, когда
+          \[
+          \abs{\lambda_i(P)} \lt 1.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Критерий устойчивости линейной стационарной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Система
+          \[
+          x(k+1) = P x(k)
+          \]
+          <i>асимптотически устойчива</i> тогда и только тогда, когда
+          \[
+          \abs{\lambda_i(P)} \leqslant 1.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: грамиан управляемости для разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим стационарную управляемую разностную систему
+        \[
+        x(k + 1) = P x(k) + Q u(k) + f(k),
+        \]
+        пусть она асимптотически устойчива, то есть $\abs{\lambda_j(P)} \lt 1$, тогда
+        \[
+        P^k \underset{k \to \infty}{\longrightarrow} 0.
+        \]
+
+        <div class="definition">
+          Матрица
+          \[
+          U = \sum_{k=0}^\infty P^k Q Q^T (P^T)^k
+          \]
+          называется <i>грамианом управляемости</i> для разностной системы.
+        </div>
+
+        <div class="lemma">
+          Грамиан управляемости $U$ удовлетворяет матричному уравнению Ляпунова:
+          \[
+          PUP^T - U + Q Q^T = 0.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Проверяется подстановкой.
+          </div>
+
+          \[
+          0 = \sum_{k=0}^\infty P^{k+1} Q Q^T (P^T)^{k+1}
+          - \sum_{k=0}^\infty P^k Q Q^T (P^T)^k + Q Q^T = Q Q^T - Q Q^T.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема о полной управляемости устойчивой линейной стационарной разностной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим стационарную управляемую асимптотически устойчивую разностную систему
+        \[
+        x(k + 1) = P x(k) + Q u(k) + f(k), \quad m \geqslant n,
+        \]
+        и её грамиан управляемости
+        \[
+        U = \sum_{k=0}^\infty P^k Q Q^T (P^T)^k.
+        \]
+
+        <div class="theorem">
+          Система полностью управляема тогда и только тогда, когда $\det U \neq 0$.
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 20</h2>
+
+    <li class="question">
+      <div class="name">
+        Постановка задачи наблюдения в линейных системах
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: полностью наблюдаемая система
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Критерий полной наблюдаемости линейной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Свойства матрицы ${\displaystyle H(t) = R(t) Y(t)}$
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="lemma">
+          Столбцы $H(t)$ линейно независимы на $[0; T]$ тогда и только тогда,
+          когда существуют
+          \[
+          0 \leqslant t_1 \lt t_2 \lt \dots \lt t_m \leqslant T, \quad m \leqslant n,
+          \]
+          для которых
+          \[
+          \rank \paren{
+          \begin{array}{c}
+          H(t_1) \\
+          \vdots \\
+          H(t_m)
+          \end{array}
+          } = n.
+          \]
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="todo">
+            Расписать.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 21</h2>
+
+    <li class="question">
+      <div class="name">
+        Принцип двойственности
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 22</h2>
+
+    <li class="question">
+      <div class="name">
+        Достаточное условие полной наблюдаемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 23</h2>
+
+    <li class="question">
+      <div class="name">
+        Постановка задачи дискретной наблюдаемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теоремы о разрешимости задачи дискретной наблюдаемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 24</h2>
+
+    <li class="question">
+      <div class="name">
+        Критерий Калмана полной наблюдаемости стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Критерий Хаутуса полной наблюдаемости стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 25</h2>
+
+    <li class="question">
+      <div class="name">
+        Декомпозиция линейной наблюдаемой системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Декомпозиция линейной наблюдаемой системы: следствие
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 26</h2>
+
+    <li class="question">
+      <div class="name">
+        Определение: грамиан наблюдаемости
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим асимптотически устойчивую линейную стационарную систему
+        \[
+        \begin{gathered}
+        \dot{x} &= P x + f(t) \\
+        y &= R x + \varphi(t),
+        \end{gathered} \qquad \Re \lambda_j(P) \lt 0. \] <div class="definition">
+          Матрица
+          \[
+          V = \int\limits_0^\infty Y^T(\tau) R^T R Y(\tau) d\tau
+          \]
+          называется <i>грамианом наблюдаемости</i>.
+        </div>
+
+        <div class="remark">
+          Используя обозначение
+          \[
+          H(t) = R \, Y(t),
+          \]
+          грамиан наблюдаемости можно переписать в виде
+          \[
+          V = \int\limits_0^T H^T(\tau) H(\tau) d\tau.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Критерий полной наблюдаемости устойчивой стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 27</h2>
+    <h2 class="subtitle">БИЛЕТ 28</h2>
+    <h2 class="subtitle">БИЛЕТ 29</h2>
+    <h2 class="subtitle">БИЛЕТ 30</h2>
+
+    <li class="question">
+      <div class="name">
+        Общая постановка задачи стабилизации движения
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим движение системы
+        \[
+        \dot{y} = G(t, y, v).
+        \]
+
+        Будем предполагать, что решеша задача программного управления: для заданных начальных
+        данных $y(t_0) = y_0$ построено программное управление $v = v_p(t)$. Тогда
+        уравнение программного движения запишем как
+        \[
+        y = y_p(t, t_0, y_0, v_p(t)).
+        \]
+
+        <div class="problem">
+          Найти дополтильеные управляющие воздействия, при которых построенное программное движение
+          $y_p$ будет асимптотически устойчиво по Ляпунову.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Вывод системы в отклонениях для задачи стабилизации
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим движение системы
+        \[
+        \dot{y} = G(t, y, v)
+        \]
+        с программным управлением $v = v_p(t)$, построенным для заданных начальных данных $y(t_0) = y_0$.
+
+        <p>
+          Проведём замену переменных:
+          \[
+          \left\{
+          \begin{aligned}
+          y &= y_p(t) + x \\
+          v &= v_p(t) + u
+          \end{aligned}
+          \right.
+          \implies
+          \left\{
+          \begin{aligned}
+          x &= y - y_p(t) \\
+          u &= v - v_p(t),
+          \end{aligned}
+          \right.
+          \]
+          где $x$ и $u$ являются отклонениями от программного движения
+          и программного управления соответственно.
+        </p>
+
+        <p>
+          Тогда система примет вид
+          \[
+          \dot{x} = G(t, y_p(t) + x, v_p(t) + u) - G(t, y_p(t), v_p(t)) = F(t, x, u).
+          \]
+          Получили <i>систему в отклонениях</i>.
+        </p>
+
+        <p>
+          Задача заключается в построении такого управления, при котором нулевое решение
+          системы в отклонениях будет асимптотически устойчиво.
+        </p>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 31</h2>
+
+    <li class="question">
+      <div class="name">
+        Стабилизация линейной стационарной системы в случае полной обратной связи
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим стационарную систему в отклонениях:
+        \[
+        \dot{x} = P x + Q u.
+        \]
+
+        <div class="definition">
+          Управление вида $u = C x$, где $C$ &mdash; некоторая постоянная матрица, называется
+          <i>допустимым управлением вида линейной обратной связи</i>.
+        </div>
+
+        Если все компоненты вектора $x$ измеримы, то линейная обратная связь называется <i>полной</i>.
+
+        <div class="problem">
+          Построить управление вида полной линейной обратной связи, при котором
+          замкнутая система
+          \[
+          \dot{x} = (P + QC) x
+          \]
+          асимптотически устойчива по Ляпунову, то есть
+          \[
+          \Re [\lambda_j (P + QC)] \lt 0.
+          \]
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Метод неопределённых коэффициентов построения стабилизирующего управления
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим стационарную систему в отклонениях:
+        \[
+        \dot{x} = P x + Q u.
+        \]
+        Управление будем искать в виде полной обратной связи: $u = Cx$.
+
+        <p>
+          Рассмотрим характеристический полином матрицы замкнутой системы:
+          \[
+          \varphi(\lambda) = \det (\lambda E - (P + QC)) = \lambda^n + \alpha_1(C) \lambda^{n-1} + \cdots
+          + \lambda_n(C).
+          \]
+        </p>
+
+        <div class="definition">
+          Собственные числа матрицы замкнутой системы называются <i>неуправляемыми</i>, если они
+          не зависят от выбора матрицы $C$.
+        </div>
+
+        <p>
+          Выберем эталонные собственные числа $\mu_1, \dots, \mu_n: \; \Re (\mu_j) \lt 0$. Тогда
+          эталонный полином запишется в виде
+          \[
+          \psi(\lambda) = \prod_{i=1}^n (\lambda - \mu_i) = \lambda^n + \beta_1 \lambda^{n-1} + \cdots
+          + \beta_n.
+          \]
+          Приравняем полиномы $\varphi(\lambda) = \psi(\lambda)$: получим систему уравнений
+          \[
+          \left\{
+          \begin{aligned}
+          \alpha_1(C) &= \beta_1 \\
+          &\dots \\
+          \alpha_n(C) &= \beta_n.
+          \end{aligned}
+          \right.
+          \]
+          Найдя из этой системы $C$, получим искомое управление.
+        </p>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Определение: время переходного процесса
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="definition">
+          Время $T$, небоходимое системе стабилизации для подавление начального отклонения
+          $x_0$ до величины безразличия $\varepsilon$:
+          \[
+          x(T) = \varepsilon,
+          \]
+          называется <i>временем переходного процесса</i>.
+        </div>
+
+        <div class="remark">
+          Чем меньше собственное число, тем меньше время переходного процесса, но тем больше
+          коэффициент усиления сигнала.
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 32</h2>
+
+    <li class="question">
+      <div class="name">
+        Лемма о количестве неуправляемых собственных чисел линейной стационарной системы
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим стационарную систему
+        \[
+        \dot{x} = P x + Q u, \quad \text{где} \quad u = Cx.
+        \]
+        <div class="lemma">
+          Если для системы ранг матрицы Калмана $\rank S = m \lt n$, то замкнутая система
+          \[
+          \dot{x} = (P + QC) x
+          \]
+          имеет $n - m$ неуправляемых собственных чисел.
+        </div>
+      
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Проверяется декомпозицией системы на управляемую и неуправляемую части, после чего
+            используется тот факт, что спектр блочно-диагональной матрицы равен
+            объединению спектров блоков на диагонали.
+          </div>
+
+          Известно, что существует невырожденное преобразование $x = T y$, приводящее
+          к декомпозиции системы на управляемую и неуправляемую подсистемы:
+          \[
+          \paren{
+          \begin{array}{c}
+          \dot{y}_1 \\
+          \dot{y}_2
+          \end{array}
+          }
+          =
+          \paren{
+          \begin{array}{cc}
+          P_{11} & P_{12} \\
+          0 & P_{22}
+          \end{array}
+          }
+          \paren{
+          \begin{array}{c}
+          y_1 \\
+          y_2
+          \end{array}
+          }
+          +
+          \paren{
+          \begin{array}{c}
+          Q_1 \\
+          0
+          \end{array}
+          }
+          u.
+          \]
+
+          Обозначив $CT =\paren{C_1, C_2}$, замкнём её:
+          \[
+          \paren{
+          \begin{array}{c}
+          \dot{y}_1 \\
+          \dot{y}_2
+          \end{array}
+          }
+          =
+          \paren{
+          \begin{array}{cc}
+          P_{11} + Q_1 C_1 & P_{12} + Q_1 C_2 \\
+          0 & P_{22}
+          \end{array}
+          }
+          \paren{
+          \begin{array}{c}
+          y_1 \\
+          y_2
+          \end{array}
+          }
+          \]
+
+          Спектр матрицы замкнутой системы представляет собой объединение спектров
+          диагональных блоков. Так как матрица $P_{22}$ не зависит от выбора $C$,
+          её собственные числа всегда лежат в спектре.
+
+          <p>
+            Они неуправляемы, их количество:
+            \[
+            \dim P_{22} = n - m.
+            \]
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 33</h2>
+
+    <li class="question">
+      <div class="name">
+        Лемма об управлении спектром линейной системы с матрицей Фробениуса
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим управляемую подсистему системы в отклонениях:
+        \[
+        \dot{y} = P_0 y + q_0 u.
+        \]
+        Предположим, что
+        \[
+        P_0 = \paren{
+        \begin{array}{ccccc}
+        0 & 0 & \dots & 0 & -\alpha_m \\
+        1 & 0 & \dots & 0 & -\alpha_{m-1} \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & \dots & 0 & -\alpha_2 \\
+        0 & 0 & \dots & 1 & -\alpha_1
+        \end{array}
+        },
+        \qquad
+        q_0 = \paren{
+        \begin{array}{c}
+        1 \\
+        0 \\
+        \vdots \\
+        0
+        \end{array}
+        }.
+        \]
+
+        Управление ищем в виде полной обратной связи: $u = C y$.
+
+        <div class="lemma">
+          Для любого набора $\mu_1, \dots, \mu_m \in \mathbb{C}$ можно выбрать $C$ так,
+          чтобы спектр матрицы замкнутой системы $P_0 + Q_0 C$ совпадал с $\mu_1, \dots, \mu_m$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Составляем матрицу
+            \[
+            K_0 = \paren{
+            \begin{array}{ccccc}
+            \alpha_{m - 1} & \alpha_{m-2} & \dots & \alpha_1 & 1 \\
+            \alpha_{m-2} & \dots & \alpha_1 & 1 & 0 \\
+            \vdots & \rddots & \rddots & \rddots & \vdots \\
+            \alpha_1 & 1 & 0 & \dots & 0 \\
+            1 & 0 & 0 & \dots & 0
+            \end{array}
+            },
+            \]
+            проводим замену переменных $y = K_0 z$, матрица снова фробениусова, замыкаем
+            систему управлением $u = \gamma z$, находим из матрицы замкнутой системы полином.
+          </div>
+
+          Проведём замену переменных: $y = K_0 z$, где $K_0$ удовлетворяет уравнению
+          \[
+          P_0^T = K_0^{-1} P_0 K_0, \quad \text{или} \quad K_0 P_0^T = P_0 K_0.
+          \]
+          Решая его методом Гаусса, получим, что
+          \[
+          K_0 = \paren{
+          \begin{array}{ccccc}
+          \alpha_{m - 1} & \alpha_{m-2} & \dots & \alpha_1 & 1 \\
+          \alpha_{m-2} & \dots & \alpha_1 & 1 & 0 \\
+          \vdots & \rddots & \rddots & \rddots & \vdots \\
+          \alpha_1 & 1 & 0 & \dots & 0 \\
+          1 & 0 & 0 & \dots & 0
+          \end{array}
+          }.
+          \]
+          Тогда управляемая подсистема примет вид
+          \[
+          \dot{z} = K_0^{-1} P_0 K_0 z + K_0^{-1} q_0 u.
+          \]
+
+          Используя
+          \[
+          K_0 \bar{q}_0 = q_0 = \paren{
+          \begin{array}{c}
+          1 \\
+          0 \\
+          \vdots \\
+          0
+          \end{array}
+          },
+          \implies
+          \bar{q}_0 = K_0^{-1} q_0 = \paren{
+          \begin{array}{c}
+          0 \\
+          0 \\
+          \vdots \\
+          1
+          \end{array}
+          },
+          \]
+          окончательно получаем:
+          \[
+          \dot{z} = P_0^T z + \bar q_0 u.
+          \]
+
+          <p>
+            Для этой системы будем строить стабилизационное управление $u = \gamma z$, доставляющее
+            спектр $\mu_1, \dots, \mu_m$. Используем МНК: замыкаем систему
+            \[
+            P_0^T + \bar q_0 \gamma = \paren{
+            \begin{array}{ccccc}
+            0 & 1 & \dots & 0 & 0 \\
+            0 & 0 & \dots & 0 & 0 \\
+            \vdots & \vdots & \ddots & \vdots & \vdots \\
+            0 & 0 & \dots & 0 & 1 \\
+            \gamma_m - \alpha_m & \gamma_{m-1} - \alpha_{m-1} & \dots & \gamma_2 - \alpha_2
+            & \gamma_1 - \alpha_1
+            \end{array}
+            }
+            \]
+            &mdash; матрица Фробениуса для
+            \[
+            \varphi(\lambda) = \det\paren{\lambda E - (P_0^T + \bar q_0 \gamma)}
+            = \lambda^m + (\alpha_1 - \gamma_1) \alpha^{m-1} + \cdots + (\alpha_m - \gamma_m).
+            \]
+          </p>
+
+          <p>
+            Если эталонный полином $\psi(\lambda) = \lambda^n + \beta_1 \lambda^{n-1} + \cdots + \beta_n$,
+            то
+            \[
+            \left\{
+            \begin{aligned}
+            \beta_1 &= \alpha_1 - \gamma_1 \\
+            &\dots \\
+            \beta_m &= \alpha_m - \gamma_m
+            \end{aligned}
+            \right.
+            \implies
+            \left\{
+            \begin{aligned}
+            \gamma_1 &= \alpha_1 - \beta_1 \\
+            &\dots \\
+            \gamma_m &= \alpha_m - \beta_m
+            \end{aligned},
+            \right.
+            \]
+            откуда
+            \[
+            u = \gamma z = \gamma K_0^{-1} y, \implies C = \gamma K_0^{-1}.
+            \]
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 34</h2>
+
+    <li class="question">
+      <div class="name">
+        Лемма об управлении спектром управляемой подсистемы общего вида
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим управляемую подсистему
+        \[
+        \dot{y} = P y + Q u,
+        \]
+        ищем $u = C y$.
+
+        <div class="lemma">
+          Выбором $C$ матрице замкнутой управляемой подсистемы $P + QC$ можно обеспечить
+          любой наперёд заданный спектр $\mu_1, \dots, \mu_m$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            <ol>
+              <li>
+                Найти базисные векторы матрицы Калмана:
+                \[
+                Q = (q_1, \dots, q_r),
+                \]
+                выбираем из последовательности
+                \[
+                q_1, P q_1, P^2 q_1, \dots
+                \]
+                первые $n_1$ ЛНЗ. Если не хватает, то выбираем из
+                \[
+                q_2, P q_2, P^2 q_2, \dots
+                \]
+                и так далее. В итоге рассмотрим $l$ последовательностей.
+              </li>
+          
+              <li>
+                Строим из них матрицу $T$ и проводим замену $y = T z$. Получаем систему
+                \[
+                \dot{z} = \widetilde{P} z + \widetilde{Q} u.
+                \]
+              </li>
+          
+              <li>
+                Находим матрицу $\widetilde{P} = T^{-1} P T$. Рассматриваем уравнение по столбцам,
+                получаем, что $\widetilde{P}$ &mdash; блочно-диагональная с матрицами
+                Фробениуса на диагонали (для каждого блока все, кроме последнего столбца, соответствуют
+                какому-то базисному вектору, а последний раскладывается в линейную комбинацию
+                базисных).
+              </li>
+          
+              <li>
+                Найдём матрицу $\widetilde{Q} = T^{-1} Q$. Также рассматриваем по столбцам,
+                получаем, что матрица $\widetilde{Q}$ состоит из блоков $e_k$ по диагонали, где
+                $e_k$ получается из единичной матрицы заменой всех элементов нулями (кроме $e_{kk}$).
+                Если $l = r$, то на этом всё, но если $l \lt r$, то после $l$ диагональных элементов
+                оставшиеся будут раскладываться в линейные комбинации базисных векторов.
+              </li>
+          
+              <li>
+                Рассмотрим теперь управление $u = C y = C T z = \widetilde{C} z$. Матрица $\widetilde{C}$
+                будет блочно-диагональной &mdash; можно найти из $\widetilde{C} = C T$.
+                Если $l \lt r$, то снизу ещё нулевая матрица добавится.
+              </li>
+          
+              <li>
+                Подставляя полученные матрицы в систему, находим, что матрица замкнутой системы
+                будет блочно-диагональной с блоками вида $\widetilde{P}^{(k)} - e_k C_1$, причём
+                $\widetilde{P}^{(k)}$ &mdash; Фробениуса. Такое уже решали, можем доставить любой
+                спектр каждому блоку на диагонали, следовательно, задача решена.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 35</h2>
+
+    <li class="question">
+      <div class="name">
+        Теорема о стабилизации нелинейной системы по линейному приближению
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим систему в отклонениях
+        \[
+        \dot{x} = P x + Q u,
+        \]
+        ищем стабилизирующее управление в виде $u = C x$.
+
+        <div class="theorem">
+          Стабилизирующее управление существует тогда и только тогда, когда
+          неуправляемая подсистема асимптотически устойчива по Ляпунову, то есть собственные
+          числа её матрицы лежат в левой полуплоскости.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Декомпозируем, получим, что матрица полученной системы блочная, значит, её спектр равен
+            объединению спектров каждого блока, поэтому если хотя бы одно собственное число
+            матрицы неуправляемой системы лежит в правой полуплоскости, то при любом выборе управления
+            не получится сделать исходную систему асимптотически устойчивой.
+          </div>
+        </div>
+      </div>
+    </li>
+    
+    <h2 class="subtitle">БИЛЕТ 36</h2>
+
+    <li class="question">
+      <div class="name">
+        Общий алгоритм решения задачи стабилизации
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <ol>
+          <li>
+            Строим $T$ &mdash; $m$ берём из матрицы Калмана, остальными добиваем до базиса
+          </li>
+
+          <li>
+            Проводим замену $x = T y$.
+          </li>
+
+          <li>
+            Если есть неуправляемая подсистема, надо её проверить на асимптотическую устойчивость.
+          </li>
+
+          <li>
+            Строим
+            \[
+            K = \paren{
+            \begin{array}{ccccc}
+            \alpha_{m - 1} & \alpha_{m-2} & \dots & \alpha_1 & 1 \\
+            \alpha_{m-2} & \dots & \alpha_1 & 1 & 0 \\
+            \vdots & \rddots & \rddots & \rddots & \vdots \\
+            \alpha_1 & 1 & 0 & \dots & 0 \\
+            1 & 0 & 0 & \dots & 0
+            \end{array}
+            }.
+            \]
+            Если система не ПУ, то справа ещё добавится единичная матрица размера $(n-m) \times (n-m)$
+            для неуправляемой подсистемы.
+          </li>
+
+          <li>
+            Для каждого блока матрицы $\widetilde{P}$ задаём эталонные значения и МНК ищем
+            вектор $\gamma$.
+          </li>
+
+          <li>
+            Ставим полученные $\gamma_k$ на диагональ матрицы $\Gamma$, остальное забиваем нулями
+            до нужной размерности.
+          </li>
+
+          <li>
+            Искомое управление: $u = C x$, где $C = \Gamma K^{-1} T^{-1}$.
+          </li>
+        </ol>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 37</h2>
+
+    <li class="question">
+      <div class="name">
+        Теорема о стабилизации нелинейной системы по линейному приближению
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим нелинейную систему в отклонениях:
+        \[
+        \dot{x} = F(t, x, u).
+        \]
+        Разложим $F(t, x, u)$ в ряд Маклорена в окрестности точки $0$ и выделим линейные слагаемые:
+        \[
+        \dot{x} = P x + Q u + h(t, x, u).
+        \]
+
+        Считаем, что
+        <ol>
+          <li>
+            $h(t, 0, 0) \equiv 0$ &mdash; т.к. система в отклонениях
+          </li>
+
+          <li>
+            $h(t, x, u) \in C\paren{\norm{x} \leqslant H_1, \norm{u} \leqslant H_2 }$, то есть
+            $h$ непрерывна в некоторой окрестности точки $0$, причём
+            \[
+            \norm{h(t, x, u)} \leqslant \alpha \paren{\norm{x} + \norm{u}}^{1 + \beta},
+            \]
+            то есть $h$ имеет порядок малости меньше первого в этой окрестности.
+          </li>
+        </ol>
+
+        Построим линейное приближение:
+        \[
+        \dot{x}_1 = P x_1 + Q u_1.
+        \]
+
+        <div class="theorem">
+          Если при управлении $u = C x_1$ линейное приближение асимптотически устойчиво,
+          то при управлении $u = C x$ нулевое решение нелинейной системы также будет
+          асимптотически устойчиво.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Используя второй метод Ляпунова, нужно показать, что добавка $h(t, x, u)$ в достаточно
+            малой окрестности нуля не портит отрицательную определённость производной
+            в силу системы.
+          </div>
+
+          <div class="remark">
+            Доказательство будем проводить, используя второй метод Ляпунова,
+            а именно:
+            <div class="theorem">
+              Пусть существует заданная и непрерывно дифференцируемая при
+              $\norm{x} \leqslant H, \; t \geqslant 0$ функция $V(t, x)$, обладающая следующими
+              свойствами
+              <ol>
+                <li>
+                  $V(t, x)$ положительно определена
+                </li>
+
+                <li>
+                  $V(t, x)$ допускает бесконечно малый высший предел:
+                  <ul>
+                    <li>
+                      $V(t, 0) \equiv 0$
+                    </li>
+
+                    <li>
+                      $V(t, x)$ непрервына по $x$ в точке $x = 0$ равномерно по $t \geqslant 0$.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  Производная $V(t, x)$ в силу системы отрицательно определена.
+                </li>
+              </ol>
+
+              Тогда нулевое решение системы равномерно асимптотически устойчиво.
+            </div>
+          </div>
+
+          Линейное приближение асимптотически устойчиво, а для линейных стационарных систем
+          асимптотическая устойчивость эквивалентна экспоненциальной устойчивости, поэтому
+          (по теореме об экспоненциальной устойчивости) существуют две положительно определённые
+          квадратичные формы
+          \[
+          v(x_1) = x_1^T V x_1 \quad \text{и} \quad w(x_1) = x_1^T W x_0
+          \]
+          такие, что
+          <ol>
+            <li>
+              существуют $\alpha_1, \alpha_2, \beta_1, \beta_2 \gt 0$ такие, что
+              \[
+              \begin{gathered}
+              \alpha_1 \norm{x_1}^2 \leqslant v(x_1) \leqslant \alpha_2 \norm{x_1}^2 \\
+              \beta_1 \norm{x_1}^2 \leqslant w(x_1) \leqslant \beta_2 \norm{x_1}^2;
+              \end{gathered}
+              \]
+            </li>
+
+            <li>
+              и справедливо равенство
+              \[
+              \at{\dv{v(x_1)}{t}}{(*)} = -w(x_1).
+              \]
+            </li>
+          </ol>
+
+          Для простоты положим $W := E$, то есть $w(x_1) = \norm{x_1}^2$. Тогда
+          \[
+          \begin{aligned}
+          \at{\dv{v(x_1)}{t}}{(*)} &= x_1^T (P + QC)^T V x_1 + x_1^T V (P + QC) x_1 = -x_1^T E x_1 \\
+          &\implies (P + QC)^T V + V(P + QC) = -E.
+          \end{aligned}
+          \]
+          Получили матричное уравнение Ляпунова, откуда нашли $V$.
+
+          <p>
+            Рассмотрим квадратичную форму $v(x) = x^T V x$ с той же матрицей $V$. Рассмотрим
+            производную в силу <i>нелинейной</i> системы:
+            \[
+            \begin{aligned}
+            \at{\dv{v(x_1)}{t}}{(1)} &\bydef= \at{\pd{v}{x_1} \dot{x}_1 + \cdots
+            + \pd{v}{x_n} \dot{x}_n}{(1)} \\
+            &= \grad \paren{v(x), (P + QC) x + h(t, x, Cx)} \\
+            &= \underbrace{\grad \paren{v(x), (P + QC) x}}_{= -\norm{x}^2}
+            + \grad \paren{v(x), h(t, x, Cx)}.
+            \end{aligned}
+            \]
+            Оценим $\grad \paren{v(x), h(t, x, Cx)}$: из неравенства Коши-Буняковского следует
+            \[
+            \abs{\grad \paren{v(x), h(t, x, Cx)}} \leqslant \norm{\grad v(x)} \cdot \norm{h(t, x, Cx)}.
+            \]
+            Так как
+            \[
+            \begin{aligned}
+            \norm{\grad v(x)} &\leqslant 2 \norm{V} \norm{x}, \quad \text{т.к. } \grad v(x)
+            \text{ &mdash; линейная форма} \\
+            \norm{h(t, x, u)} &\leqslant \alpha \paren{\norm{x} + \norm{C} \norm{x}}^{1 + \beta} \\
+            &= \alpha\paren{1 + \norm{C}}^{1 + \beta} \norm{x}^{1 + \beta},
+            \end{aligned}
+            \]
+            поэтому
+            \[
+            \abs{\grad \paren{v(x), h(t, x, Cx)}} \leqslant \gamma \norm{x}^{2 + \beta},
+            \]
+            где
+            \[
+            \gamma := 2 \alpha \norm{V} \paren{1 + \norm{C}}^{1 + \beta}.
+            \]
+
+            Значит,
+            \[
+            \begin{gathered}
+            -\norm{x}^2 - \gamma \norm{x}^{2 + \beta} \leqslant
+            \at{\dv{v(x_1)}{t}}{(1)} \leqslant -\norm{x}^2 + \gamma \norm{x}^{2 + \beta} \\
+            -\norm{x}^2 \underbrace{\paren{1 + \gamma \norm{x}^{\beta}}}_{\geqslant 0}
+            \leqslant \at{\dv{v(x_1)}{t}}{(1)} \leqslant
+            -\norm{x}^2 \underbrace{\paren{1 - \gamma \norm{x}^{\beta}}}_{\geqslant 0}.
+            \end{gathered}
+            \]
+
+            <div class="remark">
+              Оценка правой части справедлива, т.к. рассматриваем малую окрестность точки 0.
+            </div>
+
+            Значит, производная в силу системы ограничена отрицательно определёнными квадратичными
+            формами, поэтому по теореме об экспоненциальной устойчивости нулевое решение
+            нелинейной системы асимптотически устойчиво.
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <h2 class="subtitle">БИЛЕТ 38</h2>
+
+    <li class="question">
+      <div class="name">
+        Постановка задачи оптимальной стабилизации
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную нестационарную систему в отклонениях:
+        \[
+        \dot{x} = P(t) x + Q(t) u,
+        \]
+        где
+        <ul>
+          <li>
+            $x \in \mathbb{R}^n, \quad u \in \mathbb{R}^r$;
+          </li>
+
+          <li>
+            $P(t), Q(t) \in C_{t \geqslant 0}$, ограниченные, вещественные.
+          </li>
+        </ul>
+
+        <div class="definition">
+          Управление
+          \[
+          u = M(t) x
+          \]
+          будем считать <i>допустимым</i>, если замкнутая система
+          \[
+          \dot{x} = (P(t) + M(t) Q(t)) x
+          \]
+          асимптотически устойчива.
+        </div>
+
+        Введём функционал
+        \[
+        J = \int\limits_0^\infty W^2 dt,
+        \]
+        где
+        \[
+        W^2 := x^T A x + x^T B u + u^T B^T x + u^T C u.
+        \]
+        Считаем, что $u^T C u$ положительно определена.
+
+        <div class="problem">
+          Найти условия существования оптимального стабилизирующего управления и построить его.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Лемма о существовании семейства допустимых стабилизирующих управлений
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную нестационарную систему в отклонениях:
+        \[
+        \dot{x} = P(t) x + Q(t) u.
+        \]
+
+        <div class="definition">
+          Управление
+          \[
+          u = M(t) x
+          \]
+          будем считать <i>допустимым</i>, если замкнутая система
+          \[
+          \dot{x} = (P(t) + M(t) Q(t)) x
+          \]
+          асимптотически устойчива.
+        </div>
+
+        <div class="lemma">
+          Если $u = M(t) x$ &mdash; допустимое управление, то для любой вещественной ограниченной
+          непрерывной при $t \geqslant 0$ матрицы $N(t)$ управление
+          \[
+          u = \paren{M(t) + \varepsilon N(t)} x
+          \]
+          также допустимо при достаточно малом $\varepsilon$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Доказывается аналогично случаю стабилизации нелинейных систем (через второй метод
+            Ляпунова) &mdash; надо показать, что добавка $\varepsilon N(t)$ при достаточно
+            малых $\varepsilon$ не портит отрицательную определённость производной в силу системы.
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Теорема об условиях существования оптимального стабилизирующего управления (без док-ва)
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим линейную нестационарную систему в отклонениях:
+        \[
+        \dot{x} = P(t) x + Q(t) u
+        \]
+        с заданным функционалом
+        \[
+        J = \int\limits_0^\infty W^2 dt,
+        \]
+        где
+        \[
+        W^2 := x^T A x + x^T B u + u^T B^T x + u^T C u.
+        \]
+
+
+        <div class="theorem">
+          Оптимальное стабилизирующее управление $u_0 = M_0(t) x$ для $\forall x_0$ существует
+          тогда и только тогда, когда <i>матричное уравнение Рикатти</i>
+          \[
+          \dot{\Theta} - \Theta Q C^{-1} Q^T \Theta + \Theta \paren{P - Q C^{-1} B^T}
+          + \paren{P^T - B C^{-1} Q^T} \Theta + A - B C^{-1} B^T = 0
+          \]
+          имеет вещественное, ограниченное, непрерывное при $t \geqslant 0$ решение в виде такой
+          симметричной матрицы $\Theta(t)$, что
+          \[
+          u = - C^{-1} (Q^T \Theta + B^T) x
+          \]
+          является допустимым управлением.
+        </div>
+      </div>
+    </li>
+    
+    <h2 class="subtitle">БИЛЕТ 39</h2>
+
+    <li class="question">
+      <div class="name">
+        Метод последовательных приближений Зубова
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим систему $(1)$ в отклонениях
+        \[
+        \dot{x} = P(t) x + Q(t) u
+        \]
+        с заданным функционалом
+        \[
+        J = \int\limits_0^\infty f(t, x, u) dt.
+        \]
+        Пусть квадратичная форма $f(t, x, u) = x^T A(t) x + u^T C u$ положительно определена
+        по $x$ и $u$.
+
+        <p>
+          <i>Сущность</i> метода заключается в построении последовательности допустимых управлений,
+          сходящихся к оптимальному стабилизирующему.
+        </p>
+
+        <h4>Алгоритм</h4>
+        <ol>
+          <li>
+            Возьмём допустимое управление $u_k(t) = M_k(t) x$, замкнём им систему:
+            \[
+            \dot{x} = (P(t) + Q(t) M_k(t)) x.
+            \]
+            Обозначим её $(*)$.
+          </li>
+
+          <li>
+            Квадратичная форма в функционале примет вид $f(t, x, u_k) = x^T \paren{A + M_k^T C M_k} x$.
+            По условию она положительно определена, значит, можно построить
+            квадратичную форму $v_k(t, x) = x^T V_k(t) x$ такую, что
+            \[
+            \at{\dv{V_k(t, x)}{t}}{(*)} = -f(t, x, u_k).
+            \]
+
+            <p>
+              Распишем:
+              \[
+              \begin{aligned}
+              \at{\dv{V_k(t, x)}{t}}{(*)} &= -f(t, x, u_k) \\
+              \dot{V}_k + (P + Q M_k)^T V_k + V_k (P + Q M_k) &= -(A + M_k^T C M_k).
+              \end{aligned}
+              \]
+            </p>
+          </li>
+
+          <li>
+            Пусть $V_k(t)$ &mdash; решение предыдущего уравнения. Рассмотрим вспомогательную
+            функцию
+            \[
+            L_k(u(\cdot)) \bydef= v_k(t, x) + \int\limits_0^t f(t, x, u) dt.
+            \]
+            Построим управление, <i>оптимальное в смысле демпфирования</i> функции $L_k$,
+            то есть доставляющее минимум производной в силу незамкнутой системы:
+            \[
+            \at{\dv{L_k(t, x)}{t}}{(1)} = \at{\dv{v_k(t, x)}{t}}{(1)} + f(t, x, u).
+            \]
+            Можно показать, что точка минимума существует и единственна,
+            а оптимальное в смысле демпфирования управление имеет вид
+            \[
+            \overline u = -C^{-1} Q^T V_k x.
+            \]
+          </li>
+
+          <li>
+            Положим $u_{k+1} := \overline u = -C^{-1} Q^T V_k x$.
+          </li>
+
+          <li>
+            Вернёмся к шагу 1.
+          </li>
+        </ol>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Свойства последовательности приближений
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        Рассмотрим систему в отклонениях
+        \[
+        \dot{x} = P(t) x + Q(t) u
+        \]
+        с заданным функционалом
+        \[
+        J = \int\limits_0^\infty f(t, x, u) dt.
+        \]
+        Пусть квадратичная форма $f(t, x, u) = x^T A(t) x + u^T C u$ положительно определена
+        по $x$ и $u$.
+
+        <ol>
+          <li>
+            По построению матрицы $V_k(t)$
+            \[
+            \at{\dv{v_k(t, x)}{t}}{(1), u=u_k} + f(t, x, u_k) = 0.
+            \]
+          </li>
+
+          <li>
+            Функция
+            \[
+            L_k(u(\cdot)) \bydef= v_k(t, x) + \int\limits_0^t f(t, x, u) dt
+            \]
+            убывает наискорейшим образом вдоль решений исходной системы, замкнутой
+            управлением, оптимальным в смысле демпфирования, то есть $u_{k+1}(t, x)$.
+
+            <button class="derivation-toggle"></button>
+            <div class="derivation">
+              Из свойства 1 следует, что
+              \[
+              \at{\dv{L_k(t, x)}{t}}{(1),u=u_k} = 0, \implies
+              \at{\dv{L_k(t, x)}{t}}{(1),u=u_{k+1}} \leqslant 0,
+              \]
+              откуда получаем
+              \[
+              \at{\dv{v_k(t, x)}{t}}{(1), u=u_{k+1}} + f(t, x, u_{k+1}) \leqslant 0,
+              \]
+              то есть при $u = u_{k+1}$ производая в силу системы функции $L_k$ убывает
+              наискорейшим образом.
+            </div>
+          </li>
+        </ol>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Последовательные приближения: лемма 1
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="lemma">
+          Если $u_k(t, x)$ допустимо, то $u_{k+1}(t,x)$ &mdash; тоже.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Следует из свойства 2.
+          </div>
+
+          Из свойства 2 следует, что
+          \[
+          \at{\dv{v_k(t, x)}{t}}{(1), u=u_{k+1}} \leqslant f(t, x, u_{k+1}),
+          \]
+          но ведь $f(t, x, u)$ &mdash; положительно определённая квадратичная форма (по условию),
+          поэтому, по критерию экспоненциальной устойчивости, $u_{k+1}(t,x)$ &mdash; стабилизирующее
+          управление.
+        </div>
+
+        <div class="corollary">
+          Если $u_1(t,x)$ &mdash; допустимое, то для любого $k \in \mathbb{N}$ управление $u_k(t, x)$
+          также допустимо.
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Последовательные приближения: лемма 2
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="lemma">
+          Для любого $k \geqslant 0$
+          \[
+          v_{k+1}(t, x) \leqslant v_k(t, x)
+          \]
+          при всех $t \geqslant 0$.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            Следует из свойств 1 и 2.
+          </div>
+
+          Из свойств 1 и 2 следует, что
+          \[
+          \left\{
+          \begin{aligned}
+          &\at{\dv{v_k(t, x)}{t}}{(1), u=u_k} + f(t, x, u_k) = 0, \\
+          &\at{\dv{v_k(t, x)}{t}}{(1), u=u_{k+1}} + f(t, x, u_{k+1}) \leqslant 0,
+          \end{aligned}
+          \right.
+          \]
+          поэтому
+          \[
+          \at{\dv{}{t} \paren{v_{k+1}(t, x) - v_k(t, x)}}{(1), u=u_k} \geqslant 0.
+          \]
+
+          Найдём решение $x = x(t, t_0, x_0)$ системы при $u = u_{k+1}$
+          для произвольных начальных условий, тогда
+          \[
+          \at{\dv{}{t} \paren{v_{k+1}(t, x(t, t_0, x_0)) - v_k(t, x(t, t_0, x_0))}}{(1), u=u_k}
+          \geqslant 0.
+          \]
+          Проинтегрируем от $t_0$ до $T$:
+          \[
+          \left[
+          v_{k+1} \paren{T, x(T, t_0, x_0)} - v_k \paren{T, x(T, t_0, x_0)}
+          \right]
+          -
+          \left[
+          v_{k+1} \paren{t_0, x_0} - v_k \paren{t_0, x_0}
+          \right]
+          \geqslant 0.
+          \]
+          Первое слагаемое стремится к нулю при $T \to \infty$, т.к. решение
+          $x = x(t, t_0, x_0) \to 0$ в силу экспоненциальной устойчивости, а $v_k$ и $v_{k+1}$ &mdash;
+          положительно определённые квадратичные формы.
+
+          <p>
+            Получается, что
+            \[
+            -
+            \left[
+            v_{k+1} \paren{t_0, x_0} - v_k \paren{t_0, x_0}
+            \right]
+            \geqslant 0.
+            \]
+            откуда в силу произвольности $t_0, x_0$ и $k$ следует, что
+            \[
+            v_{k+1}(t, x) \leqslant v_k(t, x).
+            \]
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <li class="question">
+      <div class="name">
+        Последовательные приближения: лемма 3
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="lemma">
+          Если $u_1(t, x)$ &mdash; допустимое управление, то существуют
+          $\alpha_1, \alpha_2, \beta_1, \beta_2 \gt 0$ такие, что $\forall k \in \mathbb{N}$
+          для любого решения замкнутой системы
+          \[
+          \alpha_1 \norm{x_0} e^{-\beta-1 (t - t_0)}
+          \leqslant \norm{x(t, t_0, x_0)} \leqslant
+          \alpha_2 \norm{x_0} e^{-\beta-2 (t - t_0)}.
+          \]
+        </div>
+      </div>
+    </li>
+    
+    <h2 class="subtitle">БИЛЕТ 40</h2>
+
+    <li class="question">
+      <div class="name">
+        Теорема о сходимости последовательности приближений
+      </div>
+      <button class="toggle-button"></button>
+      <div class="content">
+        <div class="theorem">
+          Если $f(t, x, u)$ положительно определена, а $u_1(t,x)$ допустимо, то
+          \[
+          \set{u_k(t, x)} \to u_0(t, x)
+          \]
+          равномерно.
+        </div>
+
+        <button class="proof-toggle"></button>
+        <div class="proof">
+          <div class="idea">
+            <p>
+              Надо доказать, что последовательность
+              \[
+              \set{V_k(t)} \underset{k \to \infty}{\longrightarrow} V_0(t).
+              \]
+              Проверяем сначала сходимость диагональных элементов, потом недиагональных.
+            </p>
+
+            <p>
+              Если
+              \[
+              \set{V_k(t)} \underset{k \to \infty}{\longrightarrow} V_0(t),
+              \]
+              то
+              \[
+              M_k(t) = -C^{-1} Q^T V_k(t) \underset{k \to \infty}{\longrightarrow}
+              M_0(t) = -C^{-1} Q^T V_0(t).
+              \]
+            </p>
+
+            <p>
+              Проверим допустимость. Из леммы 3 следует экспоненциальная устойчивость левой части
+              \[
+              M_k(t) = -C^{-1} Q^T V_k(t)
+              \underset{k \to \infty}{\longrightarrow}
+              M_0(t) = -C^{-1} Q^T V_0(t),
+              \]
+              значит, следует и правая.
+            </p>
+
+            <p>
+              Проверим оптимальность. Достаточно показать, что $V_0(t)$ удовлетворяет уравнению
+              Риккати. Так как $V_k(t)$ &mdash; решение матричного уравнения Ляпунова, то
+              \[
+              \dot{V}_k + (P + Q M_k)^T V_k + V_k (P + Q M_k) = -(A + M_k^T C M_k)
+              \underset{k \to \infty}{\longrightarrow}
+              \dot{V}_0 + (P + Q M_0)^T V_0 + V_0 (P + Q M_0) = -(A + M_0^T C M_0).
+              \]
+              Подставляя $M_0(t) = -C^{-1} Q^T V_0(t)$, получаем уравнение Риккати:
+              \[
+              \dot{V}_0 + P^T V_0 + V_0 P + A - V_0 Q C^{-1} Q^T V_0 = 0.
+              \]
+            </p>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ol>
+</body>
+
 </html>
-
-
