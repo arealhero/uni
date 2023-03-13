@@ -7,13 +7,15 @@
 
   <title>Вопросы &mdash; Теория игр</title>
 
-  <link href="/assets/css/styles.css" rel="stylesheet">
-  <script async src="/assets/js/questions.js"></script>
-  <script async src="/assets/js/controls.js"></script>
 
-  <link rel="stylesheet" href="/assets/katex/katex.min.css">
-  <script defer src="/assets/katex/katex.min.js"></script>
-  <script defer src="/assets/katex/auto-render.min.js"></script>
+    <link href="/assets/css/styles.css" rel="stylesheet">
+    <script defer src="/assets/js/core.js"></script>
+    <script defer src="/assets/js/questions.js"></script>
+    <script defer src="/assets/js/controls.js"></script>
+
+    <link rel="stylesheet" href="/assets/katex/katex.min.css">
+    <script defer src="/assets/katex/katex.min.js"></script>
+    <script defer src="/assets/katex/auto-render.min.js"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -47,7 +49,9 @@
     <button onclick="ShowAnswers()">Показать ответы</button>
     <button onclick="HideProofs()">Скрыть доказательства</button>
     <button onclick="ShowProofs()">Показать доказательства</button>
-    <button onclick="ShowRandomQuestion()">Показать случайный вопрос</button>
+    <button onclick="ShowRandomElement(HideQuestions)">
+      Показать случайный вопрос
+    </button>
   </div>
 
   <div style="display:none">
@@ -106,7 +110,6 @@
         Прямая и двойственная задачи.
         Свойства допустимых значений
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           <i>Задача линейного программирования</i> заключается
@@ -184,7 +187,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           $x$ &mdash; допустимое решение ПЗ. поэтому
           \[
@@ -210,7 +212,6 @@
       <div class="name">
         Следствие теоремы о ранге матрицы
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="defs">
           \[
@@ -244,7 +245,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <p>
             Рассмотрим матрицу
@@ -309,7 +309,6 @@
         Базисные решения систем линейных уравнений. Теорема о
         существовании неотрицательного базисного решения
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <p>
           Рассмотрим равенство
@@ -380,7 +379,6 @@
           базисное неотрицательное решение.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="idea">
             Индукция по количеству строк матрицы $A$.
@@ -496,7 +494,6 @@
       <div class="name">
         Критерий оптимальности в задаче линейного программирования
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим
         \[
@@ -528,7 +525,6 @@
           соответственно.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <p>
             Воспользуемся свойством допустимых решений:
@@ -563,7 +559,6 @@
       <div class="name">
         Теорема двойственности
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим
         \[
@@ -637,7 +632,6 @@
           </ol>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="todo">расписать</div>
         </div>
@@ -648,7 +642,6 @@
       <div class="name">
         Каноническая теорема равновесия
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="problem">
           Найти численный метод решения ЗЛП.
@@ -674,7 +667,6 @@
           }
           \]
 
-          <button class="derivation-toggle"></button>
           <div class="derivation">
             <ul>
               <li>
@@ -767,7 +759,6 @@
           }
           \]
 
-          <button class="derivation-toggle"></button>
           <div class="derivation">
             <ul>
               <li>
@@ -861,7 +852,6 @@
             </p>
           </div>
 
-          <button class="proof-toggle"></button>
           <div class="proof">
             Рассмотрим
             \[
@@ -949,7 +939,6 @@
       <div class="name">
         Теорема о существовании оптимального базисного решения
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим
         \[
@@ -979,7 +968,6 @@
           </p>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="todo">
             Расписать.
@@ -992,7 +980,6 @@
       <div class="name">
         Теорема о преобразовании симплексной таблицы
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="given">
           <ul>
@@ -1064,7 +1051,6 @@
           </ol>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <ol>
             <li>
@@ -1117,7 +1103,6 @@
       <div class="name">
         Алгоритм симплексного метода
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим ДЗ:
         \[
@@ -1252,7 +1237,6 @@
         Обоснование симплексного метода. Теорема об оптимальном
         решении
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим ДЗ:
         \[
@@ -1313,7 +1297,6 @@
           оптимальным.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           По следствию из теоремы о ранге матрицы
           \[
@@ -1337,7 +1320,6 @@
         Обоснование симплексного метода. Лемма о преобразовании
         последней строки симплексной таблицы
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
       </div>
     </li>
@@ -1347,7 +1329,6 @@
         Обоснование симплексного метода. Теорема о неограниченном
         решении
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
       </div>
     </li>
@@ -1357,7 +1338,6 @@
         Матричная игра. Максиминные и минимаксные стратегии.
         Равновесия
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           Система вида $\Gamma = \angset{X, Y, K}$,
@@ -1479,7 +1459,6 @@
           $\underline{V} \leqslant \overline{V}$.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Так как
           \[
@@ -1526,7 +1505,6 @@
         Необходимое и достаточное условие существования оптимальных
         стратегий в матричной игре
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="theorem">
           <i>(о существовании ситуации равновесия)</i>.
@@ -1540,7 +1518,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="necessity">
             Пусть $(i_0, j_0)$ &mdash; ситуация равновесия, тогда
@@ -1608,7 +1585,6 @@
       <div class="name">
         Смешанное расширение матричной игры
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           Случайная величина, значениями которой являются стратегии
@@ -1689,7 +1665,6 @@
       <div class="name">
         Свойства оптимальных смешанных стратегий
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <p>
           Пусть $Z(\Gamma)$ &mdash; множество ситуаций равновесия
@@ -1712,7 +1687,6 @@
               \]
             </p>
 
-            <button class="derivation-toggle"></button>
             <div class="derivation">
               <div class="todo">
                 расписать.
@@ -1730,7 +1704,6 @@
               \]
             </p>
 
-            <button class="derivation-toggle"></button>
             <div class="derivation">
               <div class="todo">
                 расписать.
@@ -1751,7 +1724,6 @@
               \]
             </div>
 
-            <button class="proof-toggle"></button>
             <div class="proof">
               <div class="todo"></div>
             </div>
@@ -1767,7 +1739,6 @@
               для любых $i \in X, j \in Y$.
             </div>
 
-            <button class="proof-toggle"></button>
             <div class="proof">
               <div class="todo">
                 Расписать.
@@ -1791,7 +1762,6 @@
               </ol>
             </div>
 
-            <button class="proof-toggle"></button>
             <div class="proof">
               <div class="todo">
               </div>
@@ -1812,7 +1782,6 @@
               </ol>
             </div>
 
-            <button class="proof-toggle"></button>
             <div class="proof">
               <div class="todo"></div>
             </div>
@@ -1826,7 +1795,6 @@
         Теорема о существовании ситуации равновесия в смешанных
         стратегиях
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="theorem">
           <i>
@@ -1838,7 +1806,6 @@
           смешанных стратегиях.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="todo"></div>
         </div>
@@ -1849,7 +1816,6 @@
       <div class="name">
         Теорема о доминировании для матричных игр
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим матричную игру $\Gamma = \angset{X, Y, K}$.
 
@@ -1932,7 +1898,6 @@
           </div>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="todo"></div>
         </div>
@@ -1944,7 +1909,6 @@
         Понятие игры в нормальной форме. Равновесие по Нэшу. Примеры.
         Парадокс Брайеса
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           Система $\Gamma = \angset{N, \set{X_i}_{i \in N},
@@ -2000,7 +1964,6 @@
           эквивалентна ситуации равновесия.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           По определению NE
           \[
@@ -2169,7 +2132,6 @@
         Кооперативные игры. Характеристическая функция. Дележи.
         Доминирование дележей
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           Подмножество множества игроков $S \subseteq N$ называется
@@ -2288,7 +2250,6 @@
             <li>
               Доминирование по одноэлементной коалиции невозможно.
 
-              <button class="derivation-toggle"></button>
               <div class="derivation">
                 Пусть $\beta$ &mdash; некоторый делёж. Предположим,
                 что существует делёж $\alpha \overset{\{i\}}{\succ} \beta$.
@@ -2308,7 +2269,6 @@
             <li>
               Нельзя доминировать, когда $S = N$
 
-              <button class="derivation-toggle"></button>
               <div class="derivation">
                 Пусть $\beta$ &mdash; некоторый делёж. Предположим,
                 что существует делёж $\alpha \overset{N}{\succ} \beta$.
@@ -2345,7 +2305,6 @@
         $C$-ядро игры. Необходимое и достаточное условие непустоты
         $C$-ядра. $HM$-решение
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           Множество недоминируемых дележей кооперативной игры $(N, v)$
@@ -2366,7 +2325,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="necessity">
             Рассмотрим $\alpha \in C(N, v)$. Предположим, что
@@ -2525,7 +2483,6 @@
           $C$-ядро &mdash; подмножество $NM$-решения.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           От противного: пусть $C \not\subset NM$, тогда
           существует по крайней мере один элемент $C$-ядра $\alpha$,
@@ -2543,7 +2500,6 @@
       <div class="name">
         Вектор Шепли
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим кооперативную игру $(N, v)$ с $n$ игроками.
 
@@ -2605,7 +2561,6 @@
       <div class="name">
         Примеры задач динамического программирования
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="example">
           <i>(Задача о загрузке самолёта)</i>.
@@ -2761,7 +2716,6 @@
         Уравнение Беллмана для детерминированного многошагового
         процесса принятия решений
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <p>
           Рассмотрим марковский процесс принятия решения:
@@ -2872,7 +2826,6 @@
         Принцип оптимальности Беллмана. Решение задачи об
         оптимальном быстродействии
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           <i>Принцип оптимальности Беллмана</i>: каковы бы ни были первоначальное
@@ -2984,7 +2937,6 @@
       <div class="name">
         Непрерывные задачи динамического программирования
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <p>
           Рассмотрим управляемую систему
@@ -3015,7 +2967,6 @@
         Связь динамического программирования с принципом максимума
         Л.С.Понтрягина
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
       </div>
     </li>
@@ -3025,7 +2976,6 @@
         Пример решения задачи оптимального управления с
         использованием принципа максимума
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
       </div>
     </li>
@@ -3034,7 +2984,6 @@
       <div class="name">
         Потоки в сетях. Понятия и свойства
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим сеть $\Gamma = \angset{N, u}$, где
         <ul>
@@ -3172,7 +3121,6 @@
       <div class="name">
         Теорема о максимальном потоке и минимальном сечении
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим сеть $\Gamma = \angset{N, u}$.
 
@@ -3218,7 +3166,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Так как $s \in S$, но $s' \not\in S$, то $S \setminus \{s\}$ &mdash;
           множество, состоящее из промежуточных узлов:
@@ -3247,7 +3194,6 @@
           &mdash; минимальное сечение.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <ul>
             <li>
@@ -3301,7 +3247,6 @@
           Эта теорема является аналогом теоремы двойственной.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Из первой леммы следует, что:
           <ul>
@@ -3351,7 +3296,6 @@
             сечение). Докажем, что в этом случае $\overline f(s, N) = u(\overline S,
             \overline S')$.
 
-            <button class="proof-toggle"></button>
             <div class="proof">
               От противного: пусть $\overline f(s,N) \lt
               u(\overline S, \overline S')$. Из леммы 1 известно, что
@@ -3396,7 +3340,6 @@
               $f'(x,y)$ &mdash; поток.
             </div>
 
-            <button class="proof-toggle"></button>
             <div class="proof">
               <ul>
                 <li>
@@ -3422,7 +3365,6 @@
       <div class="name">
         Теорема о простых назначениях
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="given">
           <ul>
@@ -3514,7 +3456,6 @@
           из $S$.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <div class="todo"></div>
         </div>
@@ -3525,7 +3466,6 @@
       <div class="name">
         Теорема об оптимальных назначениях
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
       </div>
     </li>
@@ -3535,7 +3475,6 @@
         Задача нелинейного программирования. Возможные направления.
         Свойства
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         <div class="definition">
           <i>Задача нелинейного программирования (ЗНЛП)</i> &mdash; задача
@@ -3598,7 +3537,6 @@
           причём $x + \tau d \in F$.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           \[
           \dp{\nabla f(x)}{d} \gt 0 \implies
@@ -3627,7 +3565,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <p>
             Если $D(x^*) = \varnothing$, то доказывать нечего.
@@ -3651,7 +3588,6 @@
           решение ЗНЛП, то $\nabla f(x^*) = 0$.
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Если $F = \mathbb{R}^n$, то $D(x^*) = \mathbb{R}^n$, откуда по необходимому
           условию оптимальности
@@ -3672,7 +3608,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Рассмотрим сходящуюся последовательность направлений
           \[
@@ -3714,7 +3649,6 @@
           \]
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <ol>
             <li>
@@ -3770,7 +3704,6 @@
         Теорема Куна-Таккера. Достаточность условий оптимальности
         Куна-Таккера
       </div>
-      <button class="toggle-button"></button>
       <div class="content">
         Рассмотрим стандартную ЗНЛП:
         \[
@@ -3813,7 +3746,6 @@
           </p>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Система разрешима $\iff$ ЗЛП
           \[
@@ -3871,7 +3803,6 @@
           </ol>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           Пусть $x^*$ &mdash; оптимальное решение.
           <ol>
@@ -3946,7 +3877,6 @@
           </p>
         </div>
 
-        <button class="proof-toggle"></button>
         <div class="proof">
           <ol>
             <li>

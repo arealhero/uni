@@ -1,58 +1,23 @@
-var randomIndex = 0;
-var randomTickets = [];
-
-function Shuffle(array) {
-  var copy = array.slice();
-  for (let i = copy.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    var tmp = copy[i];
-    copy[i] = copy[j];
-    copy[j] = tmp;
-  }
-  return copy;
-}
+// FIXME: remove code duplication (see questions.js)
 
 function HideTickets() {
-  var tickets = document.getElementsByClassName("ticket");
-  for (var i = 0; i < tickets.length; ++i) {
-    tickets[i].style.display = "none";
-  }
+  var tickets = document.getElementsByClassName('ticket');
+  Array.from(tickets).map(function (ticket) { ticket.style.display = 'none'; });
 
-  var subtitles = document.getElementsByClassName("subtitle");
-  for (var i = 0; i < subtitles.length; ++i) {
-    subtitles[i].style.display = "none";
-  }
+  HideAnswers();
+  HideProofs();
+  HideDerivations();
+  HideSubtitles();
 }
 
 function ShowTickets() {
-  var tickets = document.getElementsByClassName("ticket");
-  for (var i = 0; i < tickets.length; ++i) {
-    tickets[i].style.display = "block";
-  }
+  var tickets = document.getElementsByClassName('ticket');
+  Array.from(tickets).map(function (ticket) { ticket.style.display = 'list-item'; });
 
-  var subtitles = document.getElementsByClassName("subtitle");
-  for (var i = 0; i < subtitles.length; ++i) {
-    subtitles[i].style.display = "block";
-  }
+  ShowAnswers();
+  ShowProofs();
+  ShowSubtitles();
 }
 
-function ShowRandomTicket() {
-  HideTickets();
-
-  randomTickets[randomIndex].style.display = "none";
-
-  randomIndex += 1;
-
-  if (randomIndex == randomTickets.length) {
-    randomTickets = Shuffle(randomTickets).slice();
-    randomIndex = 0;
-  }
-
-  randomTickets[randomIndex].style.display = "block";
-}
-
-window.onload = function() {
-  var tickets = Array.from(document.getElementsByClassName("ticket"));
-  randomTickets = Shuffle(tickets).slice();
-};
+setup('ticket');
 
