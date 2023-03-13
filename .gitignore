@@ -3,14 +3,6 @@
 Build/
 build/
 
-recordings/
-
-node_modules/
-
 # Emacs
 .#*
-
-# Big binary files
-*.pdf
-*.djvu
 

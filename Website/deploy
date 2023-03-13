@@ -1,3 +1,0 @@
-#!/bin/sh
-
-rsync -avh --exclude={'node_modules','package.json','yarn.lock','deploy'} . uni@server:public/
