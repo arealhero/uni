@@ -3,7 +3,7 @@
 namespace Uni
 {
 
-auto LagrangeInterpolator::operator()(const std::vector<Point>& points)
+auto LagrangeInterpolator::operator()(const std::vector<Point<f64>>& points)
     -> Polynomial
 {
   Polynomial result;

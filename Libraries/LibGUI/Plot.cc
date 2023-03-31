@@ -30,7 +30,7 @@ void legend()
   plt::legend();
 }
 
-void plot(const std::vector<Point>& points)
+void plot(const std::vector<Point<f64>>& points)
 {
   const auto size = points.size();
   auto xs = std::vector<double>(size);
@@ -89,7 +89,7 @@ void named_plot(const std::string& name,
   plt::named_plot(name, xs, ys);
 }
 
-void named_plot(const std::string& name, const std::vector<Point>& points)
+void named_plot(const std::string& name, const std::vector<Point<f64>>& points)
 {
   auto xs = std::vector<double>{};
   auto ys = std::vector<double>{};

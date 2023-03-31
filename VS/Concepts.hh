@@ -12,6 +12,6 @@ template <typename T>
 concept FloatingPoint = IsFloatingPoint<T>;
 
 template <typename T>
-concept Arithmetic = IsArithmetic<T>;
+concept Number = IsNumber<T>;
 
 }  // namespace VS

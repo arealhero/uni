@@ -13,7 +13,7 @@ class QuadraticSplineInterpolator : public SplineInterpolator
     return std::string{"Quadratic spline (2,1)"};
   }
 
-  [[nodiscard]] auto operator()(std::vector<Point> const& points)
+  [[nodiscard]] auto operator()(std::vector<Point<f64>> const& points)
       -> Spline override;
 };
 

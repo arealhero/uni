@@ -46,6 +46,25 @@ template <typename T>
 inline constexpr bool IsFloatingPoint = __IsFloatingPoint<RemoveCV<T>>;
 
 template <typename T>
+inline constexpr bool __IsUnsigned = false;
+
+template <>
+inline constexpr bool __IsUnsigned<bool> = true;
+template <>
+inline constexpr bool __IsUnsigned<unsigned char> = true;
+template <>
+inline constexpr bool __IsUnsigned<unsigned short> = true;
+template <>
+inline constexpr bool __IsUnsigned<unsigned int> = true;
+template <>
+inline constexpr bool __IsUnsigned<unsigned long> = true;
+template <>
+inline constexpr bool __IsUnsigned<unsigned long long> = true;
+
+template <typename T>
+inline constexpr bool IsUnsigned = __IsUnsigned<RemoveCV<T>>;
+
+template <typename T>
 struct __MakeUnsigned
 {
   using Type = void;
@@ -137,6 +156,6 @@ template <typename T>
 inline constexpr bool IsIntegral = __IsIntegral<MakeUnsigned<RemoveCV<T>>>;
 
 template <typename T>
-inline constexpr bool IsArithmetic = IsFloatingPoint<T> || IsIntegral<T>;
+inline constexpr bool IsNumber = IsFloatingPoint<T> || IsIntegral<T>;
 
 }  // namespace VS

@@ -13,7 +13,7 @@ class CubicSplineInterpolator : public SplineInterpolator
     return std::string{"Cubic spline (3,2)"};
   }
 
-  [[nodiscard]] auto operator()(std::vector<Point> const& points)
+  [[nodiscard]] auto operator()(std::vector<Point<f64>> const& points)
       -> Spline override;
 };
 

@@ -13,7 +13,7 @@ class NewtonInterpolator final : public PolynomialInterpolator
     return std::string{"Newton"};
   }
 
-  [[nodiscard]] auto operator()(const std::vector<Point>& points)
+  [[nodiscard]] auto operator()(const std::vector<Point<f64>>& points)
       -> Polynomial override;
 };
 

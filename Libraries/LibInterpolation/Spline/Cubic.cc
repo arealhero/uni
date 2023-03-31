@@ -9,7 +9,7 @@
 namespace Uni
 {
 
-auto CubicSplineInterpolator::operator()(std::vector<Point> const& points)
+auto CubicSplineInterpolator::operator()(std::vector<Point<f64>> const& points)
     -> Spline
 {
   assert(points.size() > 1);
@@ -67,7 +67,7 @@ auto CubicSplineInterpolator::operator()(std::vector<Point> const& points)
   {
     const auto [x_i, y_i] = points.at(i);
     const auto x_next = points.at(i + 1).x;
-    const auto interval = Interval{x_i, x_next};
+    const auto interval = Interval<f64>{x_i, x_next};
 
     const auto term = Polynomial{-x_i, 1.0};
     // clang-format off

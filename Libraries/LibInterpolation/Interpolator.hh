@@ -14,7 +14,7 @@ class Interpolator
   virtual ~Interpolator() = default;
 
   [[nodiscard]] virtual auto get_name() const -> std::string = 0;
-  [[nodiscard]] virtual auto operator()(std::vector<Point> const& points)
+  [[nodiscard]] virtual auto operator()(std::vector<Point<f64>> const& points)
       -> InterpolationType = 0;
 };
 

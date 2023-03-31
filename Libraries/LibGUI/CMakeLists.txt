@@ -2,6 +2,7 @@ find_package(Python3 COMPONENTS Interpreter Development NumPy)
 
 set(SOURCES
   Plot.cc
+  Window.cc
 )
 
 uni_lib (LibGUI gui)

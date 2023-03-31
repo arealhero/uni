@@ -14,14 +14,14 @@ namespace Uni
 class Spline : public Function
 {
  public:
-  using IntervalPolynomial = std::pair<Interval, Polynomial>;
+  using IntervalPolynomial = std::pair<Interval<f64>, Polynomial>;
 
   Spline(const std::vector<IntervalPolynomial>& intervals)
       : m_polynomials(intervals)
   {
   }
   Spline(std::vector<IntervalPolynomial>&& intervals)
-    : m_polynomials(std::move(intervals))
+      : m_polynomials(std::move(intervals))
   {
   }
   Spline(const std::initializer_list<IntervalPolynomial>& intervals)
@@ -29,7 +29,7 @@ class Spline : public Function
   {
   }
 
-  [[nodiscard]] auto operator()(double x) const ->double override
+  [[nodiscard]] auto operator()(double x) const -> double override
   {
     for (const auto& [interval, polynomial] : m_polynomials)
     {
@@ -42,7 +42,8 @@ class Spline : public Function
     throw std::runtime_error{"x does not match any interval"};
   }
 
-  [[nodiscard]] auto get_polynomials() const -> const std::vector<IntervalPolynomial>&
+  [[nodiscard]] auto get_polynomials() const
+      -> const std::vector<IntervalPolynomial>&
   {
     return m_polynomials;
   }

@@ -8,7 +8,7 @@ add_compile_options(-Wundef)
 add_compile_options(-Wunused)
 add_compile_options(-Werror)
 
-# FIXME: enable iff the compiler supports this flag
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  add_compile_options(-fconcepts-diagnostics-depth=4)
-endif()
+# # FIXME: enable iff the compiler supports this flag
+# if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+#   add_compile_options(-fconcepts-diagnostics-depth=4)
+# endif()

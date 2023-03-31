@@ -17,7 +17,7 @@ void subplot(std::uint32_t rows,
              std::uint32_t plot_number);
 void legend();
 
-void plot(const std::vector<Point>& points);
+void plot(const std::vector<Point<f64>>& points);
 void plot(const Polynomial& polynomial,
           double left,
           double right,
@@ -27,7 +27,7 @@ void named_plot(const std::string& name,
                 double left,
                 double right,
                 std::size_t detalization = 1000);
-void named_plot(const std::string& name, const std::vector<Point>& points);
+void named_plot(const std::string& name, const std::vector<Point<f64>>& points);
 void named_plot(const std::string& name,
                 const std::vector<std::size_t>& xs,
                 const std::vector<std::size_t>& ys);

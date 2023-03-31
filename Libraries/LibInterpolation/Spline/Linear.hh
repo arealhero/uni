@@ -13,7 +13,7 @@ class LinearSplineInterpolator : public SplineInterpolator
     return std::string{"Linear spline (1,0)"};
   }
 
-  [[nodiscard]] auto operator()(std::vector<Point> const& points)
+  [[nodiscard]] auto operator()(std::vector<Point<f64>> const& points)
       -> Spline override;
 };
 

@@ -1,14 +1,17 @@
 #pragma once
 
+#include <VS/Types.hh>
+
 namespace Uni
 {
 
+template <typename Type = f64>
 struct Interval
 {
-  double left;
-  double right;
+  Type left;
+  Type right;
 
-  [[nodiscard]] constexpr auto contains(double x) const -> bool
+  [[nodiscard]] constexpr auto contains(Type x) const -> bool
   {
     return left <= x && x <= right;
   }

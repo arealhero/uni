@@ -39,7 +39,7 @@ class LeastSquaresApproximator : public Approximator
     return {"Least squares"};
   }
 
-  [[nodiscard]] constexpr auto operator()(const std::vector<Point>& points,
+  [[nodiscard]] constexpr auto operator()(const std::vector<Point<f64>>& points,
                                           const std::size_t degree) const
       -> Polynomial override
   {
@@ -47,12 +47,12 @@ class LeastSquaresApproximator : public Approximator
   }
 
  private:
-  using Method = Polynomial (*)(const std::vector<Point>& points,
+  using Method = Polynomial (*)(const std::vector<Point<f64>>& points,
                                 const std::size_t degree);
   Method m_method;
 
   [[nodiscard]] constexpr static auto orthogonal_polynomials_method(
-      const std::vector<Point>& points,
+      const std::vector<Point<f64>>& points,
       const std::size_t degree) -> Polynomial
   {
     const std::size_t M = points.size();
@@ -63,7 +63,7 @@ class LeastSquaresApproximator : public Approximator
     std::transform(points.begin(),
                    points.end(),
                    xs.begin(),
-                   [](const Point& point) -> double { return point.x; });
+                   [](const Point<f64>& point) -> double { return point.x; });
 
     std::vector<Polynomial> q = {Polynomial{1.0}, Polynomial{-mean(xs), 1.0}};
     q.reserve(N + 1);
@@ -134,7 +134,7 @@ class LeastSquaresApproximator : public Approximator
   }
 
   [[nodiscard]] constexpr static auto normal_equations_method(
-      const std::vector<Point>& points,
+      const std::vector<Point<f64>>& points,
       const std::size_t degree) -> Polynomial
   {
     const std::size_t M = points.size();

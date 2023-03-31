@@ -16,6 +16,7 @@ Checks: >
   -readability-identifier-length,
   -readability-magic-numbers,
   -bugprone-reserved-identifier,-cert-dcl37-c,-cert-dcl51-cpp,
+  -modernize-use-trailing-return-type
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
 FormatStyle: none

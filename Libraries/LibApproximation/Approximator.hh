@@ -14,7 +14,7 @@ class Approximator
   virtual ~Approximator() = default;
 
   [[nodiscard]] virtual auto get_name() const -> std::string = 0;
-  [[nodiscard]] virtual auto operator()(const std::vector<Point>& points,
+  [[nodiscard]] virtual auto operator()(const std::vector<Point<f64>>& points,
                                         std::size_t degree) const
       -> Polynomial = 0;
 };

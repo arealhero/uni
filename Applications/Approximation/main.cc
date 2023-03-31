@@ -42,7 +42,7 @@ auto generate_approximations(const double x) -> std::vector<double>
 }
 
 auto calculate_total_error(const Uni::Polynomial& polynomial,
-                           const std::vector<Uni::Point>& points) -> double
+                           const std::vector<Uni::Point<f64>>& points) -> double
 {
   double total_error = 0;
   for (const auto& [x, y] : points)
@@ -53,7 +53,7 @@ auto calculate_total_error(const Uni::Polynomial& polynomial,
   return total_error;
 }
 
-void print_table(const std::vector<Uni::Point>& points)
+void print_table(const std::vector<Uni::Point<f64>>& points)
 {
   const auto normal_equations_approximator = Uni::LeastSquaresApproximator{
       Uni::LeastSquaresApproximator::GeneratorType::NormalEquations};
@@ -96,7 +96,7 @@ void print_table(const std::vector<Uni::Point>& points)
 
 auto main() -> int
 {
-  std::vector<Uni::Point> points;
+  std::vector<Uni::Point<f64>> points;
   points.reserve(NUMBER_OF_UNIQUE_XS * NUMBER_OF_APPROXIMATIONS);
 
   auto generator = Uni::LinearGenerator<double>(A, B, NUMBER_OF_UNIQUE_XS);
@@ -105,7 +105,7 @@ auto main() -> int
     const auto approximations = generate_approximations(x);
     for (const double approximation : approximations)
     {
-      points.push_back({x, approximation});
+      points.emplace_back(x, approximation);
     }
   }
 

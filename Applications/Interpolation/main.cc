@@ -40,14 +40,14 @@ void plot_error(const std::string& name,
                 double a,
                 double b)
 {
-  auto points = std::vector<Uni::Point>{};
+  auto points = std::vector<Uni::Point<f64>>{};
 
   const double step = (b - a) / (M - 1);
   for (std::uint32_t i = 0; i < M; ++i)
   {
     const double x = a + i * step;
     const double diff = std::abs(f(x) - function(x));
-    points.push_back({x, diff});
+    points.emplace_back(x, diff);
   }
 
   Uni::Gui::named_plot(name, points);
@@ -71,18 +71,18 @@ auto print_table(std::shared_ptr<Uni::Interpolator<T>> interpolator,
 
     constexpr double EPS = 1e-12;
 
-    std::vector<Uni::Point> linear_points;
+    std::vector<Uni::Point<f64>> linear_points;
     linear_points.reserve(n);
     for (auto x : *linear_generator)
     {
-      linear_points.push_back({x, f(x)});
+      linear_points.emplace_back(x, f(x));
     }
 
-    std::vector<Uni::Point> optimal_points;
+    std::vector<Uni::Point<f64>> optimal_points;
     optimal_points.reserve(n);
     for (auto x : *optimal_generator)
     {
-      optimal_points.push_back({x, f(x)});
+      optimal_points.emplace_back(x, f(x));
     }
 
     auto linear_polynomial = (*interpolator)(linear_points);

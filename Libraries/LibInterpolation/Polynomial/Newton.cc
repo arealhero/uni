@@ -3,7 +3,7 @@
 namespace Uni
 {
 
-auto NewtonInterpolator::operator()(const std::vector<Point>& points) -> Polynomial
+auto NewtonInterpolator::operator()(const std::vector<Point<f64>>& points) -> Polynomial
 {
   const std::size_t N = points.size();
 
