@@ -47,7 +47,7 @@ int main()
 #ifdef DEBUG_PRINT
     std::cout << name << '\n';
 #endif
-    for (u32 partitions = 100; partitions <= 5000; partitions += 100)
+    for (u32 partitions = 500; partitions <= 5000; partitions += 100)
     {
       const auto result = uniform_partition(f, a, b, partitions, method);
 #ifdef DEBUG_PRINT

@@ -60,15 +60,15 @@ constexpr f64 simpson(Function f, f64 a, f64 b)
   return (b - a) * (f(a) + 4.0 * f(middle) + f(b)) / 6.0;
 }
 
-constexpr f64 newton_cotes(Function p, Function f, f64 a, f64 b)
-{
-  return 0.;
-}
+/* constexpr f64 newton_cotes(Function p, Function f, f64 a, f64 b) */
+/* { */
+/*   return 0.; */
+/* } */
 
-constexpr f64 gauss(Function p, Function f, f64 a, f64 b)
-{
-  return 0.;
-}
+/* constexpr f64 gauss(Function p, Function f, f64 a, f64 b) */
+/* { */
+/*   return 0.; */
+/* } */
 
 }
 
